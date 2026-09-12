@@ -1,0 +1,25 @@
+# Java build output
+*.class
+/out/
+/build/
+/target/
+
+# IntelliJ IDEA - user-specific files only
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+.idea/httpRequests/
+*.iws
+
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs / temporary files
+*.log
+*.tmp
+*.temp
+*~
+*.swp
