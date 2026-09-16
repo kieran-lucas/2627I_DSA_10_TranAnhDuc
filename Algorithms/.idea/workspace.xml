@@ -31,6 +31,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.BinarySearchFirst.executor": "Run",
+    "Application.CommonElements.executor": "Run",
     "Application.DoublingTestPlot.executor": "Run",
     "Application.HelloWorld.executor": "Run",
     "Application.ThreeSumOverflow.executor": "Run",
@@ -44,7 +45,7 @@
     "settings.editor.selected.configurable": "editor.preferences.import"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.CommonElements">
+  <component name="RunManager" selected="Application.EqualPairs">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -62,6 +63,11 @@
     </configuration>
     <configuration name="DoublingTestPlot" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="DoublingTestPlot" />
+      <module name="Algorithms" />
+      <method v="2" />
+    </configuration>
+    <configuration name="EqualPairs" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="EqualPairs" />
       <module name="Algorithms" />
       <method v="2" />
     </configuration>
