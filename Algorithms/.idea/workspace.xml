@@ -44,7 +44,7 @@
     "settings.editor.selected.configurable": "editor.preferences.import"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.BinarySearchFirst">
+  <component name="RunManager" selected="Application.CommonElements">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -53,6 +53,11 @@
       <option name="MAIN_CLASS_NAME" value="BinarySearchFirst" />
       <module name="Algorithms" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="CommonElements" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="CommonElements" />
+      <module name="Algorithms" />
       <method v="2" />
     </configuration>
     <configuration name="DoublingTestPlot" type="Application" factoryName="Application">
