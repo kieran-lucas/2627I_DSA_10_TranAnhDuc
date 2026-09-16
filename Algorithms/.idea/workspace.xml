@@ -30,7 +30,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BinarySearchFirst.executor": "Run",
+    "Application.DoublingTestPlot.executor": "Run",
     "Application.HelloWorld.executor": "Run",
+    "Application.ThreeSumOverflow.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ignore.virus.scanning.warn.message": "true",
@@ -41,10 +44,16 @@
     "settings.editor.selected.configurable": "editor.preferences.import"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.DoublingTestPlot">
+  <component name="RunManager" selected="Application.BinarySearchFirst">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+    </configuration>
+    <configuration name="BinarySearchFirst" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BinarySearchFirst" />
+      <module name="Algorithms" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2" />
     </configuration>
     <configuration name="DoublingTestPlot" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="DoublingTestPlot" />
@@ -77,6 +86,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BinarySearchFirst" />
         <item itemvalue="Application.HelloWorld" />
       </list>
     </recent_temporary>
