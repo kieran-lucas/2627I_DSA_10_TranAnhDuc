@@ -34,6 +34,5 @@ public class CommonElements {
             b[i] = StdIn.readInt();
         }
 
-        printCommon(a, b);
-    }
+        printCommon(a, b);    }
 }

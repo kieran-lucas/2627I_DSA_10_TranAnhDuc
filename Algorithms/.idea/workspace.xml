@@ -33,7 +33,9 @@
     "Application.BinarySearchFirst.executor": "Run",
     "Application.CommonElements.executor": "Run",
     "Application.DoublingTestPlot.executor": "Run",
+    "Application.EqualPairs.executor": "Run",
     "Application.HelloWorld.executor": "Run",
+    "Application.Test.executor": "Run",
     "Application.ThreeSumOverflow.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -45,7 +47,7 @@
     "settings.editor.selected.configurable": "editor.preferences.import"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.EqualPairs">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -78,6 +80,11 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <module name="Algorithms" />
+      <method v="2" />
     </configuration>
     <configuration name="ThreeSumOverflow" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="ThreeSumOverflow" />
