@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TestAlgs4" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="TestAlgs4" />
+    <module name="Algorithms" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

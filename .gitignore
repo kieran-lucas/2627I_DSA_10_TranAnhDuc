@@ -1,0 +1,23 @@
+# Java build output
+*.class
+/out/
+/build/
+/target/
+
+# IntelliJ user state; keep project, module, and library XML tracked
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+.idea/httpRequests/
+*.iws
+
+# OS and temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.temp
+*~
+*.swp
