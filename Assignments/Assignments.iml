@@ -7,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/week2/Exercises" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/week3" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Microsoft-25-local" jdkType="JavaSDK" />
     <orderEntry type="library" name="algs4" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
