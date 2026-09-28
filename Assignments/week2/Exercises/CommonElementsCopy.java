@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.*;
 
-public class CommonElements {
+public class CommonElementsCopy {
 
     public static void printCommon(int[] a, int[] b) {
         int i = 0;
@@ -34,5 +34,6 @@ public class CommonElements {
             b[i] = StdIn.readInt();
         }
 
-        printCommon(a, b);    }
+        printCommon(a, b);
+    }
 }
