@@ -1,0 +1,22 @@
+# Bài 1
+a) Ta sẽ chia các lệnh thành các nhóm 3 tương ứng với mỗi lần push output ra ngoài
+enqueue(0), enqueue(1), dequeue()|
+ enqueue(2), enqueue(3), dequeue()|
+ enqueue(4), enqueue(5), dequeue()|
+  enqueue(6), enqueue(7), dequeue()
+
+Ta thấy các output lần lượt tương ứng là:
+1
+2 3
+3 4 5
+4 5 6 7
+
+Vậy chuỗi output cuối cùng là: 1 2 3 3 4 5 4 5 6 7
+
+b) Trong trường xấu nhất, tức là hàm enqueue vừa kích hoạt việc in ra queue hiện tại, tức là in ra n + 1 phần tử, kết hợp với việc thêm 1 phần tử vào cuối hàng đợi, ta tạm coi thao tác này gồm n + 2 phép tính, tức là có độ phức tạp thời gian $\theta (n)$
+
+c) Ta thấy trường hợp xấu nhất xảy ra khi mọi thao tác đều là enqueue, vì khi đó ta vừa in ra output và vừa làm lượng output được in ra tăng liên tục.
+Không mất tính tổng quát, ta giả sử $n \mod 3 = 0, khi đó ta sẽ có n/3 lượt in, mỗi lượt in lần lượt 3, 6, 9,...,n. 
+Ta có số lần thực hiện phép tính là n (số lần enqueue) + n/3 * (3 + n)/2 =n^2 + 9n/6
+Khi đó, thời gian trên mỗi thao tác là xấp xỉ n + 9/6
+Tức là $\theta (n)$
