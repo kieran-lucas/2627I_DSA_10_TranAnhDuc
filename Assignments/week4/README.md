@@ -17,3 +17,13 @@ java -cp 'build/bai1;../../lib/algs4.jar' InsertionBenchmark
 
 Trên Linux/macOS đổi `;` trong classpath thành `:` và dùng `mkdir -p build/bai1`.
 `Arrays.sort` chỉ dùng trong lớp kiểm thử để đối chiếu, không dùng trong thuật toán hoặc benchmark.
+
+## Bài 2
+
+```powershell
+javac --release 8 -cp ../../lib/algs4.jar -d build/bai2 BenchmarkData.java Selection.java bai2/*.java
+java -cp 'build/bai2;../../lib/algs4.jar' SelectionSortTest
+java -cp 'build/bai2;../../lib/algs4.jar' SelectionBenchmark
+```
+
+Đọc bảng thực nghiệm và phân tích tại `bai1/REPORT.md`, `bai2/REPORT.md`.
