@@ -5,8 +5,8 @@ public class InsertionBenchmark {
     public static void main(String[] args) throws Exception {
         String[] types = {"file", "random", "ascending", "descending", "equal"};
         int[] sizes = {1000, 2000, 4000, 8000};
-        PrintWriter raw = new PrintWriter("bai1/runs.csv");
-        PrintWriter summary = new PrintWriter("bai1/summary.csv");
+        PrintWriter raw = new PrintWriter("build/insertion-runs.csv");
+        PrintWriter summary = new PrintWriter("build/insertion-summary.csv");
         raw.println("type,size,run,nanoseconds");
         summary.println("type,size,runs,average_ns");
         for (String type : types) {

@@ -5,8 +5,8 @@ public class SelectionBenchmark {
     public static void main(String[] args) throws Exception {
         String[] types = {"file", "random", "ascending", "descending", "equal"};
         int[] sizes = {1000, 2000, 4000, 8000};
-        PrintWriter raw = new PrintWriter("bai2/runs.csv");
-        PrintWriter summary = new PrintWriter("bai2/summary.csv");
+        PrintWriter raw = new PrintWriter("build/selection-runs.csv");
+        PrintWriter summary = new PrintWriter("build/selection-summary.csv");
         raw.println("type,size,run,nanoseconds");
         summary.println("type,size,runs,average_ns");
         for (String type : types) {
