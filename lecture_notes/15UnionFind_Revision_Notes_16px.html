@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Union–Find — Ghi chú ôn thi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {--text:#283542;--body:#405063;--muted:#677789;--line:#dce4ed;--soft:#f5f7fa;--blue:#456b96;--pale:#f1f6fb;--green:#e7f4ed;--amber:#fbf5e9;--lav:#f3effb;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--text);padding:38px 18px 90px;font-family:'Space Grotesk',Arial,sans-serif;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:0 auto}
+h1,h2,h3,h4,p{margin-top:0}h1{font-size:33px;line-height:1.25;letter-spacing:-.7px;margin:0 0 10px}
+h2{font-size:24px;line-height:1.38;letter-spacing:-.3px;margin:0 0 12px}h3{font-size:19px;line-height:1.45;margin:23px 0 9px}h4{font-size:17px;margin:12px 0 6px}
+p{color:var(--body);margin:0 0 13px;line-height:1.76}
+strong{color:#2c3d50}
+a{color:#416f9c;text-decoration:none}a:hover{text-decoration:underline}
+header{border-bottom:1px solid var(--line);padding:0 0 23px;margin-bottom:25px}
+.subtitle{font-size:16px;color:var(--body);margin-bottom:0}
+nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 36px}
+nav a{color:#456078;border:1px solid var(--line);border-radius:5px;padding:11px 12px;font-weight:600;font-size:15px;line-height:1.42}
+nav .n{font:600 13px 'JetBrains Mono',monospace;color:#8a9ba9;margin-right:7px}
+section{margin-bottom:42px;scroll-margin-top:22px}
+.sectionlead{margin:0 0 18px}
+.rule{height:1px;background:var(--line);margin:24px 0}
+ul,ol{padding-left:25px;margin:7px 0 15px;color:var(--body)}li{margin-bottom:6px}li::marker{color:#7387a0}
+code,pre,.mono{font-family:'JetBrains Mono',Consolas,monospace}
+code{font-size:16px;color:#355270;background:#f0f3f7;border:1px solid #e1e7ee;padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
+pre{font-size:16px;line-height:1.63;white-space:pre;tab-size:4;margin:0}
+pre code{font-size:inherit;background:transparent;border:0;padding:0;overflow-wrap:normal}
+.codebox{background:#f7f8fa;border:1px solid var(--line);border-radius:6px;padding:17px 18px;overflow-x:auto;margin:13px 0 17px}
+.note,.definition{margin:16px 0;padding:12px 16px 13px;border-left:3px solid #97afc7;background:#f7f9fc;border-radius:0 5px 5px 0}
+.definition{border-color:#6189b4;background:#f4f8fc}.note p:last-child,.definition p:last-child{margin:0}
+.note.warn{border-color:#bd9b66;background:#fffaf3}
+.note .short,.definition .short{font-weight:700;margin-bottom:3px;color:#38536d}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:5px;margin:14px 0 19px}
+table{border-collapse:collapse;width:100%;font-size:16px;text-align:left}
+th,td{padding:11px 13px;border-bottom:1px solid #e8edf3;vertical-align:top;line-height:1.55}
+th{color:#344d66;background:#f5f7fa;font-weight:700}td{color:#43556b}tbody tr:last-child td{border-bottom:0}
+.tablebox table{min-width:610px}
+.tablebox.small table{min-width:530px}
+mark{padding:2px 4px;border-radius:3px;color:#284b6b;background:#e3f1ff}
+.figure{border:1px solid var(--line);border-radius:6px;background:#fff;margin:14px 0 18px;overflow:hidden}
+.figure-title{font-size:16px;font-weight:600;color:#52677e;padding:10px 15px;border-bottom:1px solid #e7ebf0;background:#fafbfd}
+.figure-body{padding:19px 16px}
+.figure-caption{font-size:15px;line-height:1.55;padding:0 16px 15px;color:var(--muted)}
+.flex{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.panel{border:1px solid #dfe6ed;border-radius:5px;padding:15px 17px}
+.panel h4:first-child{margin-top:0}.panel p:last-child{margin-bottom:0}
+.array{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:11px 0 17px;min-width:550px}
+.cell{text-align:center;min-width:0}
+.cell .idx{font:13px/1.65 'JetBrains Mono',monospace;color:#7b8896;margin-bottom:3px}
+.cell .val{background:#fff;border:1px solid #bfcad7;padding:8px 0;border-radius:4px;font:600 16px/1.3 'JetBrains Mono',monospace;color:#34506b}
+.cell.changed .val{background:#dceeff;border-color:#79a7d6;color:#1d4c80}
+.arr-scroll{overflow:auto}
+.rowlabel{font-weight:700;color:#344a60;font-size:16px;margin:7px 0}
+.inlinecode{font:600 16px 'JetBrains Mono',monospace;color:#395b7a}
+.kwd{color:#8250aa;font-weight:600}.codecomment{color:#738196}
+svg{display:block;width:100%;height:auto}svg text{font-family:'Space Grotesk',Arial,sans-serif;fill:#35475b;font-size:16px}
+svg .node{fill:#fff;stroke:#829cb9;stroke-width:2}svg .node-tint{fill:#e9f3fc;stroke:#6c98c7;stroke-width:2}
+svg .arr{stroke:#738da9;stroke-width:2.2;fill:none;stroke-linecap:round}svg .accent{stroke:#4d80b5;stroke-width:3}
+svg .lab{fill:#5c7088;font-size:15px}svg .heavy{font-weight:700}
+svg .faint{fill:#8393a3;font-size:14px}
+.summary-table{margin-top:16px}
+.grid-row{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.perc{display:grid;grid-template-columns:repeat(5,47px);gap:4px;justify-content:center;flex:none}
+.perc .sq{width:47px;height:47px;border:1px solid #bbc5d0;background:#fff;border-radius:2px;position:relative}
+.perc .sq.block{background:#3f4a55;border-color:#3f4a55}
+.perc .sq.path{background:#cfe5f9;border-color:#83add6}
+.perc .sq.path:after{content:'•';position:absolute;inset:0;display:grid;place-items:center;color:#3675b5;font-size:23px}
+.percnotes{max-width:370px;color:var(--body)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;color:#546a7e;margin:7px 0 0}
+.legend .sw{display:inline-block;width:14px;height:14px;border:1px solid #b8c8da;vertical-align:-2px;margin-right:5px;border-radius:2px}
+.boxed-formula{background:#f4f7fb;border:1px solid #d9e4ef;padding:11px 13px;border-radius:5px;font:600 16px/1.6 'JetBrains Mono',monospace;color:#365a7e;overflow:auto;margin:10px 0 16px;white-space:pre-wrap}
+details{border:1px solid var(--line);border-radius:5px;margin:17px 0;background:#fff}
+details summary{cursor:pointer;padding:12px 15px;font-weight:700;color:#3b5c7d;list-style-position:inside}
+details .detail-inner{padding:0 16px 16px}
+details .codebox{margin-bottom:0}
+.ques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.qa{border-left:2px solid #9eb6ce;padding:8px 15px;border-top:1px solid #e9edf2;border-right:1px solid #e9edf2;border-bottom:1px solid #e9edf2;border-radius:3px}
+.qa .q{font-weight:700;color:#3a5169;margin-bottom:5px}
+.qa .answer{color:#51677b;font-size:16px}
+.tiny{color:var(--muted);font-size:15px}
+.print{float:right;border:1px solid #dfe6ee;border-radius:4px;background:#fff;color:#5f7286;padding:7px 11px;font:600 15px 'Space Grotesk',Arial;cursor:pointer}
+@media(max-width:790px){body{padding:24px 13px 60px}h1{font-size:28px}h2{font-size:22px}nav{grid-template-columns:repeat(2,minmax(0,1fr))}.flex,.ques{grid-template-columns:1fr}.figure-body{padding:11px}.perc{grid-template-columns:repeat(5,43px)}.perc .sq{width:43px;height:43px}.print{float:none;display:block;margin-bottom:12px}.large-svg{min-width:660px}.svg-scroll{overflow-x:auto}}
+@media(max-width:430px){nav{grid-template-columns:1fr}.perc{grid-template-columns:repeat(5,38px)}.perc .sq{width:38px;height:38px}th,td{padding:9px 10px}.figure-title{padding:9px 10px}}
+@media print{*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body{padding:0;color:#222}main{max-width:none}.print,nav{display:none}header{padding-bottom:10px;margin-bottom:12px}section{margin-bottom:24px}h2,h3{break-after:avoid}.figure,.tablebox,.note,.panel,.definition{break-inside:avoid}details:not([open]) .detail-inner{display:block}details{break-inside:avoid}@page{size:A4;margin:15mm}}
+</style>
+</head>
+<body><main>
+<button class="print" onclick="window.print()">In / lưu PDF</button>
+<header><h1>Union–Find (Disjoint Set Union)</h1><p class="subtitle">Kết nối động · Quick-Find · Quick-Union · Weighted Union · Path Compression · Percolation</p></header>
+<nav aria-label="Mục lục">
+<a href="#model"><span class="n">01</span> Bài toán và API</a>
+<a href="#qf"><span class="n">02</span> Quick-Find</a>
+<a href="#qu"><span class="n">03</span> Quick-Union</a>
+<a href="#weight"><span class="n">04</span> Weighted Union</a>
+<a href="#compress"><span class="n">05</span> Path Compression</a>
+<a href="#analysis"><span class="n">06</span> Độ phức tạp</a>
+<a href="#perc"><span class="n">07</span> Percolation</a>
+<a href="#review"><span class="n">08</span> Ôn tập</a>
+</nav>
+
+<section id="model">
+<h2>1. Bài toán Dynamic Connectivity</h2>
+<p>Cho <strong>N đối tượng</strong> được đánh số <code>0</code> đến <code>N − 1</code>. Các kết nối được <strong>bổ sung dần (không xét xóa cạnh)</strong>. Cần hỗ trợ hai yêu cầu: <strong>nối hai đối tượng</strong> và <strong>kiểm tra liệu chúng có được nối bởi một đường đi hay không</strong> (không nhất thiết có cạnh trực tiếp).</p>
+<div class="definition"><p><strong>Connected component (thành phần liên thông)</strong> là một tập tối đại các đối tượng nối được với nhau. Mỗi đối tượng thuộc đúng một thành phần; thao tác <code>union(p,q)</code> gộp hai thành phần chứa <code>p</code> và <code>q</code>.</p></div>
+<p>Quan hệ “cùng thành phần” có ba tính chất: <strong>phản xạ</strong> (<code>p</code> nối với chính nó), <strong>đối xứng</strong> (nếu <code>p</code> nối <code>q</code> thì <code>q</code> nối <code>p</code>) và <strong>bắc cầu</strong> (nếu <code>p</code> nối <code>q</code>, <code>q</code> nối <code>r</code> thì <code>p</code> nối <code>r</code>).</p>
+<div class="figure"><div class="figure-title">Kết nối gián tiếp cũng được tính là liên thông</div><div class="figure-body">
+<svg viewBox="0 0 850 178" role="img" aria-label="Hai thành phần liên thông 0, 1, 2, 3 và 4, 5, 6; đường đi 0 đến 3 qua 1 và 2">
+<defs><marker id="arrow1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#7591ad"/></marker></defs>
+<g stroke="#91a6ba" stroke-width="2.4" fill="none"><path d="M65 75L180 75L295 75L410 75"/><path d="M560 75L675 75L790 75"/></g>
+<g class="node-tint"><circle cx="65" cy="75" r="25"/><circle cx="180" cy="75" r="25"/><circle cx="295" cy="75" r="25"/><circle cx="410" cy="75" r="25"/></g>
+<g class="node"><circle cx="560" cy="75" r="25"/><circle cx="675" cy="75" r="25"/><circle cx="790" cy="75" r="25"/></g>
+<g text-anchor="middle" dominant-baseline="middle" font-weight="700"><text x="65" y="75">0</text><text x="180" y="75">1</text><text x="295" y="75">2</text><text x="410" y="75">3</text><text x="560" y="75">4</text><text x="675" y="75">5</text><text x="790" y="75">6</text></g>
+<text x="235" y="140" text-anchor="middle" class="lab">{0, 1, 2, 3}</text><text x="675" y="140" text-anchor="middle" class="lab">{4, 5, 6}</text>
+</svg>
+</div><div class="figure-caption"><code>connected(0,3)</code> là <code>true</code> dù 0 và 3 không kề nhau. <code>union(3,4)</code> sẽ hợp nhất hai thành phần thành một.</div></div>
+<h3>Các phép toán (API)</h3>
+<div class="tablebox"><table><thead><tr><th>Phép toán</th><th>Ý nghĩa</th></tr></thead><tbody>
+<tr><td><code>UF(N)</code></td><td>Khởi tạo N thành phần riêng lẻ: <code>{0}, {1}, ...</code></td></tr>
+<tr><td><code>find(p)</code></td><td>Trả về đại diện của thành phần chứa p.</td></tr>
+<tr><td><code>connected(p,q)</code></td><td>Kiểm tra <code>find(p) == find(q)</code>.</td></tr>
+<tr><td><code>union(p,q)</code></td><td>Gộp hai thành phần, nếu chúng khác nhau.</td></tr>
+</tbody></table></div>
+<div class="codebox"><pre><code>if (!uf.connected(p, q)) {
+    uf.union(p, q);
+}</code></pre></div>
+<div class="note"><p><strong>Phân biệt:</strong> Union–Find được thiết kế để kiểm tra <em>có đường đi hay không</em>, không nhằm tìm chính đường đi đó. Nếu đã <code>union(4,3)</code>, <code>union(3,8)</code>, <code>union(9,4)</code> thì 8 và 9 cùng thành phần dù chưa từng được nối trực tiếp.</p></div>
+</section>
+
+<section id="qf">
+<h2>2. Quick-Find — “find nhanh, union chậm”</h2>
+<p>Quick-Find dùng mảng <code>id[]</code> kích thước N, trong đó <strong><code>id[p]</code> là nhãn của thành phần chứa p</strong>. Hai phần tử liên thông khi và chỉ khi nhãn của chúng bằng nhau.</p>
+<div class="boxed-formula">find(p) = id[p]
+connected(p, q) = (id[p] == id[q])</div>
+<h3>Cơ chế union</h3>
+<p>Để thực hiện <code>union(p,q)</code>, lưu hai nhãn cũ <code>pid = id[p]</code> và <code>qid = id[q]</code>. Quét toàn bộ mảng, đổi <strong>mọi phần tử có nhãn <code>pid</code></strong> thành <code>qid</code>, nhờ đó không còn hai nhãn khác nhau trong cùng một thành phần.</p>
+<div class="figure"><div class="figure-title">Trace: union(6, 1) — cập nhật tất cả vị trí thuộc nhóm của 6</div><div class="figure-body"><div class="arr-scroll"><div class="rowlabel">Trước: <code>id[6] = 0</code>, <code>id[1] = 1</code></div>
+<div class="array">
+<span class="cell"><div class="idx">0</div><div class="val">0</div></span><span class="cell"><div class="idx">1</div><div class="val">1</div></span><span class="cell"><div class="idx">2</div><div class="val">1</div></span><span class="cell"><div class="idx">3</div><div class="val">8</div></span><span class="cell"><div class="idx">4</div><div class="val">8</div></span><span class="cell"><div class="idx">5</div><div class="val">0</div></span><span class="cell"><div class="idx">6</div><div class="val">0</div></span><span class="cell"><div class="idx">7</div><div class="val">1</div></span><span class="cell"><div class="idx">8</div><div class="val">8</div></span><span class="cell"><div class="idx">9</div><div class="val">8</div></span>
+</div>
+<div class="rowlabel">Sau: thay toàn bộ nhãn <code>0 → 1</code></div>
+<div class="array">
+<span class="cell changed"><div class="idx">0</div><div class="val">1</div></span><span class="cell"><div class="idx">1</div><div class="val">1</div></span><span class="cell"><div class="idx">2</div><div class="val">1</div></span><span class="cell"><div class="idx">3</div><div class="val">8</div></span><span class="cell"><div class="idx">4</div><div class="val">8</div></span><span class="cell changed"><div class="idx">5</div><div class="val">1</div></span><span class="cell changed"><div class="idx">6</div><div class="val">1</div></span><span class="cell"><div class="idx">7</div><div class="val">1</div></span><span class="cell"><div class="idx">8</div><div class="val">8</div></span><span class="cell"><div class="idx">9</div><div class="val">8</div></span>
+</div></div></div><div class="figure-caption">Ba ô được đánh dấu đã đổi. Nếu chỉ đổi <code>id[6]</code> mà bỏ qua 0 và 5 thì Quick-Find sẽ cho kết quả sai.</div></div>
+<div class="codebox"><pre><code>int find(int p) {
+    return id[p];
+}
+
+void union(int p, int q) {
+    int pid = id[p];
+    int qid = id[q];
+    for (int i = 0; i &lt; id.length; i++)
+        if (id[i] == pid) id[i] = qid;
+}</code></pre></div>
+<div class="note"><p><strong>Đánh đổi:</strong> <code>find</code> và <code>connected</code> chỉ tốn <strong>O(1)</strong>, nhưng <code>union</code> phải quét N ô, nên mất <strong>O(N)</strong> dù rất ít giá trị thực sự thay đổi. <code>id[]</code> ở đây là <strong>nhãn thành phần, không phải con trỏ cha</strong>.</p></div>
+</section>
+
+<section id="qu">
+<h2>3. Quick-Union — biểu diễn bằng cây</h2>
+<p>Quick-Union vẫn dùng <code>id[]</code> nhưng ý nghĩa đã khác: <strong><code>id[i]</code> là nút cha của i</strong>. Mỗi thành phần là một cây có gốc (root) tự trỏ vào chính nó: <code>id[root] == root</code>. Hai phần tử liên thông nếu lần theo các con trỏ cha đều đến cùng một gốc.</p>
+<div class="boxed-formula">find(p) = đi theo id[p], id[id[p]], ... đến gốc
+union(p, q) = cho gốc của p trỏ sang gốc của q</div>
+<div class="figure"><div class="figure-title">Trace: union(3, 5) — chỉ một phần tử id[] thay đổi</div><div class="figure-body svg-scroll">
+<svg class="large-svg" viewBox="0 0 880 270" role="img" aria-label="Trước khi union, cây chứa 3 có gốc 9 và cây chứa 5 có gốc 6. Sau union, gốc 9 trỏ tới 6.">
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#6e90b0"/></marker></defs>
+<g stroke="#829ab2" stroke-width="2.1" fill="none"><path d="M100 64L55 128M100 64L155 128M155 128L155 205M260 64L260 130"/><path d="M605 64L545 115M545 115L497 173M545 115L593 173M593 173L593 232M605 64L733 130"/></g>
+<g class="node-tint"><circle cx="100" cy="55" r="21"/><circle cx="260" cy="55" r="21"/><circle cx="605" cy="55" r="21"/></g><g class="node"><circle cx="55" cy="135" r="21"/><circle cx="155" cy="135" r="21"/><circle cx="155" cy="210" r="21"/><circle cx="260" cy="135" r="21"/><circle cx="545" cy="125" r="21"/><circle cx="497" cy="183" r="21"/><circle cx="593" cy="183" r="21"/><circle cx="593" cy="240" r="21"/><circle cx="733" cy="135" r="21"/></g>
+<g text-anchor="middle" dominant-baseline="middle" font-weight="700"><text x="100" y="55">9</text><text x="260" y="55">6</text><text x="55" y="135">2</text><text x="155" y="135">4</text><text x="155" y="210">3</text><text x="260" y="135">5</text><text x="605" y="55">6</text><text x="545" y="125">9</text><text x="497" y="183">2</text><text x="593" y="183">4</text><text x="593" y="240">3</text><text x="733" y="135">5</text></g>
+<text x="200" y="22" text-anchor="middle" class="lab heavy">Trước</text><text x="638" y="22" text-anchor="middle" class="lab heavy">Sau</text><text x="420" y="124" text-anchor="middle" class="lab heavy">⇒</text>
+</svg>
+</div><div class="figure-caption">Ban đầu <code>find(3) = 9</code>, <code>find(5) = 6</code>. Sau khi nối <code>id[9] = 6</code>, các nút 2, 3, 4, 9, 5 đều có cùng gốc 6; không cần sửa từng nút con.</div></div>
+<div class="codebox"><pre><code>int find(int i) {
+    while (i != id[i]) i = id[i];
+    return i;
+}
+
+void union(int p, int q) {
+    int rootP = find(p);
+    int rootQ = find(q);
+    id[rootP] = rootQ;
+}</code></pre></div>
+<p><strong>Vấn đề:</strong> cây có thể trở thành một chuỗi rất dài, chẳng hạn sau <code>union(0,1)</code>, <code>union(1,2)</code>, …, <code>union(N-2,N-1)</code>, ta có thể nhận chuỗi <code>0 → 1 → 2 → ... → N-1</code>. Lúc đó <code>find(0)</code> phải đi qua gần N nút.</p>
+<div class="note warn"><p><strong>Đừng nhầm:</strong> Quick-Union chỉ cập nhật <strong>một liên kết cha</strong> khi đã tìm được hai gốc. Nhưng bản thân việc tìm gốc có thể tốn <strong>O(N)</strong>. Vì vậy không thể kết luận <code>union</code> luôn là O(1).</p></div>
+</section>
+
+<section id="weight">
+<h2>4. Weighted Quick-Union — gộp cây nhỏ vào cây lớn</h2>
+<p>Để tránh cây quá cao, ta bổ sung mảng <code>sz[]</code> lưu <strong>số nút của cây tại các vị trí là gốc</strong>. Khi gộp hai thành phần, luôn cho <strong>gốc của cây nhỏ trỏ vào gốc cây lớn</strong>, rồi cập nhật kích thước. Nếu hai cây bằng nhau, có thể chọn bất kỳ bên nào làm gốc.</p>
+<div class="flex">
+<div class="panel"><h4>Quick-Union thông thường</h4><p>Chỉ quan tâm <code>p</code> và <code>q</code>. Nếu nối cây lớn xuống cây nhỏ, chiều cao có thể tăng nhiều.</p></div>
+<div class="panel"><h4>Weighted Quick-Union</h4><p>So sánh <code>sz[rootP]</code> và <code>sz[rootQ]</code>. Gốc lớn được giữ nguyên; các độ sâu chỉ tăng một đơn vị ở phía cây nhỏ.</p></div>
+</div>
+<div class="codebox"><pre><code>void union(int p, int q) {
+    int i = find(p), j = find(q);
+    if (i == j) return;
+
+    if (sz[i] &lt; sz[j]) {
+        id[i] = j;
+        sz[j] += sz[i];
+    } else {
+        id[j] = i;
+        sz[i] += sz[j];
+    }
+}</code></pre></div>
+<div class="figure"><div class="figure-title">Vì sao phép gộp có trọng số hạn chế chiều cao?</div><div class="figure-body svg-scroll"><svg class="large-svg" viewBox="0 0 880 240" role="img" aria-label="Cây 2 nút gộp vào cây 4 nút cho ra cây 6 nút có gốc ở cây lớn">
+<g stroke="#8097b0" fill="none" stroke-width="2.1"><path d="M154 70L75 125M154 70L154 125M154 70L233 125M370 70L370 125"/><path d="M670 47L575 108M670 47L670 108M670 47L765 108M670 47L830 108M830 108L830 175"/></g>
+<g class="node-tint"><circle cx="154" cy="62" r="21"/><circle cx="370" cy="62" r="21"/><circle cx="670" cy="42" r="21"/></g>
+<g class="node"><circle cx="75" cy="135" r="21"/><circle cx="154" cy="135" r="21"/><circle cx="233" cy="135" r="21"/><circle cx="370" cy="135" r="21"/><circle cx="575" cy="116" r="21"/><circle cx="670" cy="116" r="21"/><circle cx="765" cy="116" r="21"/><circle cx="830" cy="116" r="21"/><circle cx="830" cy="183" r="21"/></g>
+<g font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="middle"><text x="154" y="62">A</text><text x="75" y="135">a</text><text x="154" y="135">b</text><text x="233" y="135">c</text><text x="370" y="62">B</text><text x="370" y="135">e</text><text x="670" y="42">A</text><text x="575" y="116">a</text><text x="670" y="116">b</text><text x="765" y="116">c</text><text x="830" y="116">B</text><text x="830" y="183">e</text></g>
+<text x="154" y="22" text-anchor="middle" class="lab heavy">4 nút</text><text x="370" y="22" text-anchor="middle" class="lab heavy">2 nút</text><text x="515" y="122" text-anchor="middle" class="heavy">⇒</text><text x="710" y="222" text-anchor="middle" class="lab">Cây 6 nút, gốc A</text>
+</svg></div><div class="figure-caption">Cây 2 nút được gắn bên dưới A. Các nút thuộc cây lớn không tăng độ sâu; cây nhỏ tăng tối đa 1.</div></div>
+<h3>Chứng minh độ sâu tối đa là O(log N)</h3>
+<p>Chọn một nút bất kỳ <code>x</code>. Độ sâu của x <strong>chỉ tăng</strong> khi cây chứa x được gắn vào cây khác có kích thước <em>không nhỏ hơn</em>. Vì thế sau mỗi lần độ sâu của x tăng thêm 1, kích thước thành phần chứa x ít nhất <strong>gấp đôi</strong>.</p>
+<div class="boxed-formula">Độ sâu tăng k lần ⇒ số nút của cây ≥ 2^k
+2^k ≤ N ⇒ k ≤ log₂ N</div>
+<p>Do đó mọi nút có độ sâu không quá <code>⌊log₂ N⌋</code>. Chi phí <code>find</code> và <code>union</code> (gồm tìm gốc) được đảm bảo ở mức <strong>O(log N)</strong>.</p>
+</section>
+
+<section id="compress">
+<h2>5. Path Compression — rút ngắn đường đi đến gốc</h2>
+<p>Ngay khi thực hiện <code>find(p)</code>, thuật toán có thể sửa con trỏ cha của các nút vừa đi qua để những lần tìm sau ngắn hơn. <strong>Thành phần liên thông không đổi; chỉ cấu trúc cây thay đổi.</strong></p>
+<div class="figure"><div class="figure-title">Từ chuỗi dài thành liên kết trực tiếp đến gốc</div><div class="figure-body svg-scroll">
+<svg class="large-svg" viewBox="0 0 880 240" role="img" aria-label="Trước path compression là chuỗi 7 tới 5 tới 3 tới 1. Sau nén đầy đủ, 7, 5, 3 cùng trỏ trực tiếp tới gốc 1.">
+<defs><marker id="pah" markerWidth="7" markerHeight="7" refX="5.6" refY="3.5" orient="auto"><path d="M0 0L6 3.5L0 7Z" fill="#7691ac"/></marker></defs>
+<g class="arr" marker-end="url(#pah)"><path d="M120 91L206 91"/><path d="M255 91L341 91"/><path d="M390 91L476 91"/><path d="M706 92L629 92"/><path d="M706 154L629 104"/><path d="M706 211L629 108"/></g>
+<g class="node"><circle cx="95" cy="91" r="24"/><circle cx="230" cy="91" r="24"/><circle cx="365" cy="91" r="24"/><circle cx="730" cy="92" r="24"/><circle cx="730" cy="154" r="24"/><circle cx="730" cy="211" r="24"/></g><g class="node-tint"><circle cx="500" cy="91" r="24"/><circle cx="605" cy="92" r="24"/></g>
+<g font-weight="700" text-anchor="middle" dominant-baseline="middle"><text x="95" y="91">7</text><text x="230" y="91">5</text><text x="365" y="91">3</text><text x="500" y="91">1</text><text x="605" y="92">1</text><text x="730" y="92">7</text><text x="730" y="154">5</text><text x="730" y="211">3</text></g>
+<text x="280" y="38" text-anchor="middle" class="lab heavy">Trước: 7 → 5 → 3 → 1</text><text x="725" y="38" text-anchor="middle" class="lab heavy">Sau: mọi nút → 1</text><text x="555" y="173" text-anchor="middle" class="heavy">⇒</text>
+</svg>
+</div><div class="figure-caption">Full path compression: trên đường đi được duyệt, các nút 7, 5 và 3 đều trực tiếp trỏ về 1.</div></div>
+<h3>Hai cách triển khai</h3>
+<div class="tablebox small"><table><thead><tr><th>Biến thể</th><th>Cách làm</th></tr></thead><tbody>
+<tr><td>Full compression (2 lượt)</td><td>Lượt 1 tìm gốc; lượt 2 đổi cha của <strong>mọi nút trên đường đã duyệt</strong> thành gốc.</td></tr>
+<tr><td>Path halving (1 lượt)</td><td>Trong lúc đi lên, đặt cha của nút hiện tại thành <strong>ông</strong> của nó: <code>id[i] = id[id[i]]</code>. Không nhất thiết làm phẳng hoàn toàn ngay sau một lượt.</td></tr>
+</tbody></table></div>
+<div class="codebox"><pre><code>int find(int i) {             // path halving
+    while (i != id[i]) {
+        id[i] = id[id[i]];    // trỏ lên ông
+        i = id[i];
+    }
+    return i;
+}</code></pre></div>
+<div class="note"><p><strong>Ví dụ path halving:</strong> với chuỗi <code>7 → 5 → 3 → 1</code>, một lần <code>find(7)</code> có thể sửa <code>7 → 3</code>, <code>3 → 1</code>; nút 5 chưa chắc đã được thay đổi. Không nên mô tả path halving như thể nó luôn nối <em>mọi</em> nút trực tiếp vào gốc sau một lần gọi.</p></div>
+<h3>Kết hợp tối ưu: Weighted Quick-Union + Path Compression</h3>
+<p>Giữ mảng <code>id[]</code> cho con trỏ cha, <code>sz[]</code> cho kích thước cây tại gốc; dùng <strong>union theo kích thước</strong> và <strong>find có path halving</strong>. Đây là sự kết hợp quan trọng nhất của bài.</p>
+<details><summary>Java đầy đủ: Weighted Quick-Union + Path Halving</summary><div class="detail-inner"><div class="codebox"><pre><code>public class WeightedQuickUnionUF {
+    private final int[] id;
+    private final int[] sz;
+
+    public WeightedQuickUnionUF(int n) {
+        id = new int[n];
+        sz = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            id[i] = i;
+            sz[i] = 1;
+        }
+    }
+
+    public int find(int i) {
+        while (i != id[i]) {
+            id[i] = id[id[i]];
+            i = id[i];
+        }
+        return i;
+    }
+
+    public boolean connected(int p, int q) {
+        return find(p) == find(q);
+    }
+
+    public void union(int p, int q) {
+        int i = find(p), j = find(q);
+        if (i == j) return;
+        if (sz[i] &lt; sz[j]) {
+            id[i] = j;
+            sz[j] += sz[i];
+        } else {
+            id[j] = i;
+            sz[i] += sz[j];
+        }
+    }
+}</code></pre></div></div></details>
+</section>
+
+<section id="analysis">
+<h2>6. Tổng hợp độ phức tạp</h2>
+<p>Quy ước chi phí: đếm số lần truy cập mảng (đọc/ghi), hoặc thời gian tỉ lệ với số truy cập đó. <strong>Chi phí <code>union</code> dưới đây đã bao gồm việc tìm hai gốc/nhãn</strong>.</p>
+<div class="tablebox"><table><thead><tr><th>Thuật toán</th><th>Khởi tạo</th><th>union</th><th>find</th><th>connected</th></tr></thead><tbody>
+<tr><td>Quick-Find</td><td>O(N)</td><td><strong>O(N)</strong></td><td>O(1)</td><td>O(1)</td></tr>
+<tr><td>Quick-Union</td><td>O(N)</td><td>O(N)</td><td>O(N)</td><td>O(N)</td></tr>
+<tr><td>Weighted Quick-Union</td><td>O(N)</td><td>O(log N)</td><td>O(log N)</td><td>O(log N)</td></tr>
+<tr><td>Weighted QU + Path Compression</td><td>O(N)</td><td colspan="3">Gần như hằng số <strong>bình quân phân bổ</strong> trên một dãy phép toán; không khẳng định mỗi lời gọi đều O(1) trong trường hợp xấu nhất.</td></tr>
+</tbody></table></div>
+<h3>Tổng chi phí của M phép toán</h3>
+<div class="tablebox small"><table><thead><tr><th>Biến thể</th><th>Chặn trên theo bài giảng</th></tr></thead><tbody>
+<tr><td>Quick-Find / Quick-Union</td><td><code>O(N + MN)</code></td></tr>
+<tr><td>Weighted Quick-Union</td><td><code>O(N + M log N)</code></td></tr>
+<tr><td>Quick-Union + Path Compression</td><td><code>O(N + M log N)</code></td></tr>
+<tr><td>Weighted QU + Path Compression</td><td><code>O(N + M lg* N)</code>, có thể phân tích chặt hơn bằng <code>α(M,N)</code></td></tr>
+</tbody></table></div>
+<p><strong><code>lg* N</code></strong> là số lần lấy log cơ số 2 liên tiếp để kết quả xuống không quá 1. Ví dụ: <code>lg* 2 = 1</code>, <code>lg* 16 = 3</code>, <code>lg* 65536 = 4</code>. Hàm <code>α</code> (nghịch đảo Ackermann) còn tăng chậm hơn; vì vậy tổ hợp weighted + compression <strong>gần tuyến tính trong thực tế</strong> với một dãy dài thao tác.</p>
+<div class="note warn"><p><strong>Hai điều cần nhớ khi làm bài:</strong> (1) <code>O(log N)</code> của weighted union là <em>đảm bảo trường hợp xấu nhất trên từng phép toán</em>; (2) kết quả gần O(1) của bản kết hợp là <em>amortized</em> (trung bình phân bổ), không phải mỗi phép toán riêng lẻ đều mất thời gian hằng số.</p></div>
+</section>
+
+<section id="perc">
+<h2>7. Ứng dụng: Percolation (thấm xuyên)</h2>
+<p>Xét một lưới <strong>N × N</strong>, mỗi ô (site) có thể <strong>open</strong> hoặc <strong>blocked</strong>. Hai ô mở được coi là kề khi chung một cạnh (trên, dưới, trái, phải). Hệ <strong>percolates</strong> khi có một đường gồm toàn ô mở nối từ hàng trên cùng tới hàng dưới cùng.</p>
+<p><strong>Open site</strong> là ô đã mở; <strong>full site</strong> là ô mở có đường nối tới hàng trên cùng. Một ô có thể open nhưng chưa full.</p>
+<div class="figure"><div class="figure-title">Một hệ 5 × 5 có đường thấm từ trên xuống dưới</div><div class="figure-body"><div class="grid-row"><div><div style="text-align:center;margin-bottom:7px;font-weight:600">Hàng trên</div><div class="perc" role="img" aria-label="Lưới năm nhân năm với một đường mở nối hàng trên tới hàng dưới"><span class="sq path"></span><span class="sq path"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq path"></span><span class="sq path"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq path"></span><span class="sq path"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq path"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq block"></span><span class="sq path"></span><span class="sq path"></span></div><div style="text-align:center;margin-top:7px;font-weight:600">Hàng dưới</div></div><div class="percnotes"><p>Các ô xanh nối nhau qua <strong>cạnh chung</strong>, tạo một đường đi liên tục xuyên suốt lưới.</p><div class="legend"><span><span class="sw" style="background:#cfe5f9"></span>Mở, thuộc đường đi</span><span><span class="sw" style="background:#3f4a55"></span>Đóng</span></div><p class="tiny" style="margin-top:12px">Nối chéo qua góc <strong>không</strong> được tính trong mô hình này.</p></div></div></div></div>
+<h3>Đưa về bài toán Union–Find</h3>
+<ol><li>Gán chỉ số <code>index(r,c) = r·N + c</code> với <code>0 ≤ r,c &lt; N</code>.</li>
+<li>Khi một ô được mở, đánh dấu <code>open</code> rồi <code>union</code> với tối đa <strong>bốn ô kề đã mở</strong>.</li>
+<li>Thêm hai đỉnh ảo (ví dụ <code>TOP=N²</code>, <code>BOTTOM=N²+1</code>, cấp phát <code>UF(N²+2)</code>): TOP nối với các ô mở ở hàng đầu; BOTTOM nối với các ô mở ở hàng cuối.</li>
+<li>Kiểm tra <code>connected(TOP, BOTTOM)</code>. Nếu đúng, hệ percolates.</li></ol>
+<div class="flex"><div class="panel"><h4>Không dùng đỉnh ảo</h4><p>Trong trường hợp trực tiếp nhất, có thể cần kiểm tra tới <code>N²</code> cặp ô giữa hàng trên và hàng dưới.</p></div><div class="panel"><h4>Dùng hai đỉnh ảo</h4><p>Chỉ cần <strong>một lần</strong> <code>connected(TOP,BOTTOM)</code> để biết có đường thấm hay không.</p></div></div>
+<div class="note"><p><strong>Điều kiện bắt buộc:</strong> Chỉ nối TOP/BOTTOM với <em>ô đang mở</em>. Các ô bị chặn không được tham gia vào những đường kết nối dùng để xác định tính thấm.</p></div>
+<h3>Ngưỡng thấm (percolation threshold) và Monte Carlo</h3>
+<p>Trong mô hình ngẫu nhiên, mỗi ô độc lập được mở với xác suất <code>p</code>. Khi N lớn, xác suất hệ percolates chuyển nhanh từ gần 0 sang gần 1 quanh một ngưỡng <code>p*</code>. Với <strong>lưới vuông hai chiều, liên thông theo bốn hướng</strong>, ngưỡng xấp xỉ <strong><code>p* ≈ 0.592746</code></strong>.</p>
+<div class="figure"><div class="figure-title">Xác suất thấm khi p tăng (minh họa định tính)</div><div class="figure-body svg-scroll"><svg class="large-svg" viewBox="0 0 860 260" role="img" aria-label="Đường cong chữ S tăng từ 0 lên 1 rất nhanh gần p bằng 0.593">
+<path d="M85 30V215H815" fill="none" stroke="#8b9aab" stroke-width="2.3"/>
+<path d="M85 215C210 214 364 214 470 209C487 205 498 194 506 165C514 133 518 65 528 48C538 31 566 29 815 29" stroke="#4f80ae" stroke-width="3.8" fill="none"/>
+<path d="M518 34V216" stroke="#9cb5cc" stroke-width="1.8" stroke-dasharray="5 5"/>
+<text x="64" y="38" text-anchor="end" class="lab">1</text><text x="64" y="218" text-anchor="end" class="lab">0</text><text x="83" y="241" class="lab">0</text><text x="801" y="241" class="lab">1</text><text x="518" y="241" text-anchor="middle" class="lab heavy">0.593</text><text x="531" y="19" class="lab heavy">p*</text><text x="450" y="256" text-anchor="middle" class="lab">Xác suất ô mở p</text><text x="87" y="17" class="lab">P(percolates)</text>
+</svg></div><div class="figure-caption">Đường cong mang tính minh họa: với lưới hữu hạn, xác suất tăng dần; khi kích thước lớn, chuyển pha quanh p* càng sắc nét.</div></div>
+<p><strong>Ước lượng Monte Carlo:</strong> khởi đầu mọi ô bị chặn, chọn ngẫu nhiên các ô chưa mở để mở lần lượt cho tới lúc TOP liên thông với BOTTOM. Ghi lại tỉ lệ ô đã mở; thực hiện nhiều lần và lấy trung bình để ước lượng ngưỡng.</p>
+<div class="boxed-formula">Một lần thử:  p̂ = (số ô đã mở lúc bắt đầu thấm) / N²
+Nhiều lần thử: p̂* = trung bình các giá trị p̂</div>
+<p class="tiny">Các ứng dụng khác của Union–Find: kết nối mạng, phát hiện nhóm liên thông trong ảnh, trò chơi Go/Hex, Kruskal tìm cây khung nhỏ nhất và các bài toán phân nhóm tương đương.</p>
+</section>
+
+<section id="review">
+<h2>8. Kiểm tra nhanh trước khi thi</h2>
+<div class="tablebox"><table><thead><tr><th>Điểm dễ nhầm</th><th>Kết luận cần nhớ</th></tr></thead><tbody>
+<tr><td>Ý nghĩa <code>id[p]</code></td><td>Quick-Find: <strong>nhãn thành phần</strong>. Quick-Union: <strong>con trỏ cha</strong>.</td></tr>
+<tr><td><code>find</code> trả về gì?</td><td>Quick-Find trả nhãn; Quick-Union trả gốc. Trong cả hai, cùng kết quả ⇒ cùng thành phần.</td></tr>
+<tr><td>Quick-Find union</td><td>Đổi <strong>mọi</strong> nhãn bằng <code>id[p]</code> cũ thành <code>id[q]</code> cũ.</td></tr>
+<tr><td>Quick-Union union</td><td>Nối <strong>gốc với gốc</strong>, không nối trực tiếp p vào q.</td></tr>
+<tr><td>Weighted union</td><td>So sánh <strong>kích thước cây tại gốc</strong>; cây nhỏ trỏ vào cây lớn.</td></tr>
+<tr><td>Path compression</td><td><code>find</code> có thể <strong>thay đổi mảng cha</strong> mà không thay đổi kết nối.</td></tr>
+<tr><td>Đánh giá hiệu năng</td><td>Phân biệt worst-case cho từng thao tác và amortized cho <strong>một dãy thao tác</strong>.</td></tr>
+<tr><td>Percolation</td><td>Chỉ nối ô <strong>mở</strong>; TOP và BOTTOM liên thông ⇒ hệ thấm.</td></tr>
+</tbody></table></div>
+<h3>Tự trả lời trong 30 giây mỗi câu</h3>
+<div class="ques">
+<div class="qa"><div class="q">1. Vì sao Quick-Find union mất O(N)?</div><div class="answer">Vì phải duyệt toàn bộ <code>id[]</code> để thay nhãn cho cả thành phần.</div></div>
+<div class="qa"><div class="q">2. Vì sao Quick-Union find có thể O(N)?</div><div class="answer">Vì cây có thể cao gần N, khiến đường từ nút đến gốc rất dài.</div></div>
+<div class="qa"><div class="q">3. Vì sao weighting tạo chặn log N?</div><div class="answer">Mỗi lần độ sâu của một nút tăng, kích thước cây chứa nó ít nhất gấp đôi.</div></div>
+<div class="qa"><div class="q">4. Hai biến thể path compression khác nhau ở đâu?</div><div class="answer">Hai lượt đưa mọi nút trên đường về gốc; halving nối các nút được xét lên ông ngay khi đi.</div></div>
+<div class="qa"><div class="q">5. Weighted + compression có O(1) worst-case cho mỗi find không?</div><div class="answer">Không. Kết quả “gần O(1)” là theo chi phí <strong>amortized</strong>.</div></div>
+<div class="qa"><div class="q">6. Tại sao cần hai nút ảo trong percolation?</div><div class="answer">Để thay nhiều phép kiểm tra giữa hai hàng bằng một phép <code>connected(TOP,BOTTOM)</code>.</div></div>
+</div>
+<p style="margin-top:20px"><strong>Tư duy thiết kế thuật toán:</strong> Mô hình hóa bài toán → chọn giải thuật → phân tích chi phí → xác định nút thắt → cải tiến và đánh giá lại.</p>
+</section>
+</main></body></html>

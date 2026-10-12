@@ -1,0 +1,324 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Mergesort — Ghi chú ôn thi</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--ink:#2b3948;--body:#415163;--muted:#66778a;--line:#dce4eb;--pale:#f5f8fb;--blue:#537ca4;--bluep:#e5f1fb;--greenp:#e5f3ea;--amberp:#faf1e3}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:#fff;color:var(--ink);font:400 16px/1.73 'Space Grotesk',Arial,sans-serif;margin:0;padding:38px 18px 95px;-webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:auto}h1,h2,h3,h4,p{margin-top:0}h1{font-size:33px;line-height:1.25;letter-spacing:-.6px;margin-bottom:10px}h2{font-size:24px;line-height:1.4;letter-spacing:-.3px;margin-bottom:12px}h3{font-size:19px;margin:22px 0 10px;line-height:1.45}h4{font-size:17px;margin:12px 0 8px}p{color:var(--body);margin:0 0 13px}strong{color:#293e53}header{padding-bottom:22px;margin-bottom:25px;border-bottom:1px solid var(--line)}.subtitle{margin:0;color:#53677b}
+nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 39px}nav a{border:1px solid var(--line);border-radius:5px;padding:10px 12px;text-decoration:none;color:#49627d;font-weight:600;font-size:15px;line-height:1.4}nav a:hover{background:var(--pale)}nav .n{color:#8ba0b3;font:600 13px 'JetBrains Mono',monospace;margin-right:5px}
+section{margin-bottom:42px;scroll-margin-top:20px}.rule{height:1px;background:var(--line);margin:24px 0}.sectionlead{margin-bottom:17px}ul,ol{padding-left:24px;margin:8px 0 15px;color:var(--body)}li{margin-bottom:6px}li::marker{color:#698aad}
+code,pre,.mono{font-family:'JetBrains Mono',Consolas,monospace}code{font-size:16px;background:#f0f3f7;border:1px solid #e0e6ed;border-radius:3px;padding:1px 4px;color:#355474;overflow-wrap:anywhere}pre{font-size:16px;line-height:1.65;white-space:pre;tab-size:2;margin:0}pre code{font:inherit;background:transparent;border:0;padding:0;overflow-wrap:normal}.codebox{background:#f7f8fa;border:1px solid var(--line);border-radius:5px;padding:16px 17px;overflow-x:auto;margin:13px 0 17px}
+.note,.definition{border-left:3px solid #95aec7;background:#f7f9fc;padding:12px 15px;border-radius:0 4px 4px 0;margin:15px 0}.definition{border-color:#5f8bb7;background:#f3f8fc}.warn{background:#fff9ef;border-left-color:#b89767}.note p:last-child,.definition p:last-child{margin-bottom:0}
+.tablebox{border:1px solid var(--line);border-radius:5px;overflow-x:auto;margin:14px 0 18px}table{border-collapse:collapse;width:100%;min-width:630px;text-align:left;font-size:16px}th,td{padding:10px 13px;border-bottom:1px solid #e8edf3;vertical-align:top;line-height:1.56}th{font-weight:700;background:#f5f7fa;color:#334e67}td{color:#425669}tbody tr:last-child td{border-bottom:0}
+.figure{border:1px solid var(--line);border-radius:5px;background:#fff;margin:14px 0 19px;overflow:hidden}.figure-title{padding:10px 15px;background:#fbfcfd;color:#4c647c;font-weight:700;border-bottom:1px solid #e6ecf1}.figure-body{padding:16px;overflow-x:auto}.figure-caption{font-size:15px;color:#63778b;line-height:1.5;padding:0 16px 13px}
+.array-row{display:flex;gap:6px;align-items:flex-end;min-width:max-content}.array-row .cell{width:52px;text-align:center}.array-row .idx{display:block;color:#71859a;font:13px/1.5 'JetBrains Mono',monospace;margin-bottom:3px}.array-row .val{display:block;border:1px solid #bac8d5;border-radius:4px;background:#fff;font:600 16px/1.4 'JetBrains Mono',monospace;padding:9px 2px;color:#334c63}.array-row .fixed .val{background:var(--greenp);border-color:#9ccbad;color:#286146}.array-row .active .val{background:#dfefff;border-color:#7ba8d3;color:#1f5689}.array-row .muted .val{background:#f7f8fa;color:#758598}
+.trace{display:grid;gap:13px;margin-top:13px}.tracerow{display:grid;grid-template-columns:195px 1fr;gap:14px;align-items:center;border-bottom:1px solid #ebeff3;padding-bottom:12px}.tracerow:last-child{border:0;padding:0}.tracelabel{color:#526980;line-height:1.45}.tracelabel b{display:block;color:#364e67}.tracelabel small{font-size:15px;color:#687d91}
+.legend{display:flex;gap:17px;flex-wrap:wrap;margin:8px 0 0;font-size:15px;color:#5b6f82}.swatch{display:inline-block;width:13px;height:13px;border:1px solid #aec4d6;margin-right:5px;vertical-align:-2px;border-radius:2px}.mathline{padding:12px 15px;background:#f3f7fb;color:#325b80;border:1px solid #d9e4ef;border-radius:5px;font:600 16px/1.7 'JetBrains Mono',Consolas,monospace;overflow-x:auto;white-space:nowrap;margin:14px 0 18px}
+.flex{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:14px 0}.panel{border:1px solid #dfe6ed;border-radius:5px;padding:14px 16px}.panel h4:first-child{margin-top:0}.panel p:last-child{margin-bottom:0}
+.chain-grid{display:grid;gap:12px;min-width:660px}.chain-row{display:flex;align-items:center;gap:12px}.chain-k{width:115px;font-weight:700;color:#405d7c}.chain-items{display:flex;gap:10px;align-items:center;flex-wrap:nowrap;font:600 16px 'JetBrains Mono',monospace}.chain-items .chunk{border:1px solid #b8c9d8;background:#f4f8fc;border-radius:4px;padding:10px 12px;min-width:50px;text-align:center}.chain-arrow{font-size:19px;color:#7c9dbc}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.qa{border:1px solid var(--line);border-left:3px solid #9db7ce;border-radius:4px;padding:10px 13px}.qa b{display:block;color:#354f69;margin-bottom:4px}.qa div{color:#4e6479}
+.small{color:var(--muted);font-size:15px}.print{float:right;background:white;border:1px solid var(--line);border-radius:4px;padding:7px 12px;font:600 15px 'Space Grotesk',sans-serif;color:#5d7184;cursor:pointer}.numtag{font:600 14px 'JetBrains Mono',monospace;color:#667e94;margin-right:7px}
+@media(max-width:790px){body{padding:25px 13px 70px}h1{font-size:28px}h2{font-size:22px}nav{grid-template-columns:repeat(2,minmax(0,1fr))}.flex,.qa-grid{grid-template-columns:1fr}.figure-body{padding:12px}.tracerow{grid-template-columns:1fr;gap:6px}.trace{gap:17px}.print{float:none;display:block;margin-bottom:11px}}
+@media(max-width:430px){nav{grid-template-columns:1fr}th,td{padding:9px 10px}.figure-title{padding:9px 11px}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{padding:0}main{max-width:none}nav,.print{display:none}section{margin-bottom:26px}h2,h3{break-after:avoid}.figure,.tablebox,.note,.definition,.panel{break-inside:avoid}@page{size:A4;margin:15mm}}
+
+/* Mergesort figures */
+.merge-track{display:flex;flex-wrap:nowrap;align-items:center;gap:5px;min-width:max-content}
+.merge-group{display:flex;align-items:center;gap:5px;padding:9px;border:1px solid #d9e5ef;border-radius:5px;background:#f7fafd}
+.merge-group.right{background:#fff9ef;border-color:#ebdcc6}
+.merge-group.output{background:#f0f8f3;border-color:#bad9c3}
+.m-cell{border:1px solid #bacada;border-radius:4px;min-width:40px;padding:7px 6px;text-align:center;background:white;color:#2b4055;font:600 16px/1.45 'JetBrains Mono',monospace}
+.m-cell.active{background:#dbeeff;border-color:#729fc5}.m-cell.chosen{background:#e5f2e8;border-color:#82bb99}.m-cell.wait{opacity:.5}
+.m-sep{color:#698399;font-size:24px;padding:0 3px}.caption{font-size:15px;color:#63778b;line-height:1.5;margin:7px 0 0}
+.steps{counter-reset:step;display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:12px 0}
+.step{border:1px solid #dce4eb;border-radius:5px;padding:11px 12px;min-width:0}.step h4{font-size:16px;margin:0 0 5px}.step p{font-size:16px;margin:0}.step .mini{overflow-x:auto;padding-top:7px}
+.tight p{margin:0 0 6px}.tight p:last-child{margin:0}
+.math-equation{font:600 17px/1.65 'JetBrains Mono',monospace;color:#325b80;overflow-x:auto;white-space:nowrap;padding:10px 15px;background:#f3f7fb;border:1px solid #d9e4ef;border-radius:5px;margin:12px 0 16px}
+.tree-svg{width:100%;height:auto;min-width:640px;display:block}
+.recurrence-row{border-left:3px solid #94b5d0;background:#f6f9fc;padding:9px 15px;margin:6px 0;font:500 16px/1.6 'JetBrains Mono',monospace}
+.two-panel{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.trace-algo{display:flex;gap:9px;align-items:center;min-width:max-content}
+.trace-algo .titlecol{min-width:170px;white-space:normal;max-width:180px;flex-shrink:0;color:#475d73;font-size:15px}
+.trace-algo .titlecol strong{display:block}
+.trace-algo .cells{display:flex;gap:4px}
+.trace-algo .cells span{min-width:35px;padding:8px 3px;border:1px solid #bdcbd9;background:white;border-radius:3px;text-align:center;font:600 16px/1.5 'JetBrains Mono',monospace}
+.trace-algo .cells span.hot{background:#dfeeff;border-color:#94b8d8}
+.trace-algo .cells span.done{background:#e4f1e8;border-color:#a6ceb3}
+.seq-wrap{overflow-x:auto;padding:14px 14px;display:grid;gap:10px}
+.note ol:last-child,.note ul:last-child{margin-bottom:0}
+mark{background:#e6f3e9;color:#2e6547;border-radius:2px;padding:0 2px}
+@media(max-width:790px){.steps,.two-panel{grid-template-columns:1fr}.trace-algo .titlecol{min-width:136px;max-width:136px}}
+@media print{.steps{grid-template-columns:1fr 1fr}.trace-algo .cells span{min-width:31px}}
+</style></head><body><main><header><h1>Mergesort</h1><p class="subtitle">Merge · Top-down &amp; Bottom-up · Analysis · Comparator · Stability</p></header><nav aria-label="Mục lục"><a href="#merge"><span class="n">01</span>Phép trộn merge</a><a href="#topdown"><span class="n">02</span>Top-down Merge Sort</a><a href="#complexity"><span class="n">03</span>Phân tích độ phức tạp</a><a href="#optimization"><span class="n">04</span>Cải tiến thực tiễn</a><a href="#bottomup"><span class="n">05</span>Bottom-up Merge Sort</a><a href="#natural"><span class="n">06</span>Natural Merge & Timsort</a><a href="#lower"><span class="n">07</span>Cận dưới của sắp xếp</a><a href="#comparator"><span class="n">08</span>Comparable / Comparator</a><a href="#stability"><span class="n">09</span>Tính ổn định</a><a href="#summary"><span class="n">10</span>Tổng hợp</a><a href="#review"><span class="n">11</span>Tự kiểm tra</a></nav><section id="merge"><h2>1. Merge — trộn hai đoạn đã có thứ tự</h2>
+<div class="definition"><p><b>Bài toán:</b> cho hai đoạn <code>a[lo..mid]</code> và <code>a[mid+1..hi]</code> đã được sắp xếp tăng dần. Hãy kết hợp chúng thành <code>a[lo..hi]</code> có thứ tự. Đây là thao tác cốt lõi của Merge Sort.</p></div>
+<p>Hai con trỏ <code>i = lo</code> và <code>j = mid+1</code> lần lượt chỉ phần tử <b>chưa lấy</b> đầu tiên của mỗi nửa. Con trỏ <code>k</code> chạy qua vùng kết quả; mỗi bước lấy phần tử nhỏ hơn ở đầu hai nửa, rồi tăng con trỏ tương ứng.</p>
+<div class="figure"><div class="figure-title">Minh họa hai đầu vào đã sắp xếp</div><div class="figure-body"><div class="merge-track"><div class="merge-group"><span class="m-cell">2ₐ</span><span class="m-cell">4</span><span class="m-cell">8</span></div><span class="m-sep">+</span><div class="merge-group right"><span class="m-cell">2ᵦ</span><span class="m-cell">3</span><span class="m-cell">7</span></div><span class="m-sep">→</span><div class="merge-group output"><span class="m-cell">2ₐ</span><span class="m-cell">2ᵦ</span><span class="m-cell">3</span><span class="m-cell">4</span><span class="m-cell">7</span><span class="m-cell">8</span></div></div><p class="caption">Ký hiệu 2ₐ và 2ᵦ có cùng khóa 2 nhưng là hai phần tử phân biệt. Khi bằng nhau, lấy 2ₐ (nửa trái) trước để giữ tính ổn định.</p></div></div>
+<h3>1.1. Trace thao tác merge</h3>
+<div class="steps">
+<div class="step"><h4>Bước 1: lấy <code>2ₐ</code></h4><p>i → 2ₐ; j → 2ᵦ</p><p class="small">Bằng nhau → chọn trái</p></div>
+<div class="step"><h4>Bước 2: lấy <code>2ᵦ</code></h4><p>i → 4; j → 2ᵦ</p><p class="small">2 < 4 → chọn phải</p></div>
+<div class="step"><h4>Bước 3: lấy <code>3</code></h4><p>i → 4; j → 3</p><p class="small">3 < 4 → chọn phải</p></div>
+<div class="step"><h4>Bước 4: lấy <code>4</code></h4><p>i → 4; j → 7</p><p class="small">4 < 7 → chọn trái</p></div>
+<div class="step"><h4>Bước 5: lấy <code>7</code></h4><p>i → 8; j → 7</p><p class="small">7 < 8 → chọn phải</p></div>
+<div class="step"><h4>Bước 6: lấy <code>8</code></h4><p>Nửa phải hết</p><p class="small">Chép phần còn lại bên trái</p></div>
+</div>
+<h3>1.2. Cài đặt Java</h3>
+<div class="codebox"><pre><code>private static &lt;T extends Comparable&lt;? super T&gt;&gt; void merge(
+        T[] a, T[] aux, int lo, int mid, int hi) {
+    for (int k = lo; k &lt;= hi; k++) aux[k] = a[k];
+
+    int i = lo, j = mid + 1;
+    for (int k = lo; k &lt;= hi; k++) {
+        if      (i &gt; mid)                    a[k] = aux[j++];
+        else if (j &gt; hi)                     a[k] = aux[i++];
+        else if (aux[j].compareTo(aux[i]) &lt; 0) a[k] = aux[j++];
+        else                                a[k] = aux[i++];
+    }
+}</code></pre></div>
+<ul><li><b>Vì sao cần <code>aux[]</code>?</b> Nếu ghi đè trực tiếp lên <code>a[]</code> trong khi còn phải đọc hai nửa, một phần tử chưa xử lý có thể bị mất. Bản sao <code>aux[lo..hi]</code> bảo vệ dữ liệu đầu vào của lần trộn.</li><li><b>Bốn nhánh của vòng for:</b> trái hết → lấy phải; phải hết → lấy trái; phải nhỏ hơn → lấy phải; còn lại → lấy trái (kể cả trường hợp bằng nhau).</li><li><b>Bất biến của vòng trộn:</b> trước khi ghi <code>a[k]</code>, các vị trí <code>a[lo..k−1]</code> đã là <code>k−lo</code> phần tử nhỏ nhất, đúng thứ tự; <code>i</code> và <code>j</code> chỉ các đầu phần chưa dùng.</li><li><b>Về bộ nhớ:</b> kết quả được ghi trở lại chính mảng <code>a[]</code>, nhưng hàm vẫn dùng <code>aux[]</code> kích thước tuyến tính; do đó đây không phải merge in-place theo nghĩa tiết kiệm bộ nhớ phụ.</li></ul>
+<div class="note"><p><b>Không được đảo điều kiện khi hai khóa bằng nhau.</b> Nếu dùng <code>&lt;= 0</code> để lấy phần tử <i>bên phải</i> trong nhánh so sánh, thứ tự ban đầu của hai phần tử có khóa bằng nhau có thể bị đảo.</p></div>
+</section>
+<section id="topdown"><h2>2. Top-down Merge Sort — chia để trị</h2>
+<p><b>Ý tưởng:</b> chia mảng thành hai nửa, đệ quy sắp mỗi nửa, sau đó gọi <code>merge()</code> để thu được toàn bộ đoạn có thứ tự. Đoạn dài 0 hoặc 1 đã có thứ tự nên không cần xử lý.</p>
+<div class="figure"><div class="figure-title">Cây chia để trị: 8 → 4 → 2 → 1, sau đó trộn ngược lên</div><div class="figure-body"><svg class="tree-svg" viewBox="0 0 920 320" role="img" aria-label="Cây chia mảng tám phần tử thành hai nửa tới khi còn một phần tử rồi trộn ngược lên"><defs><marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#91aac1"/></marker></defs>
+<path d="M460 48 L230 97" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M460 48 L690 97" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M230 127 L118 178" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M230 127 L342 178" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M690 127 L578 178" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M690 127 L802 178" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M118 207 L63 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M118 207 L173 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M342 207 L287 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M342 207 L397 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M578 207 L523 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M578 207 L633 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M802 207 L747 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<path d="M802 207 L857 256" stroke="#98aec3" stroke-width="2" fill="none"/>
+<rect x="376.0" y="9" width="168" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="460" y="31" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">8 3 6 2 7 1 5 4</text>
+<rect x="156.0" y="95" width="148" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="230" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">8 3 6 2</text>
+<rect x="616.0" y="95" width="148" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="690" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">7 1 5 4</text>
+<rect x="71.5" y="176" width="93" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="118" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">8 3</text>
+<rect x="295.5" y="176" width="93" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="342" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">6 2</text>
+<rect x="531.5" y="176" width="93" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="578" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">7 1</text>
+<rect x="755.5" y="176" width="93" height="35" rx="5" fill="#eaf3fb" stroke="#a9c2d5"/><text x="802" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">5 4</text>
+<rect x="39.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="63" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">8</text>
+<rect x="149.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="173" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">3</text>
+<rect x="263.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="287" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">6</text>
+<rect x="373.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="397" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">2</text>
+<rect x="499.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="523" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">7</text>
+<rect x="609.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="633" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">1</text>
+<rect x="723.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="747" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">5</text>
+<rect x="833.5" y="257" width="47" height="35" rx="5" fill="#e8f3eb" stroke="#a9c2d5"/><text x="857" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="600" fill="#2e4b65">4</text>
+</svg><p class="caption">Chiều đi xuống: chia đoạn. Chiều đi lên: hai con đã sắp xếp, mới được trộn thành cha.</p></div></div>
+<h3>2.1. Trace thứ tự thực sự của các lời gọi merge</h3>
+<div class="figure"><div class="figure-title">Top-down: lần trộn xuất hiện khi quay về từ đệ quy</div><div class="seq-wrap">
+<div class="trace-algo"><div class="titlecol"><strong>Ban đầu</strong>Chưa có đoạn đã sắp</div><div class="cells"><span class="">8</span><span class="">3</span><span class="">6</span><span class="">2</span><span class="">7</span><span class="">1</span><span class="">5</span><span class="">4</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(0, 0, 1)</strong>đoạn [0..1]</div><div class="cells"><span class="hot">3</span><span class="hot">8</span><span class="">6</span><span class="">2</span><span class="">7</span><span class="">1</span><span class="">5</span><span class="">4</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(2, 2, 3)</strong>đoạn [2..3]</div><div class="cells"><span class="">3</span><span class="">8</span><span class="hot">2</span><span class="hot">6</span><span class="">7</span><span class="">1</span><span class="">5</span><span class="">4</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(0, 1, 3)</strong>đoạn [0..3]</div><div class="cells"><span class="hot">2</span><span class="hot">3</span><span class="hot">6</span><span class="hot">8</span><span class="">7</span><span class="">1</span><span class="">5</span><span class="">4</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(4, 4, 5)</strong>đoạn [4..5]</div><div class="cells"><span class="">2</span><span class="">3</span><span class="">6</span><span class="">8</span><span class="hot">1</span><span class="hot">7</span><span class="">5</span><span class="">4</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(6, 6, 7)</strong>đoạn [6..7]</div><div class="cells"><span class="">2</span><span class="">3</span><span class="">6</span><span class="">8</span><span class="">1</span><span class="">7</span><span class="hot">4</span><span class="hot">5</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(4, 5, 7)</strong>đoạn [4..7]</div><div class="cells"><span class="">2</span><span class="">3</span><span class="">6</span><span class="">8</span><span class="hot">1</span><span class="hot">4</span><span class="hot">5</span><span class="hot">7</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>merge(0, 3, 7)</strong>đoạn [0..7]</div><div class="cells"><span class="hot">1</span><span class="hot">2</span><span class="hot">3</span><span class="hot">4</span><span class="hot">5</span><span class="hot">6</span><span class="hot">7</span><span class="hot">8</span></div></div>
+</div></div>
+<p>Điểm cần nhớ: top-down không trộn <code>[0..3]</code> với <code>[4..7]</code> ngay từ đầu. Nó phải trộn những đoạn nhỏ hơn trước; lời gọi <code>merge(0,3,7)</code> là <b>lần cuối</b>.</p>
+<h3>2.2. Code Java top-down hoàn chỉnh</h3>
+<div class="codebox"><pre><code>public final class MergeSort {
+    private MergeSort() { }
+
+    private static &lt;T extends Comparable&lt;? super T&gt;&gt; void merge(
+            T[] a, T[] aux, int lo, int mid, int hi) {
+        for (int k = lo; k &lt;= hi; k++) aux[k] = a[k];
+        int i = lo, j = mid + 1;
+        for (int k = lo; k &lt;= hi; k++) {
+            if      (i &gt; mid) a[k] = aux[j++];
+            else if (j &gt; hi)  a[k] = aux[i++];
+            else if (aux[j].compareTo(aux[i]) &lt; 0) a[k] = aux[j++];
+            else a[k] = aux[i++];
+        }
+    }
+
+    private static &lt;T extends Comparable&lt;? super T&gt;&gt; void sort(
+            T[] a, T[] aux, int lo, int hi) {
+        if (hi &lt;= lo) return;
+        int mid = lo + (hi - lo) / 2;
+        sort(a, aux, lo, mid);
+        sort(a, aux, mid + 1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
+
+    public static &lt;T extends Comparable&lt;? super T&gt;&gt; void sort(T[] a) {
+        T[] aux = a.clone();
+        sort(a, aux, 0, a.length - 1);
+    }
+
+    public static &lt;T extends Comparable&lt;? super T&gt;&gt; void sortBottomUp(T[] a) {
+        int n = a.length;
+        T[] aux = a.clone();
+        for (int sz = 1; sz &lt; n; sz *= 2)
+            for (int lo = 0; lo &lt; n - sz; lo += 2 * sz)
+                merge(a, aux, lo, lo + sz - 1,
+                      Math.min(lo + 2 * sz - 1, n - 1));
+    }
+}</code></pre></div>
+<div class="note"><p><b>Ý nghĩa <code>mid = lo + (hi - lo)/2</code>:</b> tính trung điểm an toàn hơn so với <code>(lo + hi)/2</code> khi <code>lo + hi</code> có nguy cơ tràn số nguyên.</p></div>
+</section>
+<section id="complexity"><h2>3. Phân tích thời gian và bộ nhớ</h2>
+<h3>3.1. Tại sao lại là N log N?</h3>
+<p>Gọi <code>T(N)</code> là lượng công việc trên mảng N phần tử. Mỗi lần tách thành hai nửa tốn hai lời gọi đệ quy; việc <b>trộn hai nửa đã sắp</b> cần thời gian tuyến tính theo độ dài đoạn.</p>
+<div class="math-equation">T(N) = 2T(N/2) + Θ(N),   T(1) = Θ(1)</div>
+<div class="figure"><div class="figure-title">Mỗi tầng của cây đệ quy xử lý tổng cộng Θ(N) phần tử</div><div class="figure-body"><div class="tablebox"><table style="min-width:570px"><thead><tr><th>Tầng</th><th>Số lần trộn</th><th>Kích thước mỗi đoạn</th><th>Tổng công việc</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>N</td><td>Θ(N)</td></tr><tr><td>2</td><td>2</td><td>N/2</td><td>Θ(N)</td></tr><tr><td>3</td><td>4</td><td>N/4</td><td>Θ(N)</td></tr><tr><td>…</td><td>…</td><td>…</td><td>…</td></tr><tr><td>log₂N</td><td>N/2</td><td>2</td><td>Θ(N)</td></tr></tbody></table></div><p class="caption">Với N là lũy thừa của 2, có log₂N tầng trộn. Mỗi tầng quét tổng cộng N phần tử ⇒ Θ(N log₂N).</p></div></div>
+<h3>3.2. Số phép so sánh, truy cập mảng và dung lượng</h3>
+<div class="tablebox"><table><thead><tr><th>Đại lượng</th><th>Bảo đảm / bậc tăng</th><th>Giải thích</th></tr></thead><tbody><tr><td>So sánh (worst case)</td><td>≤ N log₂N; Θ(N log N)</td><td>Trộn hai đoạn có m+n phần tử tốn ≤ m+n−1 so sánh; tổng qua các tầng.</td></tr><tr><td>So sánh (best case)</td><td>~ ½N log₂N (N = 2ᵏ)</td><td>Trên mỗi tầng, có thể chỉ cần so sánh nửa số phần tử nếu một nửa luôn nhỏ hơn nửa kia.</td></tr><tr><td>Truy cập mảng</td><td>≤ 6N log₂N (cận trong slide)</td><td>Mỗi merge sao chép vào aux, so sánh và ghi kết quả, đều tuyến tính.</td></tr><tr><td>Bộ nhớ phụ</td><td>Θ(N) cho aux[]</td><td>Mảng phụ cấp một lần, dùng chung trong các lần trộn.</td></tr><tr><td>Ngăn xếp đệ quy</td><td>O(log N)</td><td>Độ sâu chia đôi; không nhân thêm thành O(N log N) bộ nhớ.</td></tr></tbody></table></div>
+<div class="two-panel"><div class="panel"><h4>Best case của số lần so sánh</h4><p>Với hai nửa lần lượt toàn nhỏ hơn toàn lớn hơn, mỗi merge chỉ cần <code>m</code> so sánh nếu m = kích thước nửa trái = n/2, vì sau đó một nửa hết.</p><p><b>N = 2ᵏ:</b> mỗi tầng khoảng N/2 so sánh, có log₂N tầng.</p></div><div class="panel"><h4>Worst case của số lần so sánh</h4><p>Hai nửa có khóa đan xen nên merge có thể cần tối đa <code>m+n−1</code> so sánh (với cả hai nửa không rỗng).</p><p>Với N = 2ᵏ: <b>N log₂N − N + 1</b> là cận cực đại đạt được.</p></div></div>
+<div class="note"><p><b>Phân biệt:</b> số lần <i>so sánh</i> không phải số lần <i>ghi/chuyển phần tử</i>. Ngay cả khi phần tử hai nửa đã theo đúng thứ tự, phiên bản top-down cơ bản vẫn sao chép và trộn ở mọi tầng. Do đó best-case về <b>thời gian</b> vẫn Θ(N log N), dù số phép so sánh có thể thấp hơn hệ số.</p></div>
+</section>
+<section id="optimization"><h2>4. Ba cải tiến thường gặp của Merge Sort</h2>
+<h3>4.1. Dùng Insertion Sort cho các đoạn nhỏ</h3>
+<p>Đệ quy và cấp phát/đọc ghi tạo overhead đáng kể khi đoạn chỉ có ít phần tử. Thay vì chia tiếp, dùng Insertion Sort trực tiếp cho đoạn có kích thước nhỏ (ví dụ khoảng 10).</p>
+<div class="codebox"><pre><code>if (hi - lo + 1 &lt;= CUTOFF) {
+    insertionSortRange(a, lo, hi);
+    return;
+}</code></pre></div>
+<h3>4.2. Bỏ qua merge khi hai nửa đã nối thành dãy tăng dần</h3>
+<p>Sau khi đã sắp xếp hai nửa, chỉ cần kiểm tra phần tử cuối bên trái và đầu bên phải. Nếu <code>a[mid] ≤ a[mid+1]</code>, cả đoạn đã có thứ tự, không cần trộn.</p>
+<div class="codebox"><pre><code>sort(a, aux, lo, mid);
+sort(a, aux, mid + 1, hi);
+if (a[mid].compareTo(a[mid + 1]) &lt;= 0) return;
+merge(a, aux, lo, mid, hi);</code></pre></div>
+<div class="figure"><div class="figure-title">Kiểm tra ranh giới trước khi quyết định merge</div><div class="figure-body"><div class="two-panel"><div><p><b>Không cần trộn</b></p><div class="merge-track"><div class="merge-group"><span class="m-cell">1</span><span class="m-cell">3</span><span class="m-cell">5</span></div><span class="m-sep">|</span><div class="merge-group right"><span class="m-cell">6</span><span class="m-cell">8</span></div></div><p class="caption">5 ≤ 6 ⇒ đã có thứ tự toàn đoạn.</p></div><div><p><b>Phải trộn</b></p><div class="merge-track"><div class="merge-group"><span class="m-cell">1</span><span class="m-cell">7</span></div><span class="m-sep">|</span><div class="merge-group right"><span class="m-cell">3</span><span class="m-cell">8</span></div></div><p class="caption">7 &gt; 3 ⇒ có phần tử sai trật tự qua ranh giới.</p></div></div></div></div>
+<div class="note warn"><p><b>Không hiểu nhầm:</b> chỉ có kiểm tra <code>a[mid] ≤ a[mid+1]</code> <b>sau khi</b> mỗi nửa đã được sắp xếp. Nếu áp dụng sớm cho hai nửa chưa sắp, điều kiện này không đủ kết luận cả đoạn có thứ tự.</p></div>
+<h3>4.3. Luân phiên vai trò mảng nguồn và đích</h3>
+<p>Trong cách cơ bản, mỗi lần merge chép <code>a[lo..hi]</code> sang <code>aux[]</code>, rồi chép ngược về <code>a[]</code>. Cải tiến là dùng hai mảng luân phiên: lời gọi đệ quy sắp từ mảng này sang mảng kia, rồi merge từ <i>nguồn</i> sang <i>đích</i>.</p>
+<div class="codebox"><pre><code>// Dạng lõi: source/destination hoán đổi qua từng mức.
+sort(destination, source, lo, mid);
+sort(destination, source, mid + 1, hi);
+mergeFromTo(source, destination, lo, mid, hi);</code></pre></div>
+<p>Cải tiến này tiết kiệm các lượt sao chép trong mỗi lần merge nhưng <b>không giảm bộ nhớ phụ từ Θ(N)</b>. Cần khởi tạo mảng nguồn/đích nhất quán ngay từ đầu để tránh đọc ô chưa có giá trị.</p>
+</section>
+<section id="bottomup"><h2>5. Bottom-up Merge Sort — trộn từ dưới lên</h2>
+<p>Không dùng đệ quy. Bắt đầu bằng các đoạn dài 1 (đã có thứ tự), trộn từng cặp thành đoạn dài 2; tiếp tục với kích thước <code>sz = 2, 4, 8, ...</code> cho đến khi toàn bộ mảng được trộn.</p>
+<div class="figure"><div class="figure-title">Ví dụ 9 phần tử: đoạn cuối có thể ngắn hơn</div><div class="seq-wrap">
+<div class="trace-algo"><div class="titlecol"><strong>Ban đầu</strong>chưa trộn</div><div class="cells"><span class="">8</span><span class="">3</span><span class="">6</span><span class="">2</span><span class="">7</span><span class="">1</span><span class="">5</span><span class="">4</span><span class="">9</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>Sau sz = 1</strong>các đoạn dài tối đa 2 đã sắp</div><div class="cells"><span class="">3</span><span class="">8</span><span class="">2</span><span class="">6</span><span class="">1</span><span class="">7</span><span class="">4</span><span class="">5</span><span class="">9</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>Sau sz = 2</strong>các đoạn dài tối đa 4 đã sắp</div><div class="cells"><span class="">2</span><span class="">3</span><span class="">6</span><span class="">8</span><span class="">1</span><span class="">4</span><span class="">5</span><span class="">7</span><span class="">9</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>Sau sz = 4</strong>các đoạn dài tối đa 8 đã sắp</div><div class="cells"><span class="">1</span><span class="">2</span><span class="">3</span><span class="">4</span><span class="">5</span><span class="">6</span><span class="">7</span><span class="">8</span><span class="">9</span></div></div>
+<div class="trace-algo"><div class="titlecol"><strong>Sau sz = 8</strong>các đoạn dài tối đa 16 đã sắp</div><div class="cells"><span class="done">1</span><span class="done">2</span><span class="done">3</span><span class="done">4</span><span class="done">5</span><span class="done">6</span><span class="done">7</span><span class="done">8</span><span class="done">9</span></div></div>
+</div><p class="figure-caption">Phần tử cuối không có cặp ở các lượt đầu được giữ nguyên; chỉ trộn các cặp đoạn tồn tại. Đoạn cuối được xử lý bằng cách chặn chỉ số <code>hi</code> tại <code>N−1</code>.</p></div>
+<h3>5.1. Code Java (dùng lại hàm merge ở mục 2)</h3>
+<div class="codebox"><pre><code>public static &lt;T extends Comparable&lt;? super T&gt;&gt; void sortBottomUp(T[] a) {
+    int n = a.length;
+    T[] aux = a.clone();
+    for (int sz = 1; sz &lt; n; sz *= 2) {
+        for (int lo = 0; lo &lt; n - sz; lo += 2 * sz) {
+            int mid = lo + sz - 1;
+            int hi = Math.min(lo + 2 * sz - 1, n - 1);
+            merge(a, aux, lo, mid, hi);
+        }
+    }
+}</code></pre></div>
+<div class="tablebox"><table><thead><tr><th>Yếu tố</th><th>Top-down</th><th>Bottom-up</th></tr></thead><tbody><tr><td>Tổ chức</td><td>Đệ quy chia đôi rồi merge</td><td>Lặp sz = 1, 2, 4, 8… rồi merge theo cặp</td></tr><tr><td>Thứ tự trộn</td><td>Trộn các đoạn nhỏ khi quay về từ đệ quy</td><td>Trộn toàn bộ đoạn cùng kích thước trên mỗi lượt</td></tr><tr><td>Thời gian</td><td>Θ(N log N)</td><td>Θ(N log N)</td></tr><tr><td>Bộ nhớ phụ</td><td>Θ(N) + O(log N) stack</td><td>Θ(N), không cần đệ quy</td></tr><tr><td>Ổn định</td><td>Có, nếu merge giữ khóa bằng nhau đúng thứ tự</td><td>Có, nếu dùng cùng merge ổn định</td></tr></tbody></table></div>
+<div class="note"><p><b>Mấu chốt của vòng lặp:</b> điều kiện <code>lo &lt; n - sz</code> bảo đảm còn ít nhất một phần tử ở nửa phải. <code>Math.min(..., n−1)</code> chống vượt chỉ số khi đoạn cuối ngắn.</p></div>
+</section>
+<section id="natural"><h2>6. Natural Mergesort và Timsort</h2>
+<h3>6.1. Run tự nhiên là gì?</h3>
+<p><b>Run:</b> một đoạn liên tiếp của mảng đã có thứ tự. Natural mergesort quét để tìm các run đang có, thay vì luôn coi mỗi phần tử là một run độ dài 1. Nó trộn các run kề nhau và lặp lại.</p>
+<div class="figure"><div class="figure-title">Nhận diện các run tăng dần đã có trong đầu vào</div><div class="figure-body"><div class="merge-track"><div class="merge-group"><span class="m-cell">1</span><span class="m-cell">5</span><span class="m-cell">10</span><span class="m-cell">16</span></div><span class="m-sep">|</span><div class="merge-group right"><span class="m-cell">3</span><span class="m-cell">4</span><span class="m-cell">23</span></div><span class="m-sep">|</span><div class="merge-group"><span class="m-cell">9</span><span class="m-cell">13</span></div><span class="m-sep">|</span><div class="merge-group right"><span class="m-cell">2</span><span class="m-cell">7</span><span class="m-cell">8</span><span class="m-cell">12</span><span class="m-cell">14</span></div></div><p class="caption">Bốn run tự nhiên: [1,5,10,16] | [3,4,23] | [9,13] | [2,7,8,12,14]. Có thể trộn run 1 và 2 ngay thành [1,3,4,5,10,16,23].</p></div></div>
+<p><b>Đánh đổi:</b> ít lượt trộn hơn khi đầu vào gần có thứ tự, nhưng phải tốn phép so sánh để dò vị trí bắt đầu/kết thúc run.</p>
+<h3>6.2. Timsort</h3>
+<p>Timsort là phiên bản <b>adaptive, stable, natural mergesort</b>: phát hiện run có sẵn, có thể dùng Binary Insertion Sort để kéo dài các run ngắn, rồi trộn các run bằng những quy tắc tối ưu. Với nhiều mảng có cấu trúc sẵn, Timsort có thể chạy tuyến tính.</p>
+<ul><li><b>Best case:</b> Θ(N) trên các đầu vào thích hợp có run dài; <b>worst case:</b> O(N log N).</li><li><b>Ổn định:</b> giữ thứ tự tương đối của các phần tử có khóa bằng nhau.</li><li><b>Không cần học toàn bộ chi tiết hiện thực:</b> ghi nhớ điểm khác biệt cốt lõi là tận dụng các run tự nhiên, khác với mergesort chuẩn cứ chia/trộn theo kích thước cố định.</li></ul>
+</section>
+<section id="lower"><h2>7. Độ phức tạp của bài toán sắp xếp: cận dưới</h2>
+<div class="definition"><p><b>Mô hình so sánh (comparison-based sorting):</b> thuật toán biết thứ tự giữa hai phần tử chỉ bằng các phép so sánh khóa, mỗi phép so sánh tạo một nhánh Đúng/Sai. Tổng số phép so sánh tệ nhất tương ứng với độ sâu lớn nhất của cây quyết định.</p></div>
+<div class="figure"><div class="figure-title">Cây quyết định cho ba khóa phân biệt a, b, c</div><div class="figure-body"><svg class="tree-svg" viewBox="0 0 900 345" role="img" aria-label="Cây quyết định cần phân biệt sáu thứ tự của ba khóa a b c"><g stroke="#a4b8ca" stroke-width="2" fill="none">
+<path d="M450 51L220 112"/>
+<path d="M450 51L680 112"/>
+<path d="M220 143L105 216"/>
+<path d="M220 143L335 216"/>
+<path d="M680 143L565 216"/>
+<path d="M680 143L795 216"/>
+<path d="M335 249L258 308"/>
+<path d="M335 249L412 308"/>
+<path d="M795 249L718 308"/>
+<path d="M795 249L852 308"/>
+</g>
+<rect x="391" y="18" width="118" height="36" fill="#eaf3fa" stroke="#9fbacf" rx="18"/><text x="450" y="43" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#35516a">a &lt; b ?</text>
+<rect x="161" y="110" width="118" height="36" fill="#eaf3fa" stroke="#9fbacf" rx="18"/><text x="220" y="135" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#35516a">b &lt; c ?</text>
+<rect x="621" y="110" width="118" height="36" fill="#eaf3fa" stroke="#9fbacf" rx="18"/><text x="680" y="135" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#35516a">a &lt; c ?</text>
+<rect x="276" y="216" width="118" height="36" fill="#eaf3fa" stroke="#9fbacf" rx="18"/><text x="335" y="241" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#35516a">a &lt; c ?</text>
+<rect x="736" y="216" width="118" height="36" fill="#eaf3fa" stroke="#9fbacf" rx="18"/><text x="795" y="241" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#35516a">b &lt; c ?</text>
+<rect x="63" y="201" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="105" y="224" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">abc</text>
+<rect x="523" y="201" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="565" y="224" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">bac</text>
+<rect x="216" y="296" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="258" y="319" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">acb</text>
+<rect x="370" y="296" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="412" y="319" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">cab</text>
+<rect x="676" y="296" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="718" y="319" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">bca</text>
+<rect x="810" y="296" width="84" height="34" fill="#e8f4eb" stroke="#a2c8ae" rx="5"/><text x="852" y="319" text-anchor="middle" font-size="16" font-family="JetBrains Mono,monospace" fill="#345c47">cba</text>
+<text x="322" y="83" fill="#73879b" font-size="13">đúng</text>
+<text x="554" y="83" fill="#73879b" font-size="13">sai</text>
+<text x="148" y="176" fill="#73879b" font-size="13">đúng</text>
+<text x="290" y="176" fill="#73879b" font-size="13">sai</text>
+<text x="608" y="176" fill="#73879b" font-size="13">đúng</text>
+<text x="748" y="176" fill="#73879b" font-size="13">sai</text>
+</svg><p class="caption">Mỗi lá tương ứng một trật tự có thể xảy ra. Ở N = 3 cần phân biệt 3! = 6 trường hợp; độ sâu tệ nhất ít nhất ⌈log₂6⌉ = 3.</p></div></div>
+<h3>7.1. Chứng minh cận dưới Ω(N log N)</h3>
+<p>Với N khóa đôi một khác nhau, tồn tại <b>N!</b> cách sắp đầu vào. Cây quyết định đúng phải có ít nhất N! lá để phân biệt các trường hợp. Một cây nhị phân độ cao h có nhiều nhất <code>2ʰ</code> lá.</p>
+<div class="math-equation">2ʰ ≥ N!  ⇒  h ≥ ⌈log₂(N!)⌉ = Ω(N log N)</div>
+<p>Bằng công thức Stirling, <code>log₂(N!) = N log₂N − (log₂e)N + O(log N)</code>. Vì mergesort đạt <b>O(N log N)</b> so sánh trong worst case nên nó <b>tối ưu về bậc số phép so sánh</b> trong mô hình này.</p>
+<div class="note"><p><b>Giới hạn phạm vi:</b> chứng minh trên áp dụng khi chỉ lấy thông tin qua so sánh khóa tổng quát và xét worst case. Nếu biết thêm về miền giá trị, cấu trúc khóa hoặc đầu vào có trật tự sẵn, thuật toán đặc thù (ví dụ radix sort) có thể vượt mốc N log N về thời gian; điều đó không mâu thuẫn với cận dưới.</p></div>
+<p>Đặc biệt, “tối ưu về số phép so sánh” <b>không đồng nghĩa</b> tối ưu về bộ nhớ: Merge Sort vẫn dùng mảng phụ Θ(N).</p>
+</section>
+<section id="comparator"><h2>8. Comparable và Comparator trong Java</h2>
+<p>Một kiểu dữ liệu có thể có <b>thứ tự tự nhiên</b> (natural order) và đồng thời nhiều <b>thứ tự thay thế</b> tùy mục đích. Việc tách đối tượng dữ liệu khỏi tiêu chí so sánh cho phép dùng lại một thuật toán sắp xếp.</p>
+<div class="tablebox"><table><thead><tr><th>Tiêu chí</th><th>Comparable&lt;T&gt;</th><th>Comparator&lt;T&gt;</th></tr></thead><tbody><tr><td>Định nghĩa</td><td>Thứ tự tự nhiên của chính kiểu T</td><td>Thứ tự do đối tượng comparator cung cấp</td></tr><tr><td>Phương thức</td><td><code>int compareTo(T other)</code></td><td><code>int compare(T x, T y)</code></td></tr><tr><td>Ai định nghĩa?</td><td>Thông thường class T cài đặt</td><td>Một class khác, class lồng hoặc lambda</td></tr><tr><td>Gọi sort</td><td><code>Arrays.sort(a)</code></td><td><code>Arrays.sort(a, comparator)</code></td></tr><tr><td>Quy ước dấu</td><td>âm / 0 / dương</td><td>âm / 0 / dương</td></tr></tbody></table></div>
+<h3>8.1. Một lớp Student, nhiều tiêu chí</h3>
+<div class="codebox"><pre><code>import java.util.Arrays;
+import java.util.Comparator;
+
+class Student {
+    final String name;
+    final int section;
+    Student(String name, int section) {
+        this.name = name;
+        this.section = section;
+    }
+    static final Comparator&lt;Student&gt; BY_NAME =
+        (x, y) -&gt; x.name.compareTo(y.name);
+    static final Comparator&lt;Student&gt; BY_SECTION =
+        (x, y) -&gt; Integer.compare(x.section, y.section);
+}
+
+// Chọn một trong hai thứ tự:
+Arrays.sort(students, Student.BY_NAME);
+Arrays.sort(students, Student.BY_SECTION);</code></pre></div>
+<p>Mỗi comparator cần đưa ra quan hệ thứ tự nhất quán và bắc cầu. Dùng <code>Integer.compare(x.section, y.section)</code> tránh nguy cơ tràn số so với viết phép trừ khi trường dữ liệu có thể rất lớn. Trong ví dụ <code>section</code> nhỏ của slide, phép trừ đơn giản cũng hoạt động.</p>
+</section>
+<section id="stability"><h2>9. Stability — tính ổn định khi sắp xếp</h2>
+<div class="definition"><p><b>Thuật toán ổn định:</b> nếu hai phần tử có <b>khóa so sánh bằng nhau</b>, thứ tự xuất hiện tương đối của chúng sau sắp xếp vẫn giống trước đó. Không đòi hai phần tử phải là cùng một đối tượng.</p></div>
+<h3>9.1. Ví dụ hai lần sắp xếp dữ liệu</h3>
+<p>Giả sử các sinh viên đã được sắp theo <b>tên</b>. Nếu tiếp tục sắp theo <b>lớp (section)</b> bằng thuật toán ổn định, mỗi lớp sẽ có thứ tự theo tên như trước; nếu dùng thuật toán không ổn định, thứ tự tên trong cùng lớp có thể bị phá.</p>
+<div class="figure"><div class="figure-title">Khóa bằng nhau phải giữ nguyên thứ tự</div><div class="figure-body"><div class="merge-track"><div class="merge-group"><span class="m-cell">B₁</span><span class="m-cell">A</span><span class="m-cell">B₂</span></div><span class="m-sep">→</span><div class="merge-group output"><span class="m-cell">A</span><span class="m-cell">B₁</span><span class="m-cell">B₂</span></div></div><p class="caption">Thứ tự B₁ trước B₂ được giữ dù hai phần tử cùng khóa B. Với Selection Sort, ví dụ [B₁, B₂, A] lại có thể thành [A, B₂, B₁] và mất ổn định.</p></div></div>
+<h3>9.2. Kết luận theo từng thuật toán</h3>
+<div class="tablebox"><table><thead><tr><th>Thuật toán</th><th>Ổn định?</th><th>Lý do</th></tr></thead><tbody><tr><td>Insertion Sort</td><td><b>Có</b></td><td>Chỉ đổi vị trí khi khóa bên phải <b>nhỏ hơn</b> bên trái; khóa bằng nhau không vượt nhau.</td></tr><tr><td>Selection Sort</td><td><b>Không</b></td><td>Đổi chỗ xa làm đảo thứ tự khóa bằng nhau (phản ví dụ B₁, B₂, A).</td></tr><tr><td>Shellsort</td><td><b>Không</b></td><td>Đổi chỗ xa theo bước h có thể vượt qua phần tử khóa bằng nhau.</td></tr><tr><td>Merge Sort (top-down/bottom-up)</td><td><b>Có</b></td><td>Trong merge, khi hai đầu bằng nhau, luôn chọn phần tử nửa trái trước.</td></tr><tr><td>Timsort</td><td><b>Có</b></td><td>Thiết kế trộn các run có bảo toàn thứ tự khóa bằng nhau.</td></tr></tbody></table></div>
+<div class="note"><p><b>Bẫy khi code:</b> Merge Sort không tự động ổn định với mọi hàm <code>merge()</code>. Nếu lấy phần tử bên phải trước khi bằng khóa, thuật toán sẽ mất tính ổn định dù cấu trúc chia để trị không đổi.</p></div>
+</section>
+<section id="summary"><h2>10. Bảng tổng hợp để ôn thi</h2>
+<div class="tablebox"><table><thead><tr><th>Thuật toán</th><th>Best time</th><th>Average</th><th>Worst</th><th>Extra space</th><th>Stable?</th></tr></thead><tbody><tr><td>Selection</td><td>Θ(N²)</td><td>Θ(N²)</td><td>Θ(N²)</td><td>O(1)</td><td>Không</td></tr><tr><td>Insertion</td><td>Θ(N)</td><td>Θ(N²)</td><td>Θ(N²)</td><td>O(1)</td><td>Có</td></tr><tr><td>Shellsort (3h+1)</td><td>Θ(N log N)</td><td>Không có công thức chuẩn trong slide</td><td>O(N<sup>3/2</sup>)</td><td>O(1)</td><td>Không</td></tr><tr><td>Merge Sort</td><td>Θ(N log N)</td><td>Θ(N log N)</td><td>Θ(N log N)</td><td>Θ(N)</td><td>Có</td></tr><tr><td>Timsort</td><td>Θ(N) trên đầu vào thuận lợi</td><td>O(N log N)</td><td>O(N log N)</td><td>Có thể dùng O(N)</td><td>Có</td></tr></tbody></table></div>
+<div class="note"><p><b>Cần nhớ theo đúng đại lượng:</b> đối với Merge Sort cơ bản, best-case về <i>thời gian</i> vẫn Θ(N log N); nhưng best-case về <i>số lần so sánh</i> có hệ số đầu ~ ½Nlog₂N (khi N là lũy thừa của 2). Hai phát biểu này không mâu thuẫn.</p></div>
+<div class="tablebox"><table><thead><tr><th>Ý hỏi trong đề</th><th>Trả lời ngắn chính xác</th></tr></thead><tbody><tr><td>Điều kiện để merge đúng?</td><td>Cả hai đoạn đầu vào đã có thứ tự.</td></tr><tr><td>Vì sao dùng aux[]?</td><td>Để dữ liệu chưa đọc không bị ghi đè khi hợp nhất.</td></tr><tr><td>Vì sao ổn định?</td><td>Khóa bằng nhau → chọn nửa trái trước.</td></tr><tr><td>Vì sao N log N?</td><td>log N tầng × N công việc trên mỗi tầng.</td></tr><tr><td>Bottom-up khác top-down?</td><td>Trộn tăng dần theo sz thay vì chia bằng đệ quy.</td></tr><tr><td>Khi nào natural/Timsort mạnh?</td><td>Đầu vào đã chứa nhiều run dài có thứ tự.</td></tr><tr><td>Vì sao lower bound N log N?</td><td>Cây so sánh cần ≥ N! lá → độ cao ≥ log₂(N!).</td></tr></tbody></table></div>
+</section>
+<section id="review"><h2>11. Câu hỏi tự kiểm tra</h2>
+<div class="qa-grid">
+<div class="qa"><b>1. Hai nửa chưa có thứ tự thì gọi merge() được không?</b><div>Không. Merge chỉ đúng nếu từng nửa đã sắp xếp.</div></div>
+<div class="qa"><b>2. Vì sao khi aux[i] và aux[j] bằng nhau phải lấy bên trái?</b><div>Để bảo toàn thứ tự tương đối của những phần tử có cùng khóa (stable).</div></div>
+<div class="qa"><b>3. Merging [2, 5] và [1, 3, 6] cho kết quả gì?</b><div>[1, 2, 3, 5, 6]; mỗi bước lấy giá trị nhỏ hơn ở đầu hai nửa.</div></div>
+<div class="qa"><b>4. Top-down: merge(0, 3, 7) diễn ra trước hay sau các merge con?</b><div>Sau khi các đoạn 0..3 và 4..7 đã được sắp xếp.</div></div>
+<div class="qa"><b>5. Vì sao T(N) = 2T(N/2) + Θ(N)?</b><div>Hai bài toán con nửa kích thước và một lượt trộn tuyến tính.</div></div>
+<div class="qa"><b>6. Merge Sort có chạy O(N) trên mảng đã sắp theo code cơ bản không?</b><div>Không; bản cơ bản vẫn Θ(N log N). Có thể tối ưu bằng kiểm tra ranh giới để bỏ lượt trộn.</div></div>
+<div class="qa"><b>7. Với N = 8, có bao nhiêu tầng merge?</b><div>log₂8 = 3 tầng.</div></div>
+<div class="qa"><b>8. Bottom-up N lẻ cần xử lý thế nào?</b><div>Giữ đoạn lẻ còn lại; chặn hi = min(lo + 2sz − 1, N − 1).</div></div>
+<div class="qa"><b>9. So sánh số bộ nhớ Merge và Shellsort?</b><div>Merge dùng Θ(N) bộ nhớ phụ, Shellsort in-place dùng O(1).</div></div>
+<div class="qa"><b>10. Vì sao cận dưới Ω(N log N) không cấm Counting/Radix Sort?</b><div>Vì cận dưới chỉ áp dụng cho mô hình so sánh khóa tổng quát.</div></div>
+<div class="qa"><b>11. Comparable khác Comparator thế nào?</b><div>Comparable xác định thứ tự tự nhiên; Comparator cung cấp tiêu chí thay thế.</div></div>
+<div class="qa"><b>12. Sắp theo tên rồi theo lớp: cần thuật toán gì để giữ tên trong cùng lớp?</b><div>Một thuật toán ổn định ở lần sắp theo lớp, ví dụ Merge Sort.</div></div>
+</div>
+</section></main></body></html>

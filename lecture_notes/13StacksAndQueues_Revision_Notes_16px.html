@@ -1,0 +1,270 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Stacks &amp; Queues — Ghi chú ôn thi</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root {--text:#283542;--body:#405063;--muted:#677789;--line:#dce4ed;--soft:#f5f7fa;--blue:#456b96;--pale:#f1f6fb;--green:#e7f4ed;--amber:#fbf5e9;--lav:#f3effb;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--text);padding:38px 18px 90px;font-family:'Space Grotesk',Arial,sans-serif;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:0 auto}
+h1,h2,h3,h4,p{margin-top:0}h1{font-size:33px;line-height:1.25;letter-spacing:-.7px;margin:0 0 10px}
+h2{font-size:24px;line-height:1.38;letter-spacing:-.3px;margin:0 0 12px}h3{font-size:19px;line-height:1.45;margin:23px 0 9px}h4{font-size:17px;margin:12px 0 6px}
+p{color:var(--body);margin:0 0 13px;line-height:1.76}
+strong{color:#2c3d50}
+a{color:#416f9c;text-decoration:none}a:hover{text-decoration:underline}
+header{border-bottom:1px solid var(--line);padding:0 0 23px;margin-bottom:25px}
+.subtitle{font-size:16px;color:var(--body);margin-bottom:0}
+nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 36px}
+nav a{color:#456078;border:1px solid var(--line);border-radius:5px;padding:11px 12px;font-weight:600;font-size:15px;line-height:1.42}
+nav .n{font:600 13px 'JetBrains Mono',monospace;color:#8a9ba9;margin-right:7px}
+section{margin-bottom:42px;scroll-margin-top:22px}
+.sectionlead{margin:0 0 18px}
+.rule{height:1px;background:var(--line);margin:24px 0}
+ul,ol{padding-left:25px;margin:7px 0 15px;color:var(--body)}li{margin-bottom:6px}li::marker{color:#7387a0}
+code,pre,.mono{font-family:'JetBrains Mono',Consolas,monospace}
+code{font-size:16px;color:#355270;background:#f0f3f7;border:1px solid #e1e7ee;padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
+pre{font-size:16px;line-height:1.63;white-space:pre;tab-size:4;margin:0}
+pre code{font-size:inherit;background:transparent;border:0;padding:0;overflow-wrap:normal}
+.codebox{background:#f7f8fa;border:1px solid var(--line);border-radius:6px;padding:17px 18px;overflow-x:auto;margin:13px 0 17px}
+.note,.definition{margin:16px 0;padding:12px 16px 13px;border-left:3px solid #97afc7;background:#f7f9fc;border-radius:0 5px 5px 0}
+.definition{border-color:#6189b4;background:#f4f8fc}.note p:last-child,.definition p:last-child{margin:0}
+.note.warn{border-color:#bd9b66;background:#fffaf3}
+.note .short,.definition .short{font-weight:700;margin-bottom:3px;color:#38536d}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:5px;margin:14px 0 19px}
+table{border-collapse:collapse;width:100%;font-size:16px;text-align:left}
+th,td{padding:11px 13px;border-bottom:1px solid #e8edf3;vertical-align:top;line-height:1.55}
+th{color:#344d66;background:#f5f7fa;font-weight:700}td{color:#43556b}tbody tr:last-child td{border-bottom:0}
+.tablebox table{min-width:610px}
+.tablebox.small table{min-width:530px}
+mark{padding:2px 4px;border-radius:3px;color:#284b6b;background:#e3f1ff}
+.figure{border:1px solid var(--line);border-radius:6px;background:#fff;margin:14px 0 18px;overflow:hidden}
+.figure-title{font-size:16px;font-weight:600;color:#52677e;padding:10px 15px;border-bottom:1px solid #e7ebf0;background:#fafbfd}
+.figure-body{padding:19px 16px}
+.figure-caption{font-size:15px;line-height:1.55;padding:0 16px 15px;color:var(--muted)}
+.flex{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.panel{border:1px solid #dfe6ed;border-radius:5px;padding:15px 17px}
+.panel h4:first-child{margin-top:0}.panel p:last-child{margin-bottom:0}
+.array{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:11px 0 17px;min-width:550px}
+.cell{text-align:center;min-width:0}
+.cell .idx{font:13px/1.65 'JetBrains Mono',monospace;color:#7b8896;margin-bottom:3px}
+.cell .val{background:#fff;border:1px solid #bfcad7;padding:8px 0;border-radius:4px;font:600 16px/1.3 'JetBrains Mono',monospace;color:#34506b}
+.cell.changed .val{background:#dceeff;border-color:#79a7d6;color:#1d4c80}
+.arr-scroll{overflow:auto}
+.rowlabel{font-weight:700;color:#344a60;font-size:16px;margin:7px 0}
+.inlinecode{font:600 16px 'JetBrains Mono',monospace;color:#395b7a}
+.kwd{color:#8250aa;font-weight:600}.codecomment{color:#738196}
+svg{display:block;width:100%;height:auto}svg text{font-family:'Space Grotesk',Arial,sans-serif;fill:#35475b;font-size:16px}
+svg .node{fill:#fff;stroke:#829cb9;stroke-width:2}svg .node-tint{fill:#e9f3fc;stroke:#6c98c7;stroke-width:2}
+svg .arr{stroke:#738da9;stroke-width:2.2;fill:none;stroke-linecap:round}svg .accent{stroke:#4d80b5;stroke-width:3}
+svg .lab{fill:#5c7088;font-size:15px}svg .heavy{font-weight:700}
+svg .faint{fill:#8393a3;font-size:14px}
+.summary-table{margin-top:16px}
+.grid-row{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.perc{display:grid;grid-template-columns:repeat(5,47px);gap:4px;justify-content:center;flex:none}
+.perc .sq{width:47px;height:47px;border:1px solid #bbc5d0;background:#fff;border-radius:2px;position:relative}
+.perc .sq.block{background:#3f4a55;border-color:#3f4a55}
+.perc .sq.path{background:#cfe5f9;border-color:#83add6}
+.perc .sq.path:after{content:'•';position:absolute;inset:0;display:grid;place-items:center;color:#3675b5;font-size:23px}
+.percnotes{max-width:370px;color:var(--body)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;color:#546a7e;margin:7px 0 0}
+.legend .sw{display:inline-block;width:14px;height:14px;border:1px solid #b8c8da;vertical-align:-2px;margin-right:5px;border-radius:2px}
+.boxed-formula{background:#f4f7fb;border:1px solid #d9e4ef;padding:11px 13px;border-radius:5px;font:600 16px/1.6 'JetBrains Mono',monospace;color:#365a7e;overflow:auto;margin:10px 0 16px;white-space:pre-wrap}
+details{border:1px solid var(--line);border-radius:5px;margin:17px 0;background:#fff}
+details summary{cursor:pointer;padding:12px 15px;font-weight:700;color:#3b5c7d;list-style-position:inside}
+details .detail-inner{padding:0 16px 16px}
+details .codebox{margin-bottom:0}
+.ques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.qa{border-left:2px solid #9eb6ce;padding:8px 15px;border-top:1px solid #e9edf2;border-right:1px solid #e9edf2;border-bottom:1px solid #e9edf2;border-radius:3px}
+.qa .q{font-weight:700;color:#3a5169;margin-bottom:5px}
+.qa .answer{color:#51677b;font-size:16px}
+.tiny{color:var(--muted);font-size:15px}
+.print{float:right;border:1px solid #dfe6ee;border-radius:4px;background:#fff;color:#5f7286;padding:7px 11px;font:600 15px 'Space Grotesk',Arial;cursor:pointer}
+@media(max-width:790px){body{padding:24px 13px 60px}h1{font-size:28px}h2{font-size:22px}nav{grid-template-columns:repeat(2,minmax(0,1fr))}.flex,.ques{grid-template-columns:1fr}.figure-body{padding:11px}.perc{grid-template-columns:repeat(5,43px)}.perc .sq{width:43px;height:43px}.print{float:none;display:block;margin-bottom:12px}.large-svg{min-width:660px}.svg-scroll{overflow-x:auto}}
+@media(max-width:430px){nav{grid-template-columns:1fr}.perc{grid-template-columns:repeat(5,38px)}.perc .sq{width:38px;height:38px}th,td{padding:9px 10px}.figure-title{padding:9px 10px}}
+@media print{*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body{padding:0;color:#222}main{max-width:none}.print,nav{display:none}header{padding-bottom:10px;margin-bottom:12px}section{margin-bottom:24px}h2,h3{break-after:avoid}.figure,.tablebox,.note,.panel,.definition{break-inside:avoid}details:not([open]) .detail-inner{display:block}details{break-inside:avoid}@page{size:A4;margin:15mm}}
+
+/* supplementary diagrams for linked structures and circular queue */
+.chain{display:flex;gap:0;align-items:center;justify-content:flex-start;overflow:auto;padding:14px 1px 5px;font-family:'JetBrains Mono',Consolas,monospace}
+.linknode{min-width:76px;border:1px solid #b5c6d7;border-radius:4px;display:flex;flex-direction:column;text-align:center;flex:none;background:white;color:#34516c}
+.linknode .value{font-size:16px;padding:9px 8px;background:#f1f6fb;font-weight:600;border-bottom:1px solid #d1dde9}
+.linknode .next{font-size:14px;padding:2px 5px;color:#637c96}
+.linknode.highlight .value{background:#dcecff;color:#174d81}
+.pointer{font-size:18px;color:#8096ac;margin:0 8px;flex:none}
+.arrviz{display:flex;gap:5px;min-width:max-content;padding:5px 0 10px}
+.arrviz .slot{min-width:68px;text-align:center;flex:none}
+.arrviz .index{font:13px/1.4 'JetBrains Mono',monospace;color:#748396}
+.arrviz .v{border:1px solid #bfcbd9;border-radius:4px;padding:8px 4px;font:600 16px/1.45 'JetBrains Mono',monospace;background:#fff}
+.arrviz .slot.active .v{background:#e2f1ff;color:#225786;border-color:#90afd1}
+.arrviz .slot.blank .v{background:#f5f7fa;color:#9daab6}
+.arrviz .slot.front .v{box-shadow:inset 0 -4px 0 #8cabcf}
+.arrviz .slot.back .v{box-shadow:inset 0 -4px 0 #8bc6ae}
+.trace-table{min-width:650px}
+.trace-table td,.trace-table th{padding:9px 12px}
+.trace-table td:first-child,.trace-table td:nth-child(2){font-family:'JetBrains Mono',monospace}
+.process{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0 5px}
+.process span{padding:10px 13px;background:#f1f6fb;border:1px solid #ccdbea;border-radius:4px;font-weight:600}
+.process em{font-style:normal;color:#6785a3}
+.reading-tag{color:#65788b;font-size:15px}
+@media(max-width:790px){.process span{padding:8px 10px}}
+</style></head><body><main><button class="print" onclick="window.print()">In / lưu PDF</button><header><h1>Stacks, Queues &amp; Iterators</h1><p class="subtitle">LIFO / FIFO · Linked List · Resizing Arrays · Generics · Iterator · Dijkstra's Two-Stack Algorithm</p></header><nav aria-label="Mục lục"><a href="#overview"><span class="n">01</span> Tổng quan & API</a><a href="#stack-list"><span class="n">02</span> Stack · Linked List</a><a href="#stack-array"><span class="n">03</span> Stack · Array</a><a href="#resizing"><span class="n">04</span> Resizing Array</a><a href="#queue"><span class="n">05</span> Queue</a><a href="#generics"><span class="n">06</span> Generics</a><a href="#iteration"><span class="n">07</span> Iterators</a><a href="#applications"><span class="n">08</span> Ứng dụng</a><a href="#comparison"><span class="n">09</span> So sánh & ôn tập</a></nav><section id="overview"><h2>1. Stack, Queue, Bag và kiểu dữ liệu trừu tượng</h2><p class="sectionlead">Stack và Queue đều lưu tập các phần tử; điểm khác nhau quan trọng nhất là <strong>phần tử nào được lấy ra trước</strong>.</p><div class="tablebox "><table><thead><tr><th>Cấu trúc</th><th>Quy tắc</th><th>Thao tác</th><th>Ví dụ</th></tr></thead><tbody><tr><td><strong>Stack</strong> (ngăn xếp)</td><td><strong>LIFO</strong> — vào sau, ra trước</td><td><code>push</code>, <code>pop</code></td><td>Undo, lời gọi hàm, đánh giá biểu thức</td></tr><tr><td><strong>Queue</strong> (hàng đợi)</td><td><strong>FIFO</strong> — vào trước, ra trước</td><td><code>enqueue</code>, <code>dequeue</code></td><td>Xử lý yêu cầu theo thứ tự</td></tr><tr><td><strong>Bag</strong> (túi)</td><td>Không đặt ra chính sách lấy phần tử cụ thể</td><td>Thêm, duyệt</td><td>Lưu nhóm phần tử để duyệt</td></tr></tbody></table></div><div class="figure"><div class="figure-title">Cùng chuỗi chèn A, B, C nhưng thứ tự lấy khác nhau</div><div class="figure-body"><div class="flex"><div class="panel"><h4>Stack · LIFO</h4><div class="chain"><div class="linknode highlight"><span class="value">C</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">B</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">A</span><span class="next">next</span></div><span class="pointer">→ null</span></div><p><code>pop()</code>: C → B → A</p></div><div class="panel"><h4>Queue · FIFO</h4><div class="chain"><div class="linknode highlight"><span class="value">A</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">B</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">C</span><span class="next">next</span></div><span class="pointer">→ null</span></div><p><code>dequeue()</code>: A → B → C</p></div></div></div><div class="figure-caption">Hai hình chỉ minh họa thứ tự logic; không áp đặt một cách cài đặt trong bộ nhớ.</div></div><h3>Phân biệt interface, implementation và client</h3><p><strong>Interface/API</strong> mô tả các phép toán có thể gọi; <strong>implementation</strong> quyết định cách tổ chức dữ liệu và code thực hiện; <strong>client</strong> là chương trình sử dụng API. Một Stack có thể cài bằng danh sách liên kết hoặc mảng mà client vẫn gọi <code>push()</code>/<code>pop()</code> như nhau.</p></section><section id="stack-list"><h2>2. Stack bằng danh sách liên kết</h2><p class="sectionlead">Dùng <strong>singly linked list</strong> và con trỏ <code>first</code> trỏ đến <strong>đỉnh stack</strong>. Mọi thao tác chèn/xóa đều ở đầu danh sách.</p><div class="figure"><div class="figure-title">push("C") vào stack đang chứa B → A</div><div class="figure-body"><div class="rowlabel">Trước khi push: <code>first → B</code></div><div class="chain"><div class="linknode "><span class="value">B</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">A</span><span class="next">next</span></div><span class="pointer">→ null</span></div><div class="rowlabel">Sau khi push: <code>first → C</code></div><div class="chain"><div class="linknode highlight"><span class="value">C</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">B</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">A</span><span class="next">next</span></div><span class="pointer">→ null</span></div></div><div class="figure-caption">Nút mới trỏ tới <code>oldfirst</code>; không cần duyệt toàn bộ danh sách.</div></div><div class="flex"><div class="panel"><h4>push(item)</h4><p>Giữ <code>oldfirst</code> → tạo nút mới ở đầu → lưu item → cho <code>next = oldfirst</code>.</p></div><div class="panel"><h4>pop()</h4><p>Giữ <code>first.item</code> → dịch <code>first = first.next</code> → trả về item đã lưu.</p></div></div><div class="codebox"><pre><code>public class LinkedStack&lt;Item&gt; {
+    private Node first;
+    private int n;
+
+    private class Node {
+        Item item;
+        Node next;
+    }
+
+    public boolean isEmpty() { return first == null; }
+    public int size() { return n; }
+
+    public void push(Item item) {
+        Node oldFirst = first;
+        first = new Node();
+        first.item = item;
+        first.next = oldFirst;
+        n++;
+    }
+
+    public Item pop() {
+        if (isEmpty()) throw new java.util.NoSuchElementException();
+        Item item = first.item;
+        first = first.next;
+        n--;
+        return item;
+    }
+}</code></pre></div><div class="note"><p><strong>Tại sao O(1)?</strong> Chỉ cập nhật một số hữu hạn con trỏ, không đi qua các nút còn lại. <code>push</code>, <code>pop</code>, <code>isEmpty</code> đều <strong>O(1) trong trường hợp xấu nhất</strong>. Bộ nhớ tăng tuyến tính <strong>O(N)</strong>; mỗi nút có overhead cho object và con trỏ. Trong mô hình bộ nhớ được phân tích ở bài, khoảng <strong>40N byte</strong> cho N nút (không tính chính các chuỗi).</p></div></section><section id="stack-array"><h2>3. Stack bằng mảng dung lượng cố định</h2><p class="sectionlead">Lưu <code>N</code> phần tử trong <code>s[0..N−1]</code>. Biến <code>N</code> đồng thời là <strong>số phần tử hiện có</strong> và <strong>chỉ số vị trí sẽ ghi tiếp theo</strong>.</p><div class="figure"><div class="figure-title">Mảng có sức chứa 7, stack hiện có 4 phần tử</div><div class="figure-body"><div class="arr-scroll"><div class="arrviz"><div class="slot "><div class="index">0</div><div class="v">A</div></div><div class="slot "><div class="index">1</div><div class="v">B</div></div><div class="slot "><div class="index">2</div><div class="v">C</div></div><div class="slot active "><div class="index">3</div><div class="v">D</div></div><div class="slot blank"><div class="index">4</div><div class="v">·</div></div><div class="slot blank"><div class="index">5</div><div class="v">·</div></div><div class="slot blank"><div class="index">6</div><div class="v">·</div></div></div></div></div><div class="figure-caption">Đỉnh là <code>s[N−1] = s[3]</code>. Khi <code>push(E)</code>, ghi vào <code>s[4]</code>, rồi tăng N thành 5.</div></div><div class="codebox"><pre><code>private String[] s;
+private int N = 0;
+
+public void push(String item) {
+    s[N++] = item;      // dùng N làm index, sau đó N++
+}
+
+public String pop() {
+    String item = s[--N]; // giảm N trước, rồi đọc s[N]
+    s[N] = null;          // bỏ tham chiếu không còn dùng
+    return item;
+}</code></pre></div><div class="note warn"><p><strong><code>s[N++]</code> và <code>s[--N]</code>:</strong> một bên tăng <em>sau khi truy cập</em>, bên kia giảm <em>trước khi truy cập</em>. Với stack rỗng, <code>pop()</code> cần xử lý <strong>underflow</strong>; với mảng đã đầy, <code>push()</code> gây <strong>overflow</strong> nếu không hỗ trợ tăng dung lượng.</p></div><p><strong>Loitering:</strong> nếu chỉ giảm <code>N</code> mà không gán <code>s[N] = null</code>, ô cũ vẫn giữ tham chiếu đến đối tượng. Bộ thu gom rác không thể giải phóng đối tượng chỉ vì nó không còn nằm trong phần stack logic.</p></section><section id="resizing"><h2>4. Resizing Array — tự động tăng/giảm sức chứa</h2><p class="sectionlead">Mảng có kích thước cố định, nhưng có thể thay cả mảng bằng mảng mới lớn hoặc nhỏ hơn. Vấn đề là <strong>khi nào cần resize</strong> để tránh sao chép liên tục.</p><h3>Tăng dung lượng: nhân đôi khi đầy</h3><p>Nếu <code>N == s.length</code>, tạo mảng mới gấp đôi và chép <code>N</code> phần tử. Nếu tăng thêm đúng một ô mỗi lần push, lần thêm thứ k có thể phải sao chép k−1 phần tử, dẫn tới tổng chi phí <strong>O(M²)</strong> cho M lần thêm.</p><div class="figure"><div class="figure-title">Minh họa tại thời điểm ghi phần tử thứ 5</div><div class="figure-body"><div class="rowlabel">Mảng đầy: N = 4, capacity = 4</div><div class="arr-scroll"><div class="arrviz"><div class="slot "><div class="index">0</div><div class="v">A</div></div><div class="slot "><div class="index">1</div><div class="v">B</div></div><div class="slot "><div class="index">2</div><div class="v">C</div></div><div class="slot "><div class="index">3</div><div class="v">D</div></div></div></div><div class="rowlabel">Tăng gấp đôi, sao chép, rồi push(E): N = 5, capacity = 8</div><div class="arr-scroll"><div class="arrviz"><div class="slot "><div class="index">0</div><div class="v">A</div></div><div class="slot "><div class="index">1</div><div class="v">B</div></div><div class="slot "><div class="index">2</div><div class="v">C</div></div><div class="slot "><div class="index">3</div><div class="v">D</div></div><div class="slot active "><div class="index">4</div><div class="v">E</div></div><div class="slot blank"><div class="index">5</div><div class="v">·</div></div><div class="slot blank"><div class="index">6</div><div class="v">·</div></div><div class="slot blank"><div class="index">7</div><div class="v">·</div></div></div></div></div><div class="figure-caption">Các lần resize trong dãy chèn dài xuất hiện tại ngưỡng 1, 2, 4, 8, ... thay vì ở mọi lần chèn.</div></div><h3>Giảm dung lượng: chỉ khi đầy 1/4</h3><p>Thu nhỏ ngay lúc mảng <strong>mới đầy 1/2</strong> dễ gây <em>thrashing</em>: cứ pop rồi push quanh ngưỡng sẽ phải thu nhỏ và mở rộng liên tiếp. Quy tắc ổn định hơn là <strong>gấp đôi khi đầy; chia đôi khi N bằng 1/4 capacity</strong>.</p><div class="figure"><div class="figure-title">Khoảng cách giữa hai ngưỡng resize</div><div class="figure-body"><div class="process"><span>Đầy 100% → ×2</span><em>⇒</em><span>Sau tăng: 50%</span><em>⇒</em><span>Giảm tới 25% → ÷2</span><em>⇒</em><span>Sau giảm: 50%</span></div></div><div class="figure-caption">Sau một lần resize, số phần tử phải thay đổi đáng kể trước khi xảy ra resize ngược lại.</div></div><div class="codebox"><pre><code>public class ResizingArrayStack&lt;Item&gt; {
+    private Item[] s = (Item[]) new Object[1];
+    private int N = 0;
+
+    public boolean isEmpty() { return N == 0; }
+    public int size() { return N; }
+
+    private void resize(int capacity) {
+        Item[] copy = (Item[]) new Object[capacity];
+        for (int i = 0; i &lt; N; i++) copy[i] = s[i];
+        s = copy;
+    }
+
+    public void push(Item item) {
+        if (N == s.length) resize(2 * s.length);
+        s[N++] = item;
+    }
+
+    public Item pop() {
+        if (isEmpty()) throw new java.util.NoSuchElementException();
+        Item item = s[--N];
+        s[N] = null;
+        if (N &gt; 0 &amp;&amp; N == s.length / 4) resize(s.length / 2);
+        return item;
+    }
+}</code></pre></div><h3>Vì sao thời gian trung bình dàn trải là O(1)?</h3><p>Một lần <code>push</code>/<code>pop</code> thông thường tốn <strong>O(1)</strong>, còn lần gây resize có thể tốn <strong>O(N)</strong> do chép N phần tử. Tuy nhiên, các lần copy khi nhân đôi có kích thước tăng theo cấp số nhân <code>1 + 2 + 4 + ... &lt; 2M</code> khi thực hiện M lần thêm. Ngưỡng giảm 1/4 cũng tránh resize liên tiếp.</p><p>Vì vậy, từ stack rỗng, <strong>một chuỗi M thao tác</strong> tốn tổng <strong>O(M)</strong>: mỗi thao tác có chi phí <strong>amortized O(1)</strong>, <em>không phải</em> worst-case O(1).</p><div class="tablebox small"><table><thead><tr><th>Thao tác</th><th>Worst-case</th><th>Amortized</th></tr></thead><tbody><tr><td><code>push</code></td><td>O(N) khi nhân đôi</td><td><strong>O(1)</strong></td></tr><tr><td><code>pop</code></td><td>O(N) khi chia đôi</td><td><strong>O(1)</strong></td></tr><tr><td><code>size</code>, <code>isEmpty</code></td><td>O(1)</td><td>O(1)</td></tr></tbody></table></div><div class="note"><p><strong>Amortized ≠ average-case theo xác suất.</strong> Đó là chi phí bình quân trên một chuỗi thao tác <em>ngay cả khi chuỗi được chọn theo trường hợp xấu</em>. Với stack không rỗng, chính sách này giữ mảng sử dụng khoảng <strong>25–100% dung lượng</strong> (bỏ qua chi tiết làm tròn). Theo mô hình tham chiếu 8 byte, mảng cấp phát tốn khoảng <strong>8N–32N byte</strong>, chưa tính dữ liệu của đối tượng; những con số byte phụ thuộc JVM và kiến trúc.</p></div></section><section id="queue"><h2>5. Queue bằng linked list và mảng vòng</h2><p class="sectionlead">Queue phải thêm ở <strong>cuối</strong> và xóa ở <strong>đầu</strong>. Hai vị trí hoạt động độc lập nên cần chú ý đặc biệt khi chuyển từ rỗng ↔ có phần tử.</p><h3>Linked Queue: <code>first</code> và <code>last</code></h3><p><code>first</code> trỏ tới phần tử được lấy tiếp theo; <code>last</code> trỏ tới phần tử vừa thêm. <code>enqueue</code> nối nút mới sau <code>last</code>, <code>dequeue</code> bỏ nút <code>first</code>. Cả hai <strong>O(1) worst-case</strong>.</p><div class="figure"><div class="figure-title">Queue chứa A, B, C; đầu bên trái, cuối bên phải</div><div class="figure-body"><div class="rowlabel"><code>first</code> ↓</div><div class="chain"><div class="linknode highlight"><span class="value">A</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode "><span class="value">B</span><span class="next">next</span></div><span class="pointer">→</span><div class="linknode highlight"><span class="value">C</span><span class="next">next</span></div><span class="pointer">→ null</span></div><p style="margin:10px 0 0"><code>dequeue()</code> trả A; <code>enqueue(D)</code> nối D vào sau C. <code>last</code> luôn trỏ tới nút cuối.</p></div></div><div class="codebox"><pre><code>public class LinkedQueue&lt;Item&gt; {
+    private Node first, last;
+    private int n;
+
+    private class Node {
+        Item item;
+        Node next;
+    }
+
+    public boolean isEmpty() { return first == null; }
+    public int size() { return n; }
+
+    public void enqueue(Item item) {
+        Node oldLast = last;
+        last = new Node();
+        last.item = item;
+        if (isEmpty()) first = last;
+        else oldLast.next = last;
+        n++;
+    }
+
+    public Item dequeue() {
+        if (isEmpty()) throw new java.util.NoSuchElementException();
+        Item item = first.item;
+        first = first.next;
+        if (isEmpty()) last = null;
+        n--;
+        return item;
+    }
+}</code></pre></div><div class="note warn"><p><strong>Hai trường hợp biên không được quên:</strong> <code>enqueue</code> trên queue rỗng phải đặt <code>first = last</code>; <code>dequeue</code> phần tử cuối phải đặt <code>last = null</code>. Nếu không, cấu trúc có thể giữ con trỏ không còn hợp lệ.</p></div><h3>Mảng vòng (circular queue)</h3><p>Giữ <code>head</code> ở phần tử đầu, <code>tail</code> ở <strong>ô trống sẽ ghi tiếp theo</strong>, <code>N</code> là số phần tử. Chỉ số tăng theo modulo sức chứa: <code>(i + 1) % capacity</code>. Nhờ đó, các ô đầu mảng được tái sử dụng mà không phải dịch toàn bộ phần tử.</p><div class="figure"><div class="figure-title">Vòng hóa chỉ số trong queue dung lượng 8</div><div class="figure-body"><div class="rowlabel">Trạng thái: N = 4, head = 6, tail = 2</div><div class="arr-scroll"><div class="arrviz"><div class="slot active "><div class="index">0</div><div class="v">C</div></div><div class="slot active "><div class="index">1</div><div class="v">D</div></div><div class="slot back blank"><div class="index">2</div><div class="v">·</div></div><div class="slot blank"><div class="index">3</div><div class="v">·</div></div><div class="slot blank"><div class="index">4</div><div class="v">·</div></div><div class="slot blank"><div class="index">5</div><div class="v">·</div></div><div class="slot active front "><div class="index">6</div><div class="v">A</div></div><div class="slot active "><div class="index">7</div><div class="v">B</div></div></div></div><p style="margin:8px 0 0">Thứ tự lấy ra là <code>A → B → C → D</code>, dù mảng lưu tại các chỉ số <code>6, 7, 0, 1</code>.</p></div><div class="figure-caption">Sau khi dequeue A: head thành 7. Sau khi enqueue E: ghi tại tail = 2 rồi tail thành 3.</div></div><div class="codebox"><pre><code>// Sơ đồ logic cho queue mảng vòng với biến n, head, tail:
+void enqueue(Item item) {
+    if (n == q.length) resize(2 * q.length);
+    q[tail] = item;
+    tail = (tail + 1) % q.length;
+    n++;
+}
+
+Item dequeue() {
+    if (n == 0) throw new java.util.NoSuchElementException();
+    Item item = q[head];
+    q[head] = null;
+    head = (head + 1) % q.length;
+    n--;
+    return item;
+}
+
+void resize(int capacity) {
+    Item[] copy = (Item[]) new Object[capacity];
+    for (int i = 0; i &lt; n; i++)
+        copy[i] = q[(head + i) % q.length];
+    q = copy;
+    head = 0;
+    tail = n;
+}</code></pre></div><div class="note"><p><strong>Khi resize queue vòng:</strong> phải chép theo <em>thứ tự logic từ head</em>, sau đó đặt <code>head = 0</code>, <code>tail = N</code>. Sao chép tuần tự từ <code>q[0]</code> có thể làm đảo thứ tự FIFO. Trong mã trên, <code>q</code> là mảng đã được khởi tạo với sức chứa dương.</p></div></section><section id="generics"><h2>6. Generics — dùng cùng cấu trúc cho nhiều kiểu</h2><p class="sectionlead">Thay vì viết riêng <code>StackOfStrings</code>, <code>StackOfURLs</code>, ..., dùng <code>Stack&lt;Item&gt;</code>. Trình biên dịch kiểm tra kiểu của <code>push</code> và <code>pop</code> ngay khi biên dịch.</p><div class="codebox"><pre><code>Stack&lt;String&gt; names = new Stack&lt;String&gt;();
+names.push(&quot;Ada&quot;);
+String x = names.pop();       // không cần ép kiểu
+
+Stack&lt;Integer&gt; numbers = new Stack&lt;Integer&gt;();
+numbers.push(17);             // boxing: int -&gt; Integer
+int y = numbers.pop();       // unboxing: Integer -&gt; int</code></pre></div><p><strong>Vì sao không dùng <code>Object</code> cho tất cả?</strong> Với stack Object, client phải ép kiểu thủ công. Nếu lấy một <code>Orange</code> và ép thành <code>Apple</code>, lỗi chỉ xuất hiện lúc chạy. Với <code>Stack&lt;Apple&gt;</code>, cố <code>push</code> một <code>Orange</code> bị chặn ngay lúc biên dịch.</p><div class="figure"><div class="figure-title">Phân biệt cách tạo mảng generic</div><div class="figure-body"><div class="codebox" style="margin:0"><pre><code>Item[] a = new Item[capacity];            // lỗi biên dịch
+Item[] b = (Item[]) new Object[capacity]; // chạy được, unchecked cast</code></pre></div></div><div class="figure-caption">Việc dùng <code>(Item[]) new Object[]</code> liên quan đến type erasure; trình biên dịch có thể cảnh báo unchecked cast.</div></div><div class="note"><p><strong>Autoboxing:</strong> tham số generic phải là kiểu tham chiếu (<code>Integer</code>, không phải <code>int</code>). Java tự đóng hộp/mở hộp ở <code>push(17)</code> và <code>int a = pop()</code>.</p></div></section><section id="iteration"><h2>7. Iterator, Iterable và vòng lặp foreach</h2><p class="sectionlead">Cho phép client duyệt các phần tử <strong>mà không cần biết</strong> stack đang dùng mảng hay linked list.</p><div class="tablebox small"><table><thead><tr><th>Khái niệm</th><th>Vai trò</th></tr></thead><tbody><tr><td><code>Iterable&lt;Item&gt;</code></td><td>Cung cấp phương thức <code>iterator()</code>.</td></tr><tr><td><code>Iterator&lt;Item&gt;</code></td><td>Cung cấp <code>hasNext()</code> và <code>next()</code> để duyệt.</td></tr><tr><td><code>for (Item x : structure)</code></td><td>Cú pháp foreach, hoạt động thông qua iterator.</td></tr></tbody></table></div><div class="codebox"><pre><code>// Stack dùng linked list, với first là đỉnh:
+public java.util.Iterator&lt;Item&gt; iterator() {
+    return new java.util.Iterator&lt;Item&gt;() {
+        private Node current = first;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public Item next() {
+            if (!hasNext())
+                throw new java.util.NoSuchElementException();
+            Item value = current.item;
+            current = current.next;
+            return value;
+        }
+    };
+}</code></pre></div><p>Để dùng trực tiếp <code>foreach</code>, lớp stack phải khai báo <code>implements Iterable&lt;Item&gt;</code> và cung cấp phương thức <code>iterator()</code>. Trong stack mảng lưu đáy → đỉnh ở <code>s[0..N−1]</code>, muốn duyệt <strong>từ đỉnh xuống đáy</strong> thì đặt <code>i = N</code> và mỗi lần <code>next()</code> trả <code>s[--i]</code>. Với stack linked list, chỉ cần đi theo con trỏ <code>next</code> từ <code>first</code>.</p><div class="figure"><div class="figure-title">Thứ tự duyệt từ đỉnh stack</div><div class="figure-body"><div class="rowlabel">Mảng: A, B, C, D được push theo thứ tự đó</div><div class="arr-scroll"><div class="arrviz"><div class="slot "><div class="index">0</div><div class="v">A</div></div><div class="slot "><div class="index">1</div><div class="v">B</div></div><div class="slot "><div class="index">2</div><div class="v">C</div></div><div class="slot active "><div class="index">3</div><div class="v">D</div></div></div></div><p style="margin:8px 0 0"><code>for (String x : stack)</code> với iterator theo LIFO sẽ đi <code>D → C → B → A</code>.</p></div></div><div class="note"><p><strong>Concurrent modification:</strong> khi client sửa cấu trúc trong lúc đang duyệt, một <em>fail-fast iterator</em> có thể ném <code>ConcurrentModificationException</code>. Muốn tự cài fail-fast cần đếm số lần sửa đổi (modification count), lưu số đếm khi tạo iterator và kiểm tra ở các lần duyệt. <strong>Không phải iterator nào cũng tự động fail-fast.</strong></p></div></section><section id="applications"><h2>8. Ứng dụng: lời gọi hàm và biểu thức số học</h2><p class="sectionlead">Stack xuất hiện trong quản lý lời gọi hàm, phân tích cú pháp, Undo và đánh giá biểu thức. Hai ứng dụng quan trọng nhất của bài được minh họa dưới đây.</p><h3>Call stack và đệ quy</h3><p>Mỗi lần gọi hàm, chương trình cần lưu ngữ cảnh thực thi (tham số/biến cục bộ, địa chỉ quay lại...). Khi hàm kết thúc, khung ngăn xếp (stack frame) mới nhất được lấy ra trước. Với lời gọi đệ quy, các frame xếp chồng cho tới điều kiện dừng.</p><div class="figure"><div class="figure-title">Đệ quy gcd(216, 192) — LIFO của khung gọi</div><div class="figure-body"><div class="process"><span>gcd(216,192)</span><em>→</em><span>gcd(192,24)</span><em>→</em><span>gcd(24,0)</span></div><p style="margin:8px 0 0;text-align:center">Tính tới điều kiện dừng: <code>gcd(24,0) = 24</code>; sau đó trả kết quả ngược theo thứ tự lời gọi.</p></div></div><h3>Dijkstra's Two-Stack Algorithm</h3><p>Với biểu thức <strong>infix có đủ dấu ngoặc</strong> và các toán tử được hỗ trợ, dùng <strong>hai stack</strong>: <code>ops</code> lưu toán tử, <code>vals</code> lưu toán hạng/kết quả trung gian. Quy tắc: gặp <code>(</code> bỏ qua; gặp số → push vào <code>vals</code>; gặp toán tử → push vào <code>ops</code>; gặp <code>)</code> → pop toán tử và hai số, tính rồi push kết quả trở lại <code>vals</code>.</p><div class="figure"><div class="figure-title">Trace của ( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )</div><div class="figure-body"><div class="tablebox" style="margin:0"><table class="trace-table"><thead><tr><th>Đoạn vừa xử lý</th><th>Stack giá trị<br>(đáy → đỉnh)</th><th>Stack toán tử<br>(đáy → đỉnh)</th></tr></thead><tbody>
+<tr><td>1 + 2 + 3</td><td>1, 2, 3</td><td>+, +</td></tr>
+<tr><td>(2 + 3) → 5</td><td>1, 5</td><td>+</td></tr>
+<tr><td>4 * 5 (trước dấu đóng)</td><td>1, 5, 4, 5</td><td>+, *, *</td></tr>
+<tr><td>(4 * 5) → 20</td><td>1, 5, 20</td><td>+, *</td></tr>
+<tr><td>5 * 20 → 100</td><td>1, 100</td><td>+</td></tr>
+<tr><td>1 + 100 → 101</td><td><strong>101</strong></td><td>rỗng</td></tr>
+</tbody></table></div></div><div class="figure-caption">Bảng lược bỏ dấu ngoặc mở và các bước chỉ push trung gian; mỗi lần đóng ngoặc tương ứng với một phép tính.</div></div><div class="codebox"><pre><code>// Input: các token đã tách, ví dụ [&quot;(&quot;, &quot;1&quot;, &quot;+&quot;, ... &quot;)&quot;]
+Stack&lt;String&gt; ops = new Stack&lt;&gt;();
+Stack&lt;Double&gt; vals = new Stack&lt;&gt;();
+for (String token : tokens) {
+    if (token.equals(&quot;(&quot;)) continue;
+    else if (token.equals(&quot;+&quot;) || token.equals(&quot;*&quot;))
+        ops.push(token);
+    else if (token.equals(&quot;)&quot;)) {
+        String op = ops.pop();
+        double b = vals.pop();
+        double a = vals.pop();
+        if (op.equals(&quot;+&quot;)) vals.push(a + b);
+        else vals.push(a * b);
+    } else {
+        vals.push(Double.parseDouble(token));
+    }
+}
+double result = vals.pop();     // 101.0</code></pre></div><div class="note warn"><p><strong>Điều kiện phạm vi:</strong> ví dụ này giả định biểu thức đã được tách token, <strong>ngoặc đầy đủ và hợp lệ</strong>, và chỉ hỗ trợ <code>+</code>, <code>*</code>. Không được ngầm coi đây là bộ xử lý mọi biểu thức infix có độ ưu tiên và tính kết hợp. Nếu mở rộng sang phép trừ/chia, phải giữ đúng thứ tự <code>a op b</code>, trong đó <code>b</code> được pop trước.</p></div><h3>Postfix / Reverse Polish Notation (RPN)</h3><p>Đưa toán tử ra <em>sau</em> các toán hạng, ta không cần dấu ngoặc: <code>1 2 3 + 4 5 * * +</code> cũng bằng <strong>101</strong>. Duyệt từ trái sang phải: gặp số thì push; gặp toán tử thì pop hai giá trị, tính và push kết quả. Đây là cách đánh giá trực tiếp bằng <strong>một stack giá trị</strong>.</p></section><section id="comparison"><h2>9. So sánh, Java Collections và câu hỏi ôn tập</h2><div class="tablebox "><table><thead><tr><th>Cài đặt</th><th>Thao tác chính</th><th>Bộ nhớ / nhược điểm</th></tr></thead><tbody><tr><td>Stack liên kết</td><td><strong>push, pop: O(1) worst-case</strong></td><td>Cần nút và con trỏ; O(N) bộ nhớ.</td></tr><tr><td>Stack mảng cố định</td><td><strong>push, pop: O(1)</strong> (khi hợp lệ)</td><td>Có thể overflow, cần biết capacity.</td></tr><tr><td>Stack resizing array</td><td><strong>O(1) amortized</strong>; resize O(N)</td><td>Đôi khi copy; dung lượng thường không quá 4N khi N &gt; 0.</td></tr><tr><td>Queue liên kết</td><td><strong>enqueue, dequeue: O(1) worst-case</strong></td><td>Phải duy trì cả <code>first</code>, <code>last</code>.</td></tr><tr><td>Queue mảng vòng</td><td><strong>O(1)</strong> khi không resize</td><td>Dùng modulo; resize phải chép theo thứ tự logic.</td></tr></tbody></table></div><h3>Java Collections: hiểu API trước khi dùng</h3><p><code>ArrayList</code> dựa trên mảng động, <code>LinkedList</code> dựa trên danh sách liên kết. <code>java.util.Stack</code> kế thừa <code>Vector</code> nên mang thêm nhiều thao tác không phù hợp với một API stack tối giản; thứ tự lặp của nó cũng có thể khác thứ tự pop. <code>java.util.Queue</code> là <strong>interface</strong>, không phải lớp queue cụ thể có thể khởi tạo trực tiếp.</p><p>Chọn cấu trúc dựa trên <strong>chi phí của thao tác thực tế</strong>, không chỉ dựa vào tên kiểu dữ liệu. Chẳng hạn, xóa tại vị trí bất kỳ trong <code>ArrayList</code> cần dời các phần tử phía sau, có thể tốn O(N). Với một danh sách ban đầu có <code>N²</code> phần tử, xóa ngẫu nhiên lần lượt tất cả phần tử có thể dẫn tới tổng <strong>O(N⁴)</strong>; dùng thư viện sai cách đôi khi chậm hơn một giải pháp tưởng như đơn giản.</p><h3>Tự kiểm tra</h3><div class="ques"><div class="qa"><div class="q">01. Stack nhận A, B, C, rồi pop hai lần?</div><div class="answer">Trả C, sau đó B; A còn lại.</div></div><div class="qa"><div class="q">02. Stack mảng có N = 4 thì push ghi vào ô nào?</div><div class="answer">Ghi s[4] rồi N = 5, nếu capacity cho phép.</div></div><div class="qa"><div class="q">03. Vì sao không giảm dung lượng ở ngưỡng 1/2?</div><div class="answer">Gần ngưỡng đó, chuỗi push-pop liên tiếp có thể gây resize qua lại với mỗi thao tác.</div></div><div class="qa"><div class="q">04. O(1) amortized có đồng nghĩa mọi thao tác O(1)?</div><div class="answer">Không. Một thao tác resize riêng lẻ có thể O(N).</div></div><div class="qa"><div class="q">05. Queue rỗng enqueue(X) cần cập nhật những gì?</div><div class="answer">Đặt cả first và last trỏ đến nút X.</div></div><div class="qa"><div class="q">06. Queue xóa phần tử cuối có cần sửa last?</div><div class="answer">Có: sau khi first thành null, đặt last = null.</div></div><div class="qa"><div class="q">07. Mảng vòng có head=6, capacity=8, dequeue xong head mới?</div><div class="answer">(6 + 1) % 8 = 7.</div></div><div class="qa"><div class="q">08. Tại sao Item[] a = new Item[k] không biên dịch?</div><div class="answer">Java không cho tạo generic array trực tiếp; dạng (Item[]) new Object[k] gây cảnh báo unchecked cast.</div></div><div class="qa"><div class="q">09. Iterator stack mảng muốn theo LIFO chạy hướng nào?</div><div class="answer">Từ s[N−1] về s[0].</div></div><div class="qa"><div class="q">10. Hai-stack evaluator gặp dấu đóng ngoặc thì làm gì?</div><div class="answer">Pop một toán tử, hai toán hạng, tính rồi push kết quả vào stack giá trị.</div></div><div class="qa"><div class="q">11. Giá trị biểu thức postfix 1 2 3 + 4 5 * * + ?</div><div class="answer">101.</div></div><div class="qa"><div class="q">12. Thứ tự hai giá trị pop quan trọng với phép trừ?</div><div class="answer">Có. Pop b trước, sau đó a; tính a − b.</div></div></div></section></main></body></html>

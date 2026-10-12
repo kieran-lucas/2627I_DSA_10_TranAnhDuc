@@ -1,0 +1,393 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Analysis of Algorithms — Ghi chú ôn thi</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root {--text:#283542;--body:#405063;--muted:#677789;--line:#dce4ed;--soft:#f5f7fa;--blue:#456b96;--pale:#f1f6fb;--green:#e7f4ed;--amber:#fbf5e9;--lav:#f3effb;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--text);padding:38px 18px 90px;font-family:'Space Grotesk',Arial,sans-serif;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+main{max-width:1000px;margin:0 auto}
+h1,h2,h3,h4,p{margin-top:0}h1{font-size:33px;line-height:1.25;letter-spacing:-.7px;margin:0 0 10px}
+h2{font-size:24px;line-height:1.38;letter-spacing:-.3px;margin:0 0 12px}h3{font-size:19px;line-height:1.45;margin:23px 0 9px}h4{font-size:17px;margin:12px 0 6px}
+p{color:var(--body);margin:0 0 13px;line-height:1.76}
+strong{color:#2c3d50}
+a{color:#416f9c;text-decoration:none}a:hover{text-decoration:underline}
+header{border-bottom:1px solid var(--line);padding:0 0 23px;margin-bottom:25px}
+.subtitle{font-size:16px;color:var(--body);margin-bottom:0}
+nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 36px}
+nav a{color:#456078;border:1px solid var(--line);border-radius:5px;padding:11px 12px;font-weight:600;font-size:15px;line-height:1.42}
+nav .n{font:600 13px 'JetBrains Mono',monospace;color:#8a9ba9;margin-right:7px}
+section{margin-bottom:42px;scroll-margin-top:22px}
+.sectionlead{margin:0 0 18px}
+.rule{height:1px;background:var(--line);margin:24px 0}
+ul,ol{padding-left:25px;margin:7px 0 15px;color:var(--body)}li{margin-bottom:6px}li::marker{color:#7387a0}
+code,pre,.mono{font-family:'JetBrains Mono',Consolas,monospace}
+code{font-size:16px;color:#355270;background:#f0f3f7;border:1px solid #e1e7ee;padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
+pre{font-size:16px;line-height:1.63;white-space:pre;tab-size:4;margin:0}
+pre code{font-size:inherit;background:transparent;border:0;padding:0;overflow-wrap:normal}
+.codebox{background:#f7f8fa;border:1px solid var(--line);border-radius:6px;padding:17px 18px;overflow-x:auto;margin:13px 0 17px}
+.note,.definition{margin:16px 0;padding:12px 16px 13px;border-left:3px solid #97afc7;background:#f7f9fc;border-radius:0 5px 5px 0}
+.definition{border-color:#6189b4;background:#f4f8fc}.note p:last-child,.definition p:last-child{margin:0}
+.note.warn{border-color:#bd9b66;background:#fffaf3}
+.note .short,.definition .short{font-weight:700;margin-bottom:3px;color:#38536d}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:5px;margin:14px 0 19px}
+table{border-collapse:collapse;width:100%;font-size:16px;text-align:left}
+th,td{padding:11px 13px;border-bottom:1px solid #e8edf3;vertical-align:top;line-height:1.55}
+th{color:#344d66;background:#f5f7fa;font-weight:700}td{color:#43556b}tbody tr:last-child td{border-bottom:0}
+.tablebox table{min-width:610px}
+.tablebox.small table{min-width:530px}
+mark{padding:2px 4px;border-radius:3px;color:#284b6b;background:#e3f1ff}
+.figure{border:1px solid var(--line);border-radius:6px;background:#fff;margin:14px 0 18px;overflow:hidden}
+.figure-title{font-size:16px;font-weight:600;color:#52677e;padding:10px 15px;border-bottom:1px solid #e7ebf0;background:#fafbfd}
+.figure-body{padding:19px 16px}
+.figure-caption{font-size:15px;line-height:1.55;padding:0 16px 15px;color:var(--muted)}
+.flex{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.panel{border:1px solid #dfe6ed;border-radius:5px;padding:15px 17px}
+.panel h4:first-child{margin-top:0}.panel p:last-child{margin-bottom:0}
+.array{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:11px 0 17px;min-width:550px}
+.cell{text-align:center;min-width:0}
+.cell .idx{font:13px/1.65 'JetBrains Mono',monospace;color:#7b8896;margin-bottom:3px}
+.cell .val{background:#fff;border:1px solid #bfcad7;padding:8px 0;border-radius:4px;font:600 16px/1.3 'JetBrains Mono',monospace;color:#34506b}
+.cell.changed .val{background:#dceeff;border-color:#79a7d6;color:#1d4c80}
+.arr-scroll{overflow:auto}
+.rowlabel{font-weight:700;color:#344a60;font-size:16px;margin:7px 0}
+.inlinecode{font:600 16px 'JetBrains Mono',monospace;color:#395b7a}
+.kwd{color:#8250aa;font-weight:600}.codecomment{color:#738196}
+svg{display:block;width:100%;height:auto}svg text{font-family:'Space Grotesk',Arial,sans-serif;fill:#35475b;font-size:16px}
+svg .node{fill:#fff;stroke:#829cb9;stroke-width:2}svg .node-tint{fill:#e9f3fc;stroke:#6c98c7;stroke-width:2}
+svg .arr{stroke:#738da9;stroke-width:2.2;fill:none;stroke-linecap:round}svg .accent{stroke:#4d80b5;stroke-width:3}
+svg .lab{fill:#5c7088;font-size:15px}svg .heavy{font-weight:700}
+svg .faint{fill:#8393a3;font-size:14px}
+.summary-table{margin-top:16px}
+.grid-row{display:flex;align-items:center;gap:15px;justify-content:center;flex-wrap:wrap}
+.perc{display:grid;grid-template-columns:repeat(5,47px);gap:4px;justify-content:center;flex:none}
+.perc .sq{width:47px;height:47px;border:1px solid #bbc5d0;background:#fff;border-radius:2px;position:relative}
+.perc .sq.block{background:#3f4a55;border-color:#3f4a55}
+.perc .sq.path{background:#cfe5f9;border-color:#83add6}
+.perc .sq.path:after{content:'•';position:absolute;inset:0;display:grid;place-items:center;color:#3675b5;font-size:23px}
+.percnotes{max-width:370px;color:var(--body)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:15px;color:#546a7e;margin:7px 0 0}
+.legend .sw{display:inline-block;width:14px;height:14px;border:1px solid #b8c8da;vertical-align:-2px;margin-right:5px;border-radius:2px}
+.boxed-formula{background:#f4f7fb;border:1px solid #d9e4ef;padding:11px 13px;border-radius:5px;font:600 16px/1.6 'JetBrains Mono',monospace;color:#365a7e;overflow:auto;margin:10px 0 16px;white-space:pre-wrap}
+details{border:1px solid var(--line);border-radius:5px;margin:17px 0;background:#fff}
+details summary{cursor:pointer;padding:12px 15px;font-weight:700;color:#3b5c7d;list-style-position:inside}
+details .detail-inner{padding:0 16px 16px}
+details .codebox{margin-bottom:0}
+.ques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.qa{border-left:2px solid #9eb6ce;padding:8px 15px;border-top:1px solid #e9edf2;border-right:1px solid #e9edf2;border-bottom:1px solid #e9edf2;border-radius:3px}
+.qa .q{font-weight:700;color:#3a5169;margin-bottom:5px}
+.qa .answer{color:#51677b;font-size:16px}
+.tiny{color:var(--muted);font-size:15px}
+.print{float:right;border:1px solid #dfe6ee;border-radius:4px;background:#fff;color:#5f7286;padding:7px 11px;font:600 15px 'Space Grotesk',Arial;cursor:pointer}
+@media(max-width:790px){body{padding:24px 13px 60px}h1{font-size:28px}h2{font-size:22px}nav{grid-template-columns:repeat(2,minmax(0,1fr))}.flex,.ques{grid-template-columns:1fr}.figure-body{padding:11px}.perc{grid-template-columns:repeat(5,43px)}.perc .sq{width:43px;height:43px}.print{float:none;display:block;margin-bottom:12px}.large-svg{min-width:660px}.svg-scroll{overflow-x:auto}}
+@media(max-width:430px){nav{grid-template-columns:1fr}.perc{grid-template-columns:repeat(5,38px)}.perc .sq{width:38px;height:38px}th,td{padding:9px 10px}.figure-title{padding:9px 10px}}
+@media print{*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body{padding:0;color:#222}main{max-width:none}.print,nav{display:none}header{padding-bottom:10px;margin-bottom:12px}section{margin-bottom:24px}h2,h3{break-after:avoid}.figure,.tablebox,.note,.panel,.definition{break-inside:avoid}details:not([open]) .detail-inner{display:block}details{break-inside:avoid}@page{size:A4;margin:15mm}}
+
+/* supplementary diagrams for linked structures and circular queue */
+.chain{display:flex;gap:0;align-items:center;justify-content:flex-start;overflow:auto;padding:14px 1px 5px;font-family:'JetBrains Mono',Consolas,monospace}
+.linknode{min-width:76px;border:1px solid #b5c6d7;border-radius:4px;display:flex;flex-direction:column;text-align:center;flex:none;background:white;color:#34516c}
+.linknode .value{font-size:16px;padding:9px 8px;background:#f1f6fb;font-weight:600;border-bottom:1px solid #d1dde9}
+.linknode .next{font-size:14px;padding:2px 5px;color:#637c96}
+.linknode.highlight .value{background:#dcecff;color:#174d81}
+.pointer{font-size:18px;color:#8096ac;margin:0 8px;flex:none}
+.arrviz{display:flex;gap:5px;min-width:max-content;padding:5px 0 10px}
+.arrviz .slot{min-width:68px;text-align:center;flex:none}
+.arrviz .index{font:13px/1.4 'JetBrains Mono',monospace;color:#748396}
+.arrviz .v{border:1px solid #bfcbd9;border-radius:4px;padding:8px 4px;font:600 16px/1.45 'JetBrains Mono',monospace;background:#fff}
+.arrviz .slot.active .v{background:#e2f1ff;color:#225786;border-color:#90afd1}
+.arrviz .slot.blank .v{background:#f5f7fa;color:#9daab6}
+.arrviz .slot.front .v{box-shadow:inset 0 -4px 0 #8cabcf}
+.arrviz .slot.back .v{box-shadow:inset 0 -4px 0 #8bc6ae}
+.trace-table{min-width:650px}
+.trace-table td,.trace-table th{padding:9px 12px}
+.trace-table td:first-child,.trace-table td:nth-child(2){font-family:'JetBrains Mono',monospace}
+.process{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0 5px}
+.process span{padding:10px 13px;background:#f1f6fb;border:1px solid #ccdbea;border-radius:4px;font-weight:600}
+.process em{font-style:normal;color:#6785a3}
+.reading-tag{color:#65788b;font-size:15px}
+@media(max-width:790px){.process span{padding:8px 10px}}
+
+
+/* Analysis of Algorithms — additional layout primitives */
+.formula{margin:12px 0 19px;border:1px solid #dbe6f1;background:#f4f8fc;color:#2d527a;font:600 16px/1.7 'JetBrains Mono',Consolas,monospace;padding:13px 16px;border-radius:5px;overflow-x:auto;white-space:nowrap}
+.figure-body{overflow-x:auto}
+.figure-body svg{min-width:720px}
+.step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:17px 0 19px}
+.step{border:1px solid #dce5ee;border-radius:5px;padding:12px 15px;background:#fafcff}
+.step strong{display:block;font-size:17px;color:#34536f;margin-bottom:5px}
+.step p{margin-bottom:0}.stepno{display:inline-grid;place-items:center;width:27px;height:27px;background:#e5f0fa;color:#3c719f;border-radius:50%;font:700 15px 'JetBrains Mono',monospace;margin-bottom:8px}
+.tablebox{scrollbar-width:thin}
+.tablebox small{font-size:15px}
+@media(max-width:790px){.step-grid{grid-template-columns:1fr}.figure-body svg{min-width:870px}}
+@media print{.figure-body svg{min-width:0}.step-grid{grid-template-columns:repeat(3,1fr)}}
+</style></head><body><main>
+<header>
+<h1>Analysis of Algorithms</h1>
+<p class="subtitle">Đo hiệu năng · Mô hình toán học · Tốc độ tăng trưởng · Binary Search · Giới hạn thuật toán · Bộ nhớ</p>
+</header>
+<nav aria-label="Mục lục">
+<a href="#foundations"><span class="n">01</span> Tư duy phân tích</a>
+<a href="#empirical"><span class="n">02</span> Phân tích thực nghiệm</a>
+<a href="#doubling"><span class="n">03</span> Doubling Hypothesis</a>
+<a href="#model"><span class="n">04</span> Mô hình toán học</a>
+<a href="#counting"><span class="n">05</span> Đếm phép toán</a>
+<a href="#asymptotic"><span class="n">06</span> Ký hiệu &amp; tăng trưởng</a>
+<a href="#binary"><span class="n">07</span> Binary Search</a>
+<a href="#threesum"><span class="n">08</span> Cải tiến 3-SUM</a>
+<a href="#theory"><span class="n">09</span> Lý thuyết thuật toán</a>
+<a href="#memory"><span class="n">10</span> Phân tích bộ nhớ</a>
+<a href="#review"><span class="n">11</span> Tổng hợp ôn thi</a>
+</nav>
+<section id="foundations">
+<h2>1. Vì sao cần phân tích thuật toán?</h2>
+<p>Một chương trình cho kết quả đúng chưa chắc đã sử dụng được với dữ liệu lớn. Phân tích thuật toán trả lời hai câu hỏi: <strong>nó chạy trong bao lâu</strong> và <strong>nó cần bao nhiêu bộ nhớ</strong> khi kích thước đầu vào tăng.</p>
+<div class="tablebox small"><table><thead><tr><th>Mục tiêu</th><th>Ý nghĩa</th></tr></thead><tbody>
+<tr><td>Dự đoán hiệu năng</td><td>Ước tính chương trình xử lý được đầu vào lớn tới đâu.</td></tr>
+<tr><td>So sánh thuật toán</td><td>Đánh giá sự khác biệt khi cùng giải một bài toán.</td></tr>
+<tr><td>Đưa ra bảo đảm</td><td>Ví dụ giới hạn thời gian ở trường hợp xấu nhất.</td></tr>
+<tr><td>Tránh lỗi hiệu năng</td><td>Tránh chương trình đúng về logic nhưng quá chậm hoặc hết RAM.</td></tr>
+</tbody></table></div>
+<p>Hai cách tiếp cận <strong>bổ sung cho nhau</strong>: phân tích thực nghiệm đo thời gian trên máy tính thật; phân tích toán học đếm công việc dựa trên cấu trúc chương trình. Cách thứ nhất giúp <em>dự đoán và kiểm chứng</em>; cách thứ hai giúp <em>giải thích nguyên nhân</em> và suy rộng sang hệ thống khác.</p>
+<div class="figure"><div class="figure-title">Chu trình phân tích theo phương pháp khoa học</div><div class="figure-body"><svg aria-label="Quan sát dữ liệu, giả thuyết mô hình, dự đoán, kiểm chứng, điều chỉnh" role="img" viewbox="0 0 920 170"><defs><marker id="arr1" markerheight="9" markerwidth="9" orient="auto" refx="8" refy="4.5"><path d="M0,0 L9,4.5 L0,9" fill="#819bb7"></path></marker></defs>
+<g fill="#f3f7fb" stroke="#afc2d5" stroke-width="1.6"><rect height="66" rx="6" width="158" x="7" y="35"></rect><rect height="66" rx="6" width="158" x="193" y="35"></rect><rect height="66" rx="6" width="158" x="379" y="35"></rect><rect height="66" rx="6" width="158" x="565" y="35"></rect><rect height="66" rx="6" width="158" x="751" y="35"></rect></g>
+<g font-size="17" font-weight="600" text-anchor="middle"><text x="86" y="62">Quan sát</text><text x="86" y="83">&amp; đo đạc</text><text x="272" y="62">Lập giả thuyết</text><text x="272" y="83">T(N) ≈ aNᵇ</text><text x="458" y="62">Dự đoán</text><text x="458" y="83">T(2N)</text><text x="644" y="62">Đo lại</text><text x="644" y="83">để kiểm chứng</text><text x="830" y="62">Điều chỉnh</text><text x="830" y="83">mô hình</text></g>
+<g fill="none" marker-end="url(#arr1)" stroke="#819bb7" stroke-width="2.5"><path d="M165 68 H192"></path><path d="M351 68 H378"></path><path d="M537 68 H564"></path><path d="M723 68 H750"></path></g><path d="M829 103 V138 H275 V102" fill="none" stroke="#b3c3d3" stroke-dasharray="6 5" stroke-width="2"></path><text class="lab" text-anchor="middle" x="548" y="158">Lặp cho đến khi quan sát phù hợp giả thuyết</text></svg></div></div>
+<div class="note"><p>Thí nghiệm phải <strong>có thể tái lập</strong>; giả thuyết phải <strong>có thể bị bác bỏ</strong> bằng dữ liệu. Một kết quả benchmark đơn lẻ chưa đủ để khẳng định độ phức tạp.</p></div>
+</section>
+<section id="empirical">
+<h2>2. Phân tích thực nghiệm với bài toán 3-SUM</h2>
+<h3>2.1. Bài toán và thuật toán vét cạn</h3>
+<p>Cho <strong>N số nguyên phân biệt</strong>, đếm các bộ ba chỉ số <code>i &lt; j &lt; k</code> thỏa <code>a[i] + a[j] + a[k] == 0</code>. Quy ước thứ tự chỉ số tránh đếm trùng bộ ba.</p>
+<div class="codebox"><pre><code>static int threeSum(int[] a) {
+    int n = a.length;
+    int count = 0;
+    for (int i = 0; i &lt; n; i++)
+        for (int j = i + 1; j &lt; n; j++)
+            for (int k = j + 1; k &lt; n; k++)
+                if (a[i] + a[j] + a[k] == 0)
+                    count++;
+    return count;
+}</code></pre></div>
+<p>Với <code>[30, -40, -20, -10, 40, 0, 10, 5]</code>, có <strong>4 bộ ba</strong>: <code>(30,-40,10)</code>, <code>(30,-20,-10)</code>, <code>(-40,40,0)</code>, <code>(-10,0,10)</code>.</p>
+<div class="note warn"><p>Mã trên theo mô hình đơn giản của bài học: chưa xử lý trường hợp <strong>tràn số nguyên</strong> khi cộng ba số rất lớn.</p></div>
+<h3>2.2. Đo thời gian với các kích thước N</h3>
+<p>Đo thời gian thực thi bằng <code>Stopwatch</code> hoặc đồng hồ tương đương, lặp lại với nhiều kích thước dữ liệu và quan sát quy luật:</p>
+<div class="tablebox small"><table><thead><tr><th>N</th><th>Thời gian quan sát</th><th>Tỉ số so với N/2</th></tr></thead><tbody>
+<tr><td>1.000</td><td>0,1 s</td><td>—</td></tr><tr><td>2.000</td><td>0,8 s</td><td>≈ 8</td></tr><tr><td>4.000</td><td>6,4 s</td><td>≈ 8</td></tr><tr><td>8.000</td><td>51,1 s</td><td>≈ 8</td></tr><tr><td>16.000</td><td><strong>Dự đoán ≈ 408 s</strong></td><td>≈ 8</td></tr>
+</tbody></table></div>
+<p>Từ dữ liệu, có thể nghi ngờ <code>T(N) ≈ aN³</code>. Phép đo bổ sung tại <code>N = 16.000</code> cho kết quả khoảng <strong>410,8 s</strong>, gần với dự đoán.</p>
+<div class="figure"><div class="figure-title">Dữ liệu đo: khi N tăng gấp đôi, thời gian xấp xỉ gấp 8</div><div class="figure-body"><svg aria-label="Biểu đồ logarit theo trục thời gian cho 3-SUM, điểm tăng gấp 8 ở mỗi lần N gấp đôi" role="img" viewbox="0 0 920 355"><g stroke="#e2e8f0" stroke-width="1.2"><path d="M91 50H860 M91 111H860 M91 172H860 M91 233H860 M91 294H860"></path><path d="M120 40V295 M341 40V295 M562 40V295 M783 40V295"></path></g><path d="M91 35V295H865" fill="none" stroke="#657e9a" stroke-width="2"></path><g fill="#66788b" font-size="16"><text x="45" y="299">0.1</text><text x="45" y="238">0.8</text><text x="45" y="177">6.4</text><text x="35" y="116">51.1</text><text x="25" y="55">408</text><text text-anchor="middle" x="120" y="326">1K</text><text text-anchor="middle" x="341" y="326">2K</text><text text-anchor="middle" x="562" y="326">4K</text><text text-anchor="middle" x="783" y="326">8K</text></g><polyline fill="none" points="120,294 341,233 562,172 783,111" stroke="#5989bb" stroke-width="4"></polyline><g fill="#fff" stroke="#5685b8" stroke-width="3"><circle cx="120" cy="294" r="7"></circle><circle cx="341" cy="233" r="7"></circle><circle cx="562" cy="172" r="7"></circle><circle cx="783" cy="111" r="7"></circle></g><text font-weight="700" text-anchor="middle" x="531" y="55">Đường thẳng trên biểu đồ log–log</text><text class="lab" text-anchor="middle" x="477" y="344">Kích thước N (mỗi bước nhân đôi)</text><text class="lab" x="150" y="25">Trục dọc tăng theo cấp số ×8</text></svg></div><div class="figure-caption">Biểu đồ dùng các mức logarit; khoảng cách bằng nhau trên trục dọc biểu thị thời gian nhân 8, không phải cộng một hằng số.</div></div>
+<h3>2.3. Log–log plot và hồi quy</h3>
+<p>Nếu thời gian xấp xỉ một <strong>hàm lũy thừa</strong> <code>T(N) ≈ aNᵇ</code> thì lấy log hai vế:</p>
+<div class="formula">lg T(N) ≈ b · lg N + lg a</div>
+<p>Vì vậy, đồ thị <code>lg T</code> theo <code>lg N</code> gần đường thẳng với <strong>hệ số góc b</strong>. Với dữ liệu 3-SUM trong bài, đường hồi quy cho <code>b ≈ 2,999</code>, nên suy ra tốc độ tăng xấp xỉ bậc ba.</p>
+<p><strong>Không nhầm:</strong> đo thực nghiệm giúp nhận diện quy luật trên phạm vi thử nghiệm; riêng nó không chứng minh chắc chắn rằng mọi đầu vào và mọi N đều tuân theo quy luật đó.</p>
+</section>
+<section id="doubling">
+<h2>3. Doubling Hypothesis — thử nghiệm nhân đôi</h2>
+<p>Đây là cách ước lượng nhanh số mũ tăng trưởng. Giả sử <code>T(N) ≈ aNᵇ</code>; khi nhân đôi kích thước đầu vào:</p>
+<div class="formula">R(N) = T(2N) / T(N) ≈ 2ᵇ   ⇒   b ≈ lg R(N)</div>
+<div class="tablebox small"><table><thead><tr><th>Tỉ số R khi N → 2N</th><th>Ước lượng b</th><th>Độ tăng</th></tr></thead><tbody>
+<tr><td>1</td><td>0</td><td>Hằng số</td></tr><tr><td>2</td><td>1</td><td>Tuyến tính</td></tr><tr><td>4</td><td>2</td><td>Bậc hai</td></tr><tr><td>8</td><td>3</td><td>Bậc ba</td></tr>
+</tbody></table></div>
+<p>Để ước lượng hệ số <code>a</code>, lấy một giá trị N đủ lớn và thay vào <code>a ≈ T(N)/Nᵇ</code>. Ví dụ <code>T(8.000) = 51,1 s</code>, <code>b = 3</code> cho <code>a ≈ 9,98 × 10⁻¹¹ s</code>.</p>
+<div class="note"><p><strong>Giới hạn quan trọng:</strong> phép nhân đôi thuần túy khó nhận ra thừa số logarit. Chẳng hạn <code>N</code> và <code>N lg N</code> đều có tỉ số tiến về 2 khi N tăng lớn. Thời gian quá nhỏ bị làm tròn thành 0, việc cấp phát, JIT, GC, cache và dữ liệu đầu vào cũng gây nhiễu.</p></div>
+<p>Để đo đáng tin cậy, cố định môi trường, chọn đầu vào đại diện, chạy nhiều lần, warm-up nếu cần và so sánh trên đủ nhiều bậc kích thước. Các yếu tố <em>thuật toán và dữ liệu</em> ảnh hưởng đến số phép toán, trong khi <em>phần cứng, trình biên dịch, JVM và hệ điều hành</em> ảnh hưởng mạnh đến hệ số thời gian đo được.</p>
+</section>
+<section id="model">
+<h2>4. Mô hình toán học: chi phí × số lần thực hiện</h2>
+<div class="definition"><p><strong>Nguyên lý:</strong> Tổng thời gian chạy là tổng <em>chi phí của từng loại thao tác</em> nhân với <em>số lần thao tác đó xảy ra</em>.</p></div>
+<div class="formula">T(N) = c₁f₁(N) + c₂f₂(N) + ⋯ + cₘfₘ(N)</div>
+<p>Trong đó <code>cᵢ</code> là chi phí thao tác (có thể phụ thuộc máy và trình biên dịch), còn <code>fᵢ(N)</code> là số lần thao tác xuất hiện (phụ thuộc thuật toán và dữ liệu).</p>
+<div class="tablebox small"><table><thead><tr><th>Thao tác Java</th><th>Chi phí mô hình</th><th>Lưu ý</th></tr></thead><tbody>
+<tr><td><code>a + b</code>, <code>a &lt; b</code>, <code>a = b</code></td><td>O(1)</td><td>Phép toán nguyên thủy.</td></tr><tr><td><code>a[i]</code>, <code>a.length</code></td><td>O(1)</td><td>Truy cập phần tử và đọc độ dài.</td></tr><tr><td><code>new int[N]</code></td><td>O(N)</td><td>Khởi tạo N phần tử.</td></tr><tr><td><code>new int[N][N]</code></td><td>O(N²)</td><td>N² phần tử.</td></tr><tr><td>Nối chuỗi liên tục</td><td>Không mặc định O(1)</td><td>Việc tạo/copy chuỗi có thể tốn theo chiều dài chuỗi.</td></tr>
+</tbody></table></div>
+<p>Muốn mô hình đơn giản mà vẫn có giá trị, ta chọn một <strong>cost model</strong> — chẳng hạn <em>số lần truy cập mảng</em> — làm đại diện cho tổng công việc, thay vì cố đếm mọi thao tác máy.</p>
+<div class="note"><p>Không phải phép toán Java nào cũng có chi phí chính xác như bảng trên ở mọi JVM hoặc đầu vào; đây là <strong>mô hình phân tích tiệm cận</strong>, không phải bảng số nano-giây cố định.</p></div>
+</section>
+<section id="counting">
+<h2>5. Đếm số phép toán qua 1-SUM, 2-SUM, 3-SUM</h2>
+<p>Điểm mấu chốt là <strong>đếm chính xác số lượt chạy thân vòng lặp</strong>, rồi nhân với số phép toán ta đã chọn làm cost model.</p>
+<h3>5.1. 1-SUM — một vòng lặp</h3>
+<div class="codebox"><pre><code>int count = 0;
+for (int i = 0; i &lt; N; i++)
+    if (a[i] == 0) count++;</code></pre></div>
+<p>Có N lượt kiểm tra điều kiện và <strong>N lượt đọc <code>a[i]</code></strong>. Theo cost model truy cập mảng, chi phí là <code>N</code>, tốc độ tăng <strong>tuyến tính</strong>.</p>
+<h3>5.2. 2-SUM — các cặp i &lt; j</h3>
+<div class="codebox"><pre><code>int count = 0;
+for (int i = 0; i &lt; N; i++)
+    for (int j = i + 1; j &lt; N; j++)
+        if (a[i] + a[j] == 0) count++;</code></pre></div>
+<p>Với mỗi <code>i</code>, có <code>N-i-1</code> giá trị của <code>j</code>. Tổng số cặp là:</p>
+<div class="formula">∑ᵢ₌₀ᴺ⁻¹ (N − i − 1) = 0 + 1 + ⋯ + (N − 1) = N(N − 1)/2 = C(N, 2)</div>
+<p>Mỗi cặp cần <strong>2 lần truy cập mảng</strong> (<code>a[i]</code> và <code>a[j]</code>), nên tổng truy cập mảng là:</p>
+<div class="formula">A₂(N) = 2 · C(N, 2) = N(N − 1) ∼ N²</div>
+<div class="figure"><div class="figure-title">Vì sao không phải N² cặp?</div><div class="figure-body"><svg aria-label="Ma trận với ô tam giác phía trên đường chéo đại diện các cặp i nhỏ hơn j" role="img" viewbox="0 0 880 250"><g font-size="16" text-anchor="middle"><text x="83" y="26">j = 0</text><text x="155" y="26">1</text><text x="227" y="26">2</text><text x="299" y="26">3</text><text x="371" y="26">4</text><text x="443" y="26">5</text></g><g fill="#e0eefb" stroke="#9fc0df" stroke-width="1.4"><rect height="28" rx="3" width="52" x="120" y="40"></rect><rect height="28" rx="3" width="52" x="192" y="40"></rect><rect height="28" rx="3" width="52" x="264" y="40"></rect><rect height="28" rx="3" width="52" x="336" y="40"></rect><rect height="28" rx="3" width="52" x="408" y="40"></rect><rect height="28" rx="3" width="52" x="192" y="76"></rect><rect height="28" rx="3" width="52" x="264" y="76"></rect><rect height="28" rx="3" width="52" x="336" y="76"></rect><rect height="28" rx="3" width="52" x="408" y="76"></rect><rect height="28" rx="3" width="52" x="264" y="112"></rect><rect height="28" rx="3" width="52" x="336" y="112"></rect><rect height="28" rx="3" width="52" x="408" y="112"></rect><rect height="28" rx="3" width="52" x="336" y="148"></rect><rect height="28" rx="3" width="52" x="408" y="148"></rect><rect height="28" rx="3" width="52" x="408" y="184"></rect></g><g font-size="17"><text x="18" y="61">i=0</text><text x="18" y="96">i=1</text><text x="18" y="131">i=2</text><text x="18" y="167">i=3</text><text x="18" y="202">i=4</text><text x="18" y="236">i=5</text><text font-weight="700" x="569" y="100">5 + 4 + 3 + 2 + 1</text><text x="569" y="135">= 15 cặp khi N = 6</text><text class="lab" x="569" y="180">Chỉ đếm phần tam giác i &lt; j</text></g></svg></div></div>
+<h3>5.3. 3-SUM — các bộ ba i &lt; j &lt; k</h3>
+<p>Số bộ ba được duyệt là <code>C(N,3) = N(N−1)(N−2)/6</code>. Mỗi lượt kiểm tra đọc ba phần tử, do đó:</p>
+<div class="formula">A₃(N) = 3 · C(N, 3) = N(N − 1)(N − 2)/2 ∼ ½ N³</div>
+<div class="tablebox"><table><thead><tr><th>Thuật toán</th><th>Số tổ hợp được kiểm tra</th><th>Số truy cập mảng (cost model)</th><th>Bậc tăng</th></tr></thead><tbody>
+<tr><td>1-SUM</td><td>N phần tử</td><td>N</td><td>N</td></tr><tr><td>2-SUM</td><td>C(N,2) ∼ ½N²</td><td>N(N−1) ∼ N²</td><td>N²</td></tr><tr><td>3-SUM</td><td>C(N,3) ∼ ⅙N³</td><td>3C(N,3) ∼ ½N³</td><td>N³</td></tr>
+</tbody></table></div>
+<div class="note warn"><p><strong>Bẫy hay gặp:</strong> <code>⅙N³</code> là <em>số bộ ba</em>, còn <code>½N³</code> là <em>số truy cập mảng</em> nếu mỗi lần kiểm tra đọc đúng 3 phần tử. Chúng không mâu thuẫn.</p></div>
+<h3>5.4. Ước lượng các tổng thường gặp</h3>
+<div class="tablebox small"><table><thead><tr><th>Tổng</th><th>Xấp xỉ với N lớn</th></tr></thead><tbody>
+<tr><td><code>1 + 2 + ⋯ + N</code></td><td>∼ N²/2</td></tr><tr><td><code>1ᵏ + 2ᵏ + ⋯ + Nᵏ</code> (k cố định ≥ 0)</td><td>∼ Nᵏ⁺¹/(k+1)</td></tr><tr><td><code>1 + 1/2 + ⋯ + 1/N</code></td><td>∼ ln N</td></tr><tr><td><code>1 + 1/2 + 1/4 + ⋯</code></td><td>= 2</td></tr>
+</tbody></table></div>
+<p>Thay tổng bằng tích phân là một kỹ thuật tốt để tìm bậc tăng của các tổng biến thiên đều, nhưng <strong>không phải lúc nào tích phân cũng cho xấp xỉ tương đương</strong> (ví dụ cấp số nhân vô hạn).</p>
+</section>
+<section id="asymptotic">
+<h2>6. Tilde notation và các bậc tăng trưởng</h2>
+<h3>6.1. Dấu ∼ khác gì O(N)?</h3>
+<div class="definition"><p><strong>Tilde notation:</strong> <code>f(N) ∼ g(N)</code> khi <code>lim [f(N)/g(N)] = 1</code> lúc <code>N → ∞</code>. Nó giữ <em>đúng hệ số của số hạng dẫn đầu</em>.</p></div>
+<div class="formula">⅙N³ − ½N² + ⅓N ∼ ⅙N³    nhưng    Θ(N³) chỉ ghi bậc N³</div>
+<p><strong>Order of growth</strong> chỉ giữ dạng tăng trưởng, bỏ cả hằng số nhân lẫn số hạng bậc thấp. Nếu <code>f(N) ∼ c·g(N)</code> với <code>c &gt; 0</code>, ta nói tốc độ tăng của f là <code>g(N)</code>.</p>
+<div class="tablebox"><table><thead><tr><th>Tên gọi</th><th>Dạng</th><th>Ví dụ điển hình</th><th>T(2N)/T(N)</th></tr></thead><tbody>
+<tr><td>Constant</td><td>1</td><td>Phép cộng số nguyên</td><td>1</td></tr>
+<tr><td>Logarithmic</td><td>lg N</td><td>Binary Search</td><td>→ 1</td></tr>
+<tr><td>Linear</td><td>N</td><td>Tìm Max</td><td>2</td></tr>
+<tr><td>Linearithmic</td><td>N lg N</td><td>Merge Sort</td><td>→ 2</td></tr>
+<tr><td>Quadratic</td><td>N²</td><td>Duyệt mọi cặp</td><td>4</td></tr>
+<tr><td>Cubic</td><td>N³</td><td>Brute-force 3-SUM</td><td>8</td></tr>
+<tr><td>Exponential</td><td>2ᴺ</td><td>Duyệt tất cả tập con</td><td>2ᴺ</td></tr>
+</tbody></table></div>
+<p>Với N lớn, thứ tự tăng từ chậm đến nhanh thường là <code>1 &lt; lg N &lt; N &lt; N lg N &lt; N² &lt; N³ &lt; 2ᴺ</code>. Trong thực tế, <em>hằng số nhân</em> vẫn quyết định hiệu năng ở N nhỏ hoặc trung bình.</p>
+<div class="figure"><div class="figure-title">So sánh độ lớn tại các giá trị N</div><div class="figure-body"><svg aria-label="Biểu đồ log-log thực của lg N, N, N lg N và N bình phương" role="img" viewBox="0 0 920 346"><path d="M80 25V284H880" fill="none" stroke="#72869b" stroke-width="2"></path><path d="M80 280H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="286">2^0</text><path d="M80 258H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="264">2^1</text><path d="M80 236H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="242">2^2</text><path d="M80 214H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="220">2^3</text><path d="M80 192H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="198">2^4</text><path d="M80 170H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="176">2^5</text><path d="M80 148H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="154">2^6</text><path d="M80 126H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="132">2^7</text><path d="M80 104H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="110">2^8</text><path d="M80 82H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="88">2^9</text><path d="M80 60H880" stroke="#e5ebf2"></path><text class="lab" text-anchor="middle" x="47" y="66">2^10</text><path d="M124 28V280" stroke="#edf0f4"></path><text class="lab" text-anchor="middle" x="124" y="312">2</text><path d="M300 28V280" stroke="#edf0f4"></path><text class="lab" text-anchor="middle" x="300" y="312">4</text><path d="M476 28V280" stroke="#edf0f4"></path><text class="lab" text-anchor="middle" x="476" y="312">8</text><path d="M652 28V280" stroke="#edf0f4"></path><text class="lab" text-anchor="middle" x="652" y="312">16</text><path d="M828 28V280" stroke="#edf0f4"></path><text class="lab" text-anchor="middle" x="828" y="312">32</text><polyline fill="none" points="124.0,280.0 300.0,258.0 476.0,245.1 652.0,236.0 828.0,228.9" stroke="#4e8d9d" stroke-width="3.4"></polyline><circle cx="124.0" cy="280.0" fill="#4e8d9d" r="4.5"></circle><circle cx="300.0" cy="258.0" fill="#4e8d9d" r="4.5"></circle><circle cx="476.0" cy="245.1" fill="#4e8d9d" r="4.5"></circle><circle cx="652.0" cy="236.0" fill="#4e8d9d" r="4.5"></circle><circle cx="828.0" cy="228.9" fill="#4e8d9d" r="4.5"></circle><polyline fill="none" points="124.0,258.0 300.0,236.0 476.0,214.0 652.0,192.0 828.0,170.0" stroke="#588ac2" stroke-width="3.4"></polyline><circle cx="124.0" cy="258.0" fill="#588ac2" r="4.5"></circle><circle cx="300.0" cy="236.0" fill="#588ac2" r="4.5"></circle><circle cx="476.0" cy="214.0" fill="#588ac2" r="4.5"></circle><circle cx="652.0" cy="192.0" fill="#588ac2" r="4.5"></circle><circle cx="828.0" cy="170.0" fill="#588ac2" r="4.5"></circle><polyline fill="none" points="124.0,258.0 300.0,214.0 476.0,179.1 652.0,148.0 828.0,118.9" stroke="#8f75b2" stroke-width="3.4"></polyline><circle cx="124.0" cy="258.0" fill="#8f75b2" r="4.5"></circle><circle cx="300.0" cy="214.0" fill="#8f75b2" r="4.5"></circle><circle cx="476.0" cy="179.1" fill="#8f75b2" r="4.5"></circle><circle cx="652.0" cy="148.0" fill="#8f75b2" r="4.5"></circle><circle cx="828.0" cy="118.9" fill="#8f75b2" r="4.5"></circle><polyline fill="none" points="124.0,236.0 300.0,192.0 476.0,148.0 652.0,104.0 828.0,60.0" stroke="#c18c50" stroke-width="3.4"></polyline><circle cx="124.0" cy="236.0" fill="#c18c50" r="4.5"></circle><circle cx="300.0" cy="192.0" fill="#c18c50" r="4.5"></circle><circle cx="476.0" cy="148.0" fill="#c18c50" r="4.5"></circle><circle cx="652.0" cy="104.0" fill="#c18c50" r="4.5"></circle><circle cx="828.0" cy="60.0" fill="#c18c50" r="4.5"></circle><g font-size="16"><text class="lab" x="100" y="20">Giá trị hàm (trục log₂)</text><text class="lab" text-anchor="middle" x="480" y="335">N (trục log₂)</text></g><text font-size="17" font-weight="700" style="fill:#4e8d9d" text-anchor="start" x="140" y="19">lg N</text><text font-size="17" font-weight="700" style="fill:#588ac2" text-anchor="start" x="315" y="19">N</text><text font-size="17" font-weight="700" style="fill:#8f75b2" text-anchor="start" x="508" y="19">N lg N</text><text font-size="17" font-weight="700" style="fill:#c18c50" text-anchor="start" x="700" y="19">N²</text></svg></div><div class="figure-caption">Các đường vẽ từ giá trị thật của bốn hàm; trục ngang biểu diễn N theo log₂ và trục dọc biểu diễn giá trị hàm theo log₂.</div></div>
+<div class="note warn"><p><strong>Không suy đoán chỉ bằng số vòng <code>for</code>.</strong> Hai vòng lồng nhau có thể là <code>N²</code>, <code>N lg N</code> hoặc nhỏ hơn tùy cận và cách biến điều khiển thay đổi. Hãy viết số lượt lặp hoặc hệ thức truy hồi.</p></div>
+</section>
+<section id="binary">
+<h2>7. Binary Search — tìm kiếm nhị phân</h2>
+<p><strong>Điều kiện bắt buộc:</strong> mảng đã được sắp xếp. Mỗi lượt, so sánh <code>key</code> với phần tử giữa, rồi loại bỏ một nửa miền tìm kiếm còn lại.</p>
+<div class="codebox"><pre><code>static int binarySearch(int[] a, int key) {
+    int lo = 0, hi = a.length - 1;
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if      (key &lt; a[mid]) hi = mid - 1;
+        else if (key &gt; a[mid]) lo = mid + 1;
+        else return mid;
+    }
+    return -1;
+}</code></pre></div>
+<h3>7.1. Trace tìm số 33</h3>
+<p>Cho mảng tăng dần <code>[6,13,14,25,33,43,51,53,64,72,84,93,95,96,97]</code>:</p>
+<div class="tablebox"><table><thead><tr><th>Lượt</th><th>lo</th><th>hi</th><th>mid</th><th>a[mid]</th><th>Kết luận</th></tr></thead><tbody>
+<tr><td>1</td><td>0</td><td>14</td><td>7</td><td>53</td><td>33 &lt; 53 ⇒ hi = 6</td></tr>
+<tr><td>2</td><td>0</td><td>6</td><td>3</td><td>25</td><td>33 &gt; 25 ⇒ lo = 4</td></tr>
+<tr><td>3</td><td>4</td><td>6</td><td>5</td><td>43</td><td>33 &lt; 43 ⇒ hi = 4</td></tr>
+<tr><td>4</td><td>4</td><td>4</td><td>4</td><td>33</td><td><strong>Tìm thấy tại index 4</strong></td></tr>
+</tbody></table></div>
+<div class="figure"><div class="figure-title">Vùng tìm kiếm thu hẹp sau mỗi so sánh</div><div class="figure-body"><svg aria-label="Bốn lượt binary search lần lượt xét đoạn 0 đến14, 0 đến6, 4 đến6, và phần tử số 4" role="img" viewbox="0 0 920 278"><g font-size="15"><text font-weight="700" x="7" y="47">Lượt 1</text><text font-weight="700" x="7" y="106">Lượt 2</text><text font-weight="700" x="7" y="165">Lượt 3</text><text font-weight="700" x="7" y="224">Lượt 4</text></g><g stroke="#cad5df" stroke-width="1.1">
+<rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="104" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="126.5" y="58">0</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="155" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="177.5" y="58">1</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="206" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="228.5" y="58">2</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="257" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="279.5" y="58">3</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="308" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="330.5" y="58">4</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="359" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="381.5" y="58">5</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="410" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="432.5" y="58">6</text><rect fill="#bad9f5" height="34" rx="3" stroke="#4d8abc" width="45" x="461" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="483.5" y="58">7</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="512" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="534.5" y="58">8</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="563" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="585.5" y="58">9</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="614" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="636.5" y="58">10</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="665" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="687.5" y="58">11</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="716" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="738.5" y="58">12</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="767" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="789.5" y="58">13</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="818" y="36"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="840.5" y="58">14</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="104" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="126.5" y="117">0</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="155" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="177.5" y="117">1</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="206" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="228.5" y="117">2</text><rect fill="#bad9f5" height="34" rx="3" stroke="#4d8abc" width="45" x="257" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="279.5" y="117">3</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="308" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="330.5" y="117">4</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="359" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="381.5" y="117">5</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="410" y="95"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="432.5" y="117">6</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="461" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="483.5" y="117">7</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="512" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="534.5" y="117">8</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="563" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="585.5" y="117">9</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="614" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="636.5" y="117">10</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="665" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="687.5" y="117">11</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="716" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="738.5" y="117">12</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="767" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="789.5" y="117">13</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="818" y="95"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="840.5" y="117">14</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="104" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="126.5" y="176">0</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="155" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="177.5" y="176">1</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="206" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="228.5" y="176">2</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="257" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="279.5" y="176">3</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="308" y="154"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="330.5" y="176">4</text><rect fill="#bad9f5" height="34" rx="3" stroke="#4d8abc" width="45" x="359" y="154"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="381.5" y="176">5</text><rect fill="#e7f1fb" height="34" rx="3" stroke="#b6cce1" width="45" x="410" y="154"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="432.5" y="176">6</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="461" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="483.5" y="176">7</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="512" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="534.5" y="176">8</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="563" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="585.5" y="176">9</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="614" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="636.5" y="176">10</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="665" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="687.5" y="176">11</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="716" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="738.5" y="176">12</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="767" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="789.5" y="176">13</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="818" y="154"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="840.5" y="176">14</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="104" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="126.5" y="235">0</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="155" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="177.5" y="235">1</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="206" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="228.5" y="235">2</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="257" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="279.5" y="235">3</text><rect fill="#bad9f5" height="34" rx="3" stroke="#4d8abc" width="45" x="308" y="213"></rect><text fill="#244f7b" font-size="15" style="fill:#244f7b" text-anchor="middle" x="330.5" y="235">4</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="359" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="381.5" y="235">5</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="410" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="432.5" y="235">6</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="461" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="483.5" y="235">7</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="512" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="534.5" y="235">8</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="563" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="585.5" y="235">9</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="614" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="636.5" y="235">10</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="665" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="687.5" y="235">11</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="716" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="738.5" y="235">12</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="767" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="789.5" y="235">13</text><rect fill="#f2f4f6" height="34" rx="3" stroke="#e1e6eb" width="45" x="818" y="213"></rect><text fill="#b4c0cb" font-size="15" style="fill:#b4c0cb" text-anchor="middle" x="840.5" y="235">14</text>
+</g></svg></div><div class="figure-caption">Ô xanh là miền còn có thể chứa key; ô xanh đậm là vị trí giữa đang kiểm tra. Khi cập nhật <code>lo</code>/<code>hi</code>, những phần tử bị loại không cần xét lại.</div></div>
+<h3>7.2. Vì sao thời gian là O(lg N)?</h3>
+<p>Sau mỗi lượt so sánh, kích thước miền tìm kiếm còn <em>nhiều nhất khoảng một nửa</em>. Dùng một đơn vị chi phí là <strong>một phép so sánh ba ngả với khóa</strong>:</p>
+<div class="formula">T(N) ≤ T(⌊N/2⌋) + 1   ⇒   T(N) = O(lg N)</div>
+<p>Với <code>N = 2ᵏ</code>, sau k lần chia còn 1 phần tử, nên có thể chặn số lượt so sánh bởi khoảng <code>1 + lg N</code>. Thực hiện với vòng lặp thì <strong>thời gian O(lg N), bộ nhớ phụ O(1)</strong>.</p>
+<div class="note warn"><p><strong>Điểm dễ sai:</strong> viết <code>mid = (lo + hi)/2</code> có thể gây tràn số; viết <code>lo + (hi-lo)/2</code> an toàn hơn. Bất biến đúng là: <em>nếu key có trong mảng thì một vị trí của nó phải còn nằm trong đoạn [lo, hi]</em>. Không được truy cập <code>a[lo]</code> hoặc <code>a[hi]</code> khi đoạn đã rỗng.</p></div>
+</section>
+<section id="threesum">
+<h2>8. Cải tiến 3-SUM bằng sắp xếp + Binary Search</h2>
+<p>Thuật toán vét cạn xét mọi bộ ba, tốn O(N³). Có thể giảm số vòng lặp bằng cách <strong>sắp xếp</strong>, rồi với mỗi cặp <code>(i,j)</code> tìm phần tử thứ ba có giá trị <code>-(a[i]+a[j])</code> bằng Binary Search.</p>
+<div class="step-grid"><div class="step"><span class="stepno">1</span><strong>Sort</strong><p>Sắp xếp N phần tử: ở bài học xét bước này O(N²) nếu dùng Insertion Sort.</p></div><div class="step"><span class="stepno">2</span><strong>Enumerate</strong><p>Duyệt mọi cặp <code>i &lt; j</code>: có O(N²) cặp.</p></div><div class="step"><span class="stepno">3</span><strong>Search</strong><p>Tìm phần tử thứ ba chỉ ở đoạn <code>k &gt; j</code>: O(lg N) cho mỗi cặp.</p></div></div>
+<div class="formula">T(N) = O(N²) + O(N² lg N) = O(N² lg N)</div>
+<div class="codebox"><pre><code>static int threeSumFaster(int[] input) {
+    int[] a = input.clone();
+    java.util.Arrays.sort(a);
+    int n = a.length;
+    int count = 0;
+    for (int i = 0; i &lt; n; i++)
+        for (int j = i + 1; j &lt; n; j++) {
+            long target = -(long) a[i] - a[j];
+            if (target &lt; Integer.MIN_VALUE ||
+                target &gt; Integer.MAX_VALUE) continue;
+            if (java.util.Arrays.binarySearch(
+                    a, j + 1, n, (int) target) &gt;= 0)
+                count++;
+        }
+    return count;
+}</code></pre></div>
+<p>Ở đây điều kiện <code>k &gt; j</code> giúp chỉ đếm mỗi bộ ba một lần. Việc dùng <code>long</code> cho phép tính mục tiêu tránh tràn số khi trừ. Cài đặt này giả sử <strong>các số đầu vào phân biệt</strong>, đúng phạm vi bài toán được xét.</p>
+<div class="tablebox small"><table><thead><tr><th>Kích thước</th><th>Vét cạn O(N³)</th><th>Bản cải tiến O(N² lg N)</th></tr></thead><tbody>
+<tr><td>1.000</td><td>0,1 s</td><td>0,14 s</td></tr><tr><td>2.000</td><td>0,8 s</td><td>0,18 s</td></tr><tr><td>4.000</td><td>6,4 s</td><td>0,34 s</td></tr><tr><td>8.000</td><td>51,1 s</td><td>0,96 s</td></tr>
+</tbody></table></div>
+<p>Các số liệu minh họa cho thấy thuật toán có bậc tăng tốt hơn có thể chậm hơn ở N nhỏ (do hệ số và overhead), nhưng thắng rõ rệt khi N tăng. Nếu cải tiến việc tìm phần tử thứ ba, bài học còn nêu khả năng đạt <strong>O(N²)</strong>; chi tiết thuật toán này không phải trọng tâm tại đây.</p>
+</section>
+<section id="theory">
+<h2>9. Best / Average / Worst Case và lý thuyết thuật toán</h2>
+<h3>9.1. Ba cách đánh giá thời gian</h3>
+<div class="tablebox"><table><thead><tr><th>Khái niệm</th><th>Ý nghĩa đối với một thuật toán và cỡ N</th><th>Giá trị sử dụng</th></tr></thead><tbody>
+<tr><td><strong>Best case</strong></td><td>Chi phí nhỏ nhất trong các đầu vào cỡ N.</td><td>Thể hiện tình huống thuận lợi nhất.</td></tr>
+<tr><td><strong>Worst case</strong></td><td>Chi phí lớn nhất trong các đầu vào cỡ N.</td><td>Cho bảo đảm không vượt quá mức đó.</td></tr>
+<tr><td><strong>Average case</strong></td><td>Kỳ vọng chi phí theo một phân phối đầu vào được quy định.</td><td>Dự báo thời gian sử dụng điển hình theo mô hình đã chọn.</td></tr>
+</tbody></table></div>
+<p>Với <strong>brute-force 3-SUM</strong>, ba vòng lặp duyệt mọi bộ ba dù có bao nhiêu nghiệm, nên số truy cập mảng gần như giống nhau ở best/average/worst: <code>∼ ½N³</code>. Với <strong>Binary Search</strong>, tìm thấy ngay giữa mất Θ(1) trong best case; những trường hợp sâu hơn mất Θ(lg N).</p>
+<h3>9.2. Tilde, Big Theta, Big Oh, Big Omega</h3>
+<div class="tablebox"><table><thead><tr><th>Ký hiệu</th><th>Diễn giải chính xác</th><th>Ví dụ f(N) = 3N² + 4N + 5</th></tr></thead><tbody>
+<tr><td><code>f ∼ g</code></td><td>Hệ số chính xác của số hạng dẫn đầu; f/g → 1.</td><td><code>f ∼ 3N²</code>, không phải <code>f ∼ N²</code>.</td></tr>
+<tr><td><code>Θ(g)</code></td><td>Chặn trên và chặn dưới cùng bậc (nhân hằng số).</td><td><code>f ∈ Θ(N²)</code></td></tr>
+<tr><td><code>O(g)</code></td><td><strong>Chặn trên tiệm cận</strong>: f không lớn hơn hằng số nhân g khi N đủ lớn.</td><td><code>f ∈ O(N²)</code>, đồng thời <code>O(N³)</code>.</td></tr>
+<tr><td><code>Ω(g)</code></td><td><strong>Chặn dưới tiệm cận</strong>: f không nhỏ hơn hằng số nhân g khi N đủ lớn.</td><td><code>f ∈ Ω(N²)</code>, đồng thời <code>Ω(N)</code>.</td></tr>
+</tbody></table></div>
+<p>Với hàm chi phí không âm, <strong>Θ(g) = O(g) ∩ Ω(g)</strong> (theo nghĩa tập hợp hàm). Trong lời nói thông thường, nhiều người dùng “Big-O” để chỉ bậc tăng; khi làm bài lý thuyết cần nhớ <strong>O chỉ là chặn trên</strong>, không nhất thiết là chặn chặt nhất.</p>
+<div class="figure"><div class="figure-title">Trực giác về chặn trên và chặn dưới</div><div class="figure-body"><svg aria-label="Đồ thị minh họa cận trên O(g), hàm f, cận dưới Omega g" role="img" viewbox="0 0 920 286"><path d="M82 26V244H882" fill="none" stroke="#7287a0" stroke-width="2.1"></path><g stroke="#e2e8ef"><path d="M82 197H881M82 148H881M82 99H881M82 50H881"></path></g><path d="M85 232 Q316 223 500 158 T857 26" fill="none" stroke="#91afcd" stroke-dasharray="7 5" stroke-width="3"></path><path d="M85 238 Q327 232 505 187 T857 85" fill="none" stroke="#4f80b1" stroke-width="4"></path><path d="M85 241 Q327 238 505 218 T857 164" fill="none" stroke="#84afa0" stroke-dasharray="7 5" stroke-width="3"></path><g font-size="17" font-weight="600"><text fill="#547f9e" x="714" y="27">C·g(N) — trên</text><text fill="#3a699a" x="810" y="103">f(N)</text><text fill="#4f8d7b" x="700" y="175">c·g(N) — dưới</text></g><text class="lab" text-anchor="middle" x="474" y="273">N tăng →</text></svg></div><div class="figure-caption">Minh họa cho một hàm thuộc Θ(g): khi N đủ lớn, f bị kẹp giữa hai bội số dương của g.</div></div>
+<h3>9.3. Upper bound, lower bound và tối ưu</h3>
+<p><strong>Upper bound của bài toán</strong> thu được khi ta đưa ra một thuật toán cụ thể và chứng minh nó chạy không quá mức nào đó trong worst case. <strong>Lower bound của bài toán</strong> đòi hỏi chứng minh rằng mọi thuật toán trong mô hình tính toán đang xét đều cần ít nhất lượng công việc tương ứng.</p>
+<p>Ví dụ 1-SUM theo phiên bản quyết định “có phần tử nào bằng 0 không?”: quét hết mảng mất O(N); ở trường hợp bất lợi, không thể bỏ qua phần tử chưa kiểm tra vì phần tử đó có thể bằng 0 ⇒ Ω(N). Vậy bài toán có thuật toán worst-case tối ưu <strong>Θ(N)</strong>.</p>
+<div class="note"><p>Với 3-SUM, bài học trình bày các cận O(N³), O(N² lg N) và cận dưới cơ bản Ω(N), đồng thời nêu <em>khoảng cách giữa cận trên và cận dưới</em>. Các nhận định “bài toán còn mở” trong bộ bài giảng mang tính lịch sử; không nên tự động xem chúng là trạng thái nghiên cứu hiện nay.</p></div>
+</section>
+<section id="memory">
+<h2>10. Phân tích bộ nhớ trong Java</h2>
+<p>Phần này dùng một <strong>mô hình JVM 64-bit cụ thể</strong> trong bài học: tham chiếu đối tượng chiếm 8 byte, object header 16 byte, array header 24 byte, đối tượng được căn chỉnh thành bội số 8 byte. Đây <strong>không phải con số cố định</strong> cho mọi JVM hiện đại (ví dụ compressed references có thể nhỏ hơn).</p>
+<h3>10.1. Kiểu nguyên thủy và mảng</h3>
+<div class="tablebox"><table><thead><tr><th>Kiểu</th><th>Byte / giá trị</th><th>Mảng một chiều (theo mô hình)</th></tr></thead><tbody>
+<tr><td><code>boolean</code>, <code>byte</code></td><td>1</td><td>—</td></tr><tr><td><code>char</code></td><td>2</td><td><code>char[N]</code>: ≈ 24 + 2N byte</td></tr><tr><td><code>int</code>, <code>float</code></td><td>4</td><td><code>int[N]</code>: ≈ 24 + 4N byte</td></tr><tr><td><code>long</code>, <code>double</code></td><td>8</td><td><code>double[N]</code>: ≈ 24 + 8N byte</td></tr>
+</tbody></table></div>
+<p>Mảng hai chiều kích thước <code>M × N</code> thường chiếm khoảng <code>4MN</code> byte đối với <code>int</code> (chỉ giữ số hạng dẫn đầu); trong Java đây là <strong>mảng chứa tham chiếu đến các mảng hàng</strong>, nên dung lượng thực còn có header, tham chiếu và padding.</p>
+<h3>10.2. Object overhead, padding và shallow/deep memory</h3>
+<div class="flex"><div class="panel"><h4>Shallow memory</h4><p>Tính bộ nhớ của đối tượng hiện tại, các trường nguyên thủy và <strong>các tham chiếu</strong>, nhưng không cộng dung lượng các đối tượng được tham chiếu tới.</p></div><div class="panel"><h4>Deep memory</h4><p>Cộng cả dung lượng các đối tượng được tham chiếu đến (tránh đếm trùng nếu cùng đối tượng được trỏ tới nhiều nơi).</p></div></div>
+<p>Ví dụ một đối tượng chứa 3 trường <code>int</code>: <code>16</code> byte header + <code>12</code> byte dữ liệu + <code>4</code> byte padding = <strong>32 byte</strong>. Lưu một tham chiếu không đồng nghĩa với việc tạo bản sao của đối tượng mà nó trỏ tới.</p>
+<h3>10.3. Ví dụ WeightedQuickUnionUF</h3>
+<div class="codebox"><pre><code>class WeightedQuickUnionUF {
+    private int[] id;
+    private int[] sz;
+    private int count;
+
+    WeightedQuickUnionUF(int n) {
+        id = new int[n];
+        sz = new int[n];
+        count = n;
+        for (int i = 0; i &lt; n; i++) {
+            id[i] = i;
+            sz[i] = 1;
+        }
+    }
+}</code></pre></div>
+<div class="tablebox small"><table><thead><tr><th>Khoản mục</th><th>Byte</th></tr></thead><tbody>
+<tr><td>Đối tượng UF: header</td><td>16</td></tr><tr><td>Hai tham chiếu đến mảng</td><td>2 × 8 = 16</td></tr><tr><td>Trường <code>count</code> + padding</td><td>4 + 4 = 8</td></tr><tr><td>Hai mảng <code>int[N]</code></td><td>2 × (24 + 4N)</td></tr><tr><td><strong>Tổng</strong></td><td><strong>8N + 88 ∼ 8N byte</strong></td></tr>
+</tbody></table></div>
+<p>Ví dụ cho thấy cách dùng <strong>tilde notation</strong> trong phân tích không gian: bỏ các chi phí cố định 88 byte khi N lớn, nhưng giữ hệ số <code>8</code> trước N.</p>
+</section>
+<section id="review">
+<h2>11. Hệ thống nhanh trước kỳ thi</h2>
+<div class="tablebox"><table><thead><tr><th>Gặp dạng câu hỏi</th><th>Cách xử lý</th></tr></thead><tbody>
+<tr><td>“N tăng gấp đôi, T tăng gấp bao nhiêu?”</td><td>Thay 2N vào T(N), lấy tỉ số; với Nᵇ là 2ᵇ.</td></tr>
+<tr><td>“Từ benchmark suy ra bậc tăng?”</td><td>Dùng <code>b ≈ lg[T(2N)/T(N)]</code>, thử với nhiều N đủ lớn.</td></tr>
+<tr><td>“Đếm vòng lặp i &lt; j &lt; k?”</td><td>Dùng tổ hợp C(N,2), C(N,3), rồi nhân số thao tác / lượt.</td></tr>
+<tr><td>“Phân biệt ∼ với Θ, O, Ω?”</td><td><code>∼</code> giữ hệ số; <code>Θ</code> bậc chặt; <code>O</code> chặn trên; <code>Ω</code> chặn dưới.</td></tr>
+<tr><td>“Tìm kiếm nhị phân vì sao nhanh?”</td><td>Loại khoảng một nửa mỗi lượt ⇒ <code>T(N) ≤ T(N/2)+1</code>.</td></tr>
+<tr><td>“Tính bộ nhớ đối tượng Java?”</td><td>Cộng header + trường + padding + dung lượng mảng/đối tượng được sở hữu.</td></tr>
+<tr><td>“Thuật toán tối ưu chưa?”</td><td>Phải có upper bound của thuật toán và lower bound của bài toán trùng bậc.</td></tr>
+</tbody></table></div>
+<h3>Câu hỏi tự kiểm tra</h3>
+<div class="ques">
+<div class="qa"><div class="q">1. Vì sao bộ ba 3-SUM chỉ đếm C(N,3), không phải N³?</div><div class="answer">Vì thứ tự chỉ số bị ràng buộc i &lt; j &lt; k; mỗi tập 3 chỉ số chỉ được xét một lần.</div></div>
+<div class="qa"><div class="q">2. Bằng bao nhiêu truy cập mảng khi duyệt mọi bộ ba?</div><div class="answer">3C(N,3) ∼ ½N³, giả sử mỗi lượt đọc ba phần tử.</div></div>
+<div class="qa"><div class="q">3. T(N) ≈ aN² và N nhân đôi; dự đoán thời gian?</div><div class="answer">Tăng xấp xỉ 4 lần.</div></div>
+<div class="qa"><div class="q">4. Vì sao doubling hypothesis khó phát hiện N lg N?</div><div class="answer">T(2N)/T(N) → 2, giống hàm tuyến tính khi N đủ lớn.</div></div>
+<div class="qa"><div class="q">5. Khi nào Binary Search trả về -1?</div><div class="answer">Khi khoảng [lo,hi] rỗng mà chưa tìm thấy; điều kiện lặp lo ≤ hi không còn đúng.</div></div>
+<div class="qa"><div class="q">6. f(N) = 5N² + N: viết gần đúng theo tilde?</div><div class="answer">f(N) ∼ 5N²; còn tốc độ tăng là Θ(N²).</div></div>
+<div class="qa"><div class="q">7. Thuật toán O(N²) có nhất thiết Θ(N²)?</div><div class="answer">Không; O là chặn trên, ví dụ thuật toán Θ(N) cũng thuộc O(N²).</div></div>
+<div class="qa"><div class="q">8. Bộ nhớ 2 mảng int[N] và 1 đối tượng UF theo mô hình?</div><div class="answer">8N + 88 byte ∼ 8N byte (theo đúng giả định object/reference/padding của bài học).</div></div>
+<div class="qa"><div class="q">9. Best case O(1) có đảm bảo mọi đầu vào đều nhanh?</div><div class="answer">Không. Muốn bảo đảm mọi đầu vào cần phân tích worst case.</div></div>
+<div class="qa"><div class="q">10. Vì sao thuật toán nhanh hơn về bậc có thể chậm hơn tại N nhỏ?</div><div class="answer">Vì hằng số thời gian, overhead và chi phí khởi tạo có thể lớn hơn.</div></div>
+</div>
+</section>
+</main>
+</body></html>

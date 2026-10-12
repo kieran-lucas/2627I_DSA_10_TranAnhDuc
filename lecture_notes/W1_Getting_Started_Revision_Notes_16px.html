@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Kiến thức nền tảng về giải bài toán trên máy tính, cấu trúc dữ liệu và thuật toán.">
+<title>Bài mở đầu · Cấu trúc dữ liệu và giải thuật — Revision Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#26323e;--body:#435269;--muted:#798598;--edge:#dfe4ea;--softedge:#edf0f5;--accent:#548bc8;--lav:#f5f7fa;--lavedge:#dfe4ea;--bl:#f4f7fa;--bled:#c9d5e0;--mint:#eff5f2;--minte:#bfcec6;--warn:#fbfaf8;--warne:#e3ddd3}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;padding:35px 16px 70px;background:#fff;color:var(--ink);font:14px/1.6 'Space Grotesk',Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}main{max-width:1000px;margin:0 auto}
+h1,h2,h3,h4,p{margin-top:0}h1{font-size:30px;letter-spacing:-.9px;line-height:1.23;margin:0 0 10px;font-weight:700}h2{font-size:24px;letter-spacing:-.3px;line-height:1.36;font-weight:700;margin:0 0 12px}h3{font-size:16px;font-weight:700;letter-spacing:-.12px;margin:0 0 9px}h4{font-size:13px;font-weight:700;margin:0 0 6px}p{font-size:13.5px;line-height:1.78;color:var(--body);margin-bottom:12px}
+small,.caption,.source{color:var(--muted);font-size:11.5px;line-height:1.65}.source{padding-top:10px;margin-top:18px;border-top:1px solid var(--softedge)}
+a{color:#497aa9;text-decoration:none}a:hover{text-decoration:underline}
+.hero{border-bottom:1px solid var(--edge);padding:0 0 27px;margin-bottom:25px}.eyebrow{font:600 11px/1.4 'JetBrains Mono',Consolas,monospace;letter-spacing:1.3px;text-transform:uppercase;color:#708198;margin:0 0 13px}.hero-sub{font-size:14px;line-height:1.75;color:var(--body);margin:0;max-width:760px}.meta{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}.chip{border:1px solid #dbe4ed;border-radius:4px;font-size:11px;color:#61748b;padding:3px 9px;white-space:nowrap;background:#fafbfd}.chip.mono{font-family:'JetBrains Mono',monospace}
+.navhead{font-size:11px;letter-spacing:1px;color:#8290a1;text-transform:uppercase;font-weight:700;margin-bottom:10px}.contents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 28px}.contents a{display:flex;align-items:center;gap:10px;color:#486078;border:1px solid #e3e9f0;background:#fff;border-radius:3px;padding:9px 11px;font-size:12.5px;font-weight:600;transition:background .18s,border-color .18s}.contents a:hover{background:#f1f6fb;border-color:#bccfe1;text-decoration:none}.navnum{font:600 11px 'JetBrains Mono',monospace;color:#7b8ea1}
+section{margin:0 0 34px;scroll-margin-top:24px}.section-sub{margin-bottom:17px}.sectionhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.sectionhead h2{margin:0 0 9px}.sectionno{color:#95a5b7;font:500 11px 'JetBrains Mono',monospace;white-space:nowrap}
+.definition{border-left:3px solid #829fbd;background:#f8fafc;padding:10px 13px;margin:13px 0;border-radius:0 4px 4px 0}.definition p:last-child,.note p:last-child{margin-bottom:0}.label{font:700 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.45px;color:#68809a;text-transform:uppercase;margin-bottom:6px}.note{border-left:3px solid #a9b6c3;background:#fff;padding:11px 15px;border-radius:0 4px 4px 0;margin:17px 0 14px}.note .label{color:#a17f56}.note.cool{background:#fff;border-color:#9db5d1}.note.cool .label{color:#6587a7}
+.figure{border:1px solid var(--edge);border-radius:6px;overflow:hidden;background:#fff;margin:16px 0 17px}.figure .figbar{font:600 11px/1.5 'JetBrains Mono',monospace;padding:10px 14px;border-bottom:1px solid #e4eaf1;color:#667b8d;background:#f8fafc}.figure .figbody{padding:16px 15px}.figure figcaption{font:11.5px/1.6 'Space Grotesk',Arial,sans-serif;color:#7b8796;padding:0 15px 14px;margin-top:-1px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pair>div,.mini-card{padding:15px;border:1px solid var(--edge);border-radius:5px;background:#fff}.mini-card p:last-child{margin-bottom:0}.pair .mini-card:first-child{border-top:1px solid #dfe4ea}.pair .mini-card:last-child{border-top:1px solid #dfe4ea}
+.stepflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.step{background:#fff;border:1px solid #e4eaf1;border-radius:4px;min-height:120px;padding:10px 9px 12px;position:relative}.stepnum{font:700 11px 'JetBrains Mono',monospace;color:#548bc8;margin-bottom:8px}.steptitle{font-size:12.5px;line-height:1.42;font-weight:700;color:#2c3d4e;margin:0 0 7px}.stepdesc{font-size:11.2px;line-height:1.55;color:#69798c;margin:0}.step:not(:last-child)::after{content:'›';position:absolute;right:-9px;top:43px;color:#8ca3ba;font-size:18px;font-weight:700;z-index:2}
+.bullets{padding-left:20px;color:var(--body);font-size:13.5px;line-height:1.8;margin:8px 0 13px}.bullets li{margin-bottom:4px}.bullets strong{color:#314358}.subheading{font-size:15px;margin:22px 0 9px}.rowline{height:1px;background:var(--softedge);margin:20px 0}
+.mono,code,pre{font-family:'JetBrains Mono',Consolas,'Courier New',monospace}code{font-size:11.8px;line-height:1.55;letter-spacing:-.22px;color:#40546c;background:#f0f3f7;border:1px solid #e4e9ef;border-radius:3px;padding:1px 4px;word-break:break-word}.formula{font:600 13px/1.6 'JetBrains Mono',Consolas,monospace;color:#37516d;background:#f6f9fd;border:1px solid #dce6f0;padding:8px 13px;border-radius:5px;display:inline-block;margin:6px 0 2px}.codeblock{border:1px solid #dfe4ea;background:#f7f8fa;border-radius:5px;padding:14px 16px;overflow-x:auto;margin:12px 0}.codeblock pre{margin:0;font:12px/1.73 'JetBrains Mono',Consolas,monospace;tab-size:4;color:#3b4c5c;white-space:pre}.kw{color:#8250aa;font-weight:600}.num{color:#b35329}.fn{color:#225fbd}.comment{color:#8996a3}
+.compact-trace{border:1px solid #e4e9ef;background:#fafbfd;padding:11px 14px;margin:13px 0;border-radius:4px}.trace-line{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:3px 0;color:#5b6e82;font-size:12px}.trace-line>span{min-width:155px}.trace-line code{border:0;background:transparent;color:#304b65;font-size:12.4px;padding:0}.tablebox{overflow-x:auto;border:1px solid #dfe4ea;border-radius:5px;margin:14px 0 15px}table{width:100%;border-collapse:collapse;text-align:left}thead{background:#f5f7fa}th{font-size:12px;color:#41556b;line-height:1.55;font-weight:700}td{font-size:12.7px;line-height:1.63;color:#485b70}th,td{padding:10px 13px;vertical-align:top;border-bottom:1px solid #e8edf2}tbody tr:last-child td{border-bottom:none}td:first-child{font-weight:600;color:#34485c}th:first-child{min-width:143px}
+.tag{display:inline-block;font:600 10px/1.3 'JetBrains Mono',monospace;background:#f0f4f9;color:#65809d;padding:3px 6px;border-radius:3px;margin-right:6px}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:4px 0;color:#708096;font-size:11.5px}.dot{display:inline-block;width:10px;height:10px;border:1px solid #b9cadb;border-radius:2px;vertical-align:-1px;margin-right:5px}.dot.a{background:#e7f1ff}.dot.b{background:#f1edfc}.dot.c{background:#e8f7f0}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.method{padding:14px;border:1px solid #dfe5eb;border-top:3px solid #b9cde0;border-radius:4px}.method h4{font-size:13px;margin:0 0 6px;color:#34506b}.method p{font-size:12.2px;margin:0;line-height:1.6}
+.strategy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:17px 0}.strategy{border:1px solid #e1e7ee;border-radius:5px;padding:14px 16px}.strategy-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:5px}.strategy h3{font-size:15px;margin:0}.strategy-icon{font-size:11px;color:#71859b;background:#fff;border:1px solid #e0e7ee;border-radius:4px;padding:2px 7px}.strategy p{font-size:12.8px;margin:6px 0 0}.strategy .ex{font-size:11.9px;color:#738299;margin-top:8px}
+.recall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.recall .item{padding:12px 14px;border:1px solid #e2e9ef;border-left:2px solid #a3b7cc;border-radius:3px;background:#fff}.recall .q{font-weight:700;font-size:12.4px;color:#394f64;margin-bottom:6px}.recall .a{font-size:12.2px;line-height:1.67;color:#5b7084}
+.printbar{text-align:right;margin:0 0 10px}.printbar button{font:600 11px 'Space Grotesk',Arial,sans-serif;cursor:pointer;color:#536b81;background:#fff;border:1px solid #dce5ee;padding:7px 12px;border-radius:4px}.printbar button:hover{background:#f5f8fb}
+.footer{border-top:1px solid var(--edge);padding-top:15px;color:#8190a0;font-size:11.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:9px}
+svg{max-width:100%;height:auto;display:block}svg text{font-family:'Space Grotesk',Arial,sans-serif}svg .mono{font-family:'JetBrains Mono',Consolas,monospace}svg .line{stroke:#7f96ad;stroke-width:2;fill:none}svg .mainline{stroke:#698bad;stroke-width:2.2;fill:none}svg .node{fill:#fff;stroke:#96adc4;stroke-width:1.6}svg .process{fill:#f5f9fd;stroke:#93acc6;stroke-width:1.5}svg .decision{fill:#f3effb;stroke:#a99bc8;stroke-width:1.5}svg .out{fill:#eaf8f2;stroke:#8fbea9;stroke-width:1.5}svg .lbl{font-size:13px;fill:#314860;font-weight:600}svg .edgeLabel{font-size:11px;fill:#708399}svg .small{font-size:11px;fill:#667d92}svg .cap{font-size:12px;fill:#60758a}
+/* Reading scale: 16px theory text and code throughout the notes. */
+body{font-size:16px}
+p,.hero-sub,.bullets,.method p,.strategy p,.strategy .ex,
+.stepdesc,.steptitle,.trace-line,.trace-line code,
+th,td,.recall .q,.recall .a,.contents a,
+.figure figcaption{font-size:16px}
+code,.codeblock pre,.formula{font-size:16px}
+h3{font-size:18px}h4,.method h4,.strategy h3{font-size:17px}
+.subheading{font-size:18px}
+@media(max-width:740px){.figure .figbody{overflow-x:auto}.figure .figbody>svg{max-width:none;width:720px}body{padding:22px 12px 45px}h1{font-size:25px}h2{font-size:21px}.contents{grid-template-columns:repeat(2,minmax(0,1fr))}.stepflow{grid-template-columns:1fr;gap:5px}.step{min-height:0;padding:11px 13px}.step:not(:last-child)::after{display:none}.stepnum{display:inline;margin-right:10px}.steptitle{display:inline}.stepdesc{margin-top:4px}.pair,.strategy-grid,.recall{grid-template-columns:1fr}.method-grid{grid-template-columns:1fr}.figure .figbody{padding:10px}th,td{padding:9px 10px}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{padding:0;color:#222;background:#fff;font-size:16px}main{max-width:100%}.printbar,.contents{display:none}.hero{padding-bottom:10px;margin-bottom:18px}.meta{margin-top:8px}section{margin-bottom:25px}.figure,.tablebox,.note,.definition,.pair>div,.strategy,.recall .item{break-inside:avoid}.sectionhead{break-after:avoid}h2,h3{break-after:avoid}.stepflow{gap:5px}a{color:inherit}svg{max-height:600px}.footer{margin-top:20px}@page{size:A4;margin:14mm 15mm}}
+</style>
+</head>
+<body><main>
+<div class="printbar"><button onclick="window.print()" type="button" aria-label="In hoặc lưu PDF">In / Lưu PDF ↗</button></div>
+<header class="hero">
+ <div class="eyebrow">DSA · WEEK 01</div>
+ <h1>Bài mở đầu</h1>
+ <p class="hero-sub">Cấu trúc dữ liệu và giải thuật · Tuần 01</p>
+</header>
+<div class="navhead">Mục lục</div>
+<nav class="contents" aria-label="Mục lục bài ôn">
+ <a href="#problem"><span class="navnum">01</span>Giải bài toán trên máy tính</a>
+ <a href="#data"><span class="navnum">02</span>Mô hình & cấu trúc dữ liệu</a>
+ <a href="#algorithm"><span class="navnum">03</span>Thuật toán & đặc trưng</a>
+ <a href="#representation"><span class="navnum">04</span>Biểu diễn thuật toán</a>
+ <a href="#strategies"><span class="navnum">05</span>Chiến lược thiết kế</a>
+ <a href="#review"><span class="navnum">06</span>Tự kiểm tra trước thi</a>
+</nav>
+
+<section id="problem">
+ <div class="sectionhead"><h2>1. Giải bài toán trên máy tính</h2></div>
+ <p class="section-sub">Để máy tính giải một vấn đề thực tế, cần mô hình hóa nó thành <strong>bài toán tin học</strong> với dữ liệu vào, kết quả cần tìm và yêu cầu rõ ràng.</p>
+ <div class="pair">
+  <div class="mini-card"><div class="label">Bài toán thực tế</div><h3>Phát biểu theo nhu cầu</h3><p>Ví dụ: “Tìm đường ngắn nhất từ A đến D”.</p></div>
+  <div class="mini-card"><div class="label">Bài toán tin học</div><h3>Phát biểu có thể xử lý</h3><p>Biểu diễn mạng đường thành đồ thị; <em>Input</em>: đồ thị, A, D; <em>Output</em>: đường đi ngắn nhất (nếu tồn tại).</p></div>
+ </div>
+ <div class="definition"><div class="label">Bước 1: xác định bài toán</div><p>Nêu chính xác <strong>Input</strong> (dữ liệu và điều kiện hợp lệ), <strong>Output</strong> (kết quả phải trả về) cùng các ràng buộc cần thiết.</p></div>
+ <figure class="figure" aria-label="Năm bước giải bài toán trên máy tính">
+ <div class="figbar">QUY TRÌNH · 05 BƯỚC</div>
+ <div class="figbody">
+ <div class="stepflow">
+  <div class="step"><div class="stepnum">01</div><div class="steptitle">Xác định bài toán</div><p class="stepdesc">Input, Output, ràng buộc.</p></div>
+  <div class="step"><div class="stepnum">02</div><div class="steptitle">Chọn / thiết kế thuật toán</div><p class="stepdesc">Ý tưởng, tiêu chí, mô tả.</p></div>
+  <div class="step"><div class="stepnum">03</div><div class="steptitle">Viết chương trình</div><p class="stepdesc">CTDL + ngôn ngữ lập trình.</p></div>
+  <div class="step"><div class="stepnum">04</div><div class="steptitle">Hiệu chỉnh</div><p class="stepdesc">Thử nghiệm, sửa lỗi.</p></div>
+  <div class="step"><div class="stepnum">05</div><div class="steptitle">Viết tài liệu</div><p class="stepdesc">Mô tả sử dụng và tổ chức.</p></div>
+ </div>
+ </div>
+ </figure>
+ <h3 class="subheading">Lưu ý quan trọng</h3>
+ <ul class="bullets">
+  <li><strong>Bước 2 — lựa chọn hoặc thiết kế:</strong> không chỉ nghĩ ra cách giải; còn cân nhắc sự phù hợp rồi <strong>mô tả thuật toán</strong> bằng ngôn ngữ tự nhiên, sơ đồ khối hoặc giả mã.</li>
+  <li><strong>Bước 3 — hiện thực hóa:</strong> nguyên tắc là <em>“Chương trình = Cấu trúc dữ liệu + Thuật toán”</em>. Đây là cách diễn đạt về hai thành phần cốt lõi, <strong>không phải</strong> một phép cộng theo nghĩa toán học.</li>
+  <li><strong>Bước 4 — hiệu chỉnh:</strong> thử nghiệm, phát hiện và sửa lỗi; nếu cần, quay lại các bước trước.</li>
+ </ul>
+ <div class="note cool"><div class="label">Phân biệt</div><p><strong>Thuật toán</strong> là phương pháp giải; <strong>chương trình</strong> là một hiện thực của phương pháp ấy trong ngôn ngữ lập trình cùng cách tổ chức dữ liệu cụ thể. Một thuật toán có thể được cài đặt bởi nhiều chương trình.</p></div>
+</section>
+
+<section id="data">
+ <div class="sectionhead"><h2>2. Mô hình dữ liệu và cấu trúc dữ liệu</h2></div>
+ <p>Điểm phân biệt: <strong>mô hình dữ liệu</strong> nói về bản chất và phép toán của dữ liệu; <strong>cấu trúc dữ liệu</strong> nói về cách biểu diễn và tổ chức dữ liệu trong chương trình.</p>
+ <div class="pair">
+  <div class="mini-card"><div class="label">Mô hình dữ liệu · Data model</div><h3>Nhìn ở mức trừu tượng</h3><p>Tập khái niệm có tính toán học mô tả dữ liệu qua <strong>giá trị</strong> và <strong>phép toán</strong>; khi cần, có cả quan hệ giữa các giá trị.</p></div>
+  <div class="mini-card"><div class="label">Cấu trúc dữ liệu · Data structure</div><h3>Nhìn ở mức tổ chức / biểu diễn</h3><p>Cách tổ chức thành phần dữ liệu và <strong>liên kết</strong> giữa chúng để biểu diễn mô hình trong chương trình.</p></div>
+ </div>
+ <p style="margin-top:12px">Ví dụ: <strong>mảng</strong> (array), <strong>bản ghi</strong> (record), <strong>con trỏ</strong> (pointer).</p>
+ <figure class="figure">
+  <div class="figbar">MINH HỌA · TỪ MÔ HÌNH ĐỒ THỊ → CÁCH BIỂU DIỄN TRONG BỘ NHỚ</div>
+  <div class="figbody">
+  <svg viewBox="0 0 900 250" role="img" aria-labelledby="graphTitle graphDesc">
+   <title id="graphTitle">Phân biệt mô hình đồ thị với biểu diễn danh sách kề</title>
+   <desc id="graphDesc">Đồ thị vô hướng gồm bốn đỉnh A B C D với các cạnh AB, AC, BD, CD; được biểu diễn tương đương bằng các danh sách kề.</desc>
+   <defs><marker id="arrGraph" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#86a2be"/></marker></defs>
+   <rect x="1" y="1" width="897" height="247" rx="7" fill="#fbfcfe" stroke="#e8edf2"/>
+   <text x="154" y="29" font-size="13" fill="#61758b" font-weight="700" text-anchor="middle">MÔ HÌNH · ĐỒ THỊ G = (V, E)</text>
+   <g stroke="#90a7bf" stroke-width="3" stroke-linecap="round"><path d="M99 106 L211 62 M99 106 L205 187 M211 62 L305 118 M205 187 L305 118"/></g>
+   <g font-size="15" font-weight="700" fill="#2f5275" text-anchor="middle">
+    <circle cx="99" cy="106" r="21" fill="#e7f1ff" stroke="#719bc6" stroke-width="1.8"/><text x="99" y="112">A</text>
+    <circle cx="211" cy="62" r="21" fill="#e7f1ff" stroke="#719bc6" stroke-width="1.8"/><text x="211" y="68">B</text>
+    <circle cx="205" cy="187" r="21" fill="#e7f1ff" stroke="#719bc6" stroke-width="1.8"/><text x="205" y="193">C</text>
+    <circle cx="305" cy="118" r="21" fill="#e7f1ff" stroke="#719bc6" stroke-width="1.8"/><text x="305" y="124">D</text>
+   </g>
+   <text x="184" y="231" text-anchor="middle" class="small">Quan hệ: A—B, A—C, B—D, C—D</text>
+   <path d="M367 124 H493" stroke="#86a2be" stroke-width="2.5" fill="none" marker-end="url(#arrGraph)"/>
+   <text x="430" y="106" class="small" text-anchor="middle">Biểu diễn</text>
+   <text x="683" y="29" font-size="13" fill="#61758b" font-weight="700" text-anchor="middle">CTDL · DANH SÁCH KỀ</text>
+   <g font-size="13" fill="#405872" font-family="JetBrains Mono, monospace">
+    <g transform="translate(547 51)">
+      <rect x="0" y="0" width="38" height="34" rx="4" fill="#e8f2ff" stroke="#abc5df"/><text x="19" y="22" text-anchor="middle" font-weight="700">A</text>
+      <rect x="48" y="0" width="121" height="34" rx="4" fill="white" stroke="#d3dee9"/><text x="108" y="22" text-anchor="middle">[B, C]</text>
+    </g>
+    <g transform="translate(547 97)">
+      <rect x="0" y="0" width="38" height="34" rx="4" fill="#e8f2ff" stroke="#abc5df"/><text x="19" y="22" text-anchor="middle" font-weight="700">B</text>
+      <rect x="48" y="0" width="121" height="34" rx="4" fill="white" stroke="#d3dee9"/><text x="108" y="22" text-anchor="middle">[A, D]</text>
+    </g>
+    <g transform="translate(547 143)">
+      <rect x="0" y="0" width="38" height="34" rx="4" fill="#e8f2ff" stroke="#abc5df"/><text x="19" y="22" text-anchor="middle" font-weight="700">C</text>
+      <rect x="48" y="0" width="121" height="34" rx="4" fill="white" stroke="#d3dee9"/><text x="108" y="22" text-anchor="middle">[A, D]</text>
+    </g>
+    <g transform="translate(547 189)">
+      <rect x="0" y="0" width="38" height="34" rx="4" fill="#e8f2ff" stroke="#abc5df"/><text x="19" y="22" text-anchor="middle" font-weight="700">D</text>
+      <rect x="48" y="0" width="121" height="34" rx="4" fill="white" stroke="#d3dee9"/><text x="108" y="22" text-anchor="middle">[B, C]</text>
+    </g>
+   </g>
+   <text x="803" y="123" class="small" text-anchor="middle"><tspan x="803">Cùng quan hệ,</tspan><tspan x="803" dy="17">cách lưu cụ thể</tspan></text>
+  </svg>
+  </div>
+ </figure>
+ <div class="note cool"><div class="label">Điểm cốt lõi</div><p><strong>Mô hình</strong>: biểu diễn khái niệm và phép toán. <strong>CTDL</strong>: tổ chức và liên kết dữ liệu khi hiện thực. <strong>Một mô hình có thể có nhiều cách biểu diễn.</strong></p></div>
+ <h3 class="subheading">Một số cấu trúc và dạng dữ liệu</h3>
+ <div class="tablebox"><table>
+ <thead><tr><th>Dạng</th><th>Ý nghĩa</th><th>Ví dụ / thao tác tiêu biểu</th></tr></thead>
+ <tbody>
+ <tr><td>Tập hợp <span class="tag">Set</span></td><td>Quan tâm một phần tử có thuộc tập hay không; không xét trùng theo ngữ nghĩa tập hợp.</td><td>Kiểm tra phần tử thuộc tập.</td></tr>
+ <tr><td>Danh sách <span class="tag">List</span></td><td>Các phần tử được tổ chức thành một dãy, có thể xét theo vị trí.</td><td>Thêm, xóa, duyệt.</td></tr>
+ <tr><td>Từ điển <span class="tag">Dictionary</span></td><td>Ánh xạ khóa → giá trị.</td><td>Tra cứu bằng khóa.</td></tr>
+ <tr><td>Ngăn xếp / Hàng đợi</td><td>Stack thường theo <strong>LIFO</strong>; Queue thường theo <strong>FIFO</strong>.</td><td><span class="mono">push/pop</span>; <span class="mono">enqueue/dequeue</span>.</td></tr>
+ <tr><td>Cây <span class="tag">Tree</span></td><td>Cấu trúc phân cấp gồm các nút và quan hệ cha–con.</td><td>Duyệt cây, tìm nút.</td></tr>
+ <tr><td>Bảng băm <span class="tag">Hash table</span></td><td>Tra cứu dựa vào hàm băm để xác định vị trí lưu trữ.</td><td>Chèn / tìm theo khóa.</td></tr>
+ <tr><td>Đồ thị <span class="tag">Graph</span></td><td>Các đỉnh và cạnh biểu diễn quan hệ.</td><td>Đường đi, kết nối.</td></tr>
+ </tbody></table></div>
+ <p class="caption">Đây không phải một hệ phân loại đồng nhất: stack/queue thường được xem là kiểu dữ liệu trừu tượng; hash table là một cách tổ chức dữ liệu.</p>
+</section>
+
+<section id="algorithm">
+ <div class="sectionhead"><h2>3. Thuật toán và các đặc trưng</h2></div>
+ <div class="definition"><div class="label">Định nghĩa · Thuật toán (Algorithm)</div><p>Thuật toán giải một bài toán là <strong>dãy hữu hạn các thao tác</strong>, được sắp xếp theo một trình tự xác định, sao cho khi thực hiện với <strong>Input</strong> của bài toán, ta thu được <strong>Output</strong> cần tìm.</p></div>
+ <h3 class="subheading">Bảy đặc trưng của thuật toán</h3>
+ <div class="tablebox"><table>
+ <thead><tr><th>Đặc trưng</th><th>Ý nghĩa</th></tr></thead>
+ <tbody>
+ <tr><td>1. Tính xác định</td><td>Mỗi bước và điều kiện thực hiện phải rõ ràng, không mơ hồ về cách tiến hành.</td></tr>
+ <tr><td>2. Tính dừng</td><td>Với đầu vào hợp lệ, thuật toán phải kết thúc sau <strong>hữu hạn bước</strong>.</td></tr>
+ <tr><td>3. Tính đúng đắn</td><td>Output phải thỏa yêu cầu với mọi Input hợp lệ.</td></tr>
+ <tr><td>4. Tính phổ dụng</td><td>Giải được <strong>cả lớp bài toán</strong> thuộc phạm vi đã xác định, không chỉ một bộ dữ liệu mẫu.</td></tr>
+ <tr><td>5. Đại lượng vào</td><td>Các dữ liệu được cung cấp cho thuật toán (Input).</td></tr>
+ <tr><td>6. Đại lượng ra</td><td>Kết quả mà thuật toán tạo ra (Output).</td></tr>
+ <tr><td>7. Tính hiệu quả</td><td>Sử dụng thời gian và bộ nhớ hợp lý.</td></tr>
+ </tbody></table></div>
+ <div class="note"><div class="label">Phân biệt</div><p><strong>Tính dừng ≠ tính đúng đắn:</strong> một chương trình có thể kết thúc nhưng trả về kết quả sai. <strong>Tính đúng đắn ≠ tính hiệu quả:</strong> có thể có nhiều thuật toán cùng cho đáp án đúng nhưng khác biệt đáng kể về chi phí thực hiện.</p></div>
+ <h3 class="subheading">Ví dụ: tìm giá trị lớn nhất</h3>
+ <div class="pair">
+  <div class="mini-card"><div class="label">Input</div><p><strong>N</strong> là số nguyên dương và một dãy số <span class="mono">a₁, a₂, …, aₙ</span> gồm <strong>N</strong> phần tử.</p></div>
+  <div class="mini-card"><div class="label">Output</div><p><strong>Max</strong> là giá trị lớn nhất trong dãy, tức <span class="mono">Max = max(a₁, …, aₙ)</span>.</p></div>
+ </div>
+ <p style="margin-top:13px">Đặt <code>Max = a₁</code> (vì <code>N ≥ 1</code>). Duyệt từ <code>a₂</code> đến <code>aₙ</code>; chỉ cập nhật khi gặp phần tử lớn hơn. Kết thúc vòng lặp, trả về <code>Max</code>.</p>
+ <div class="compact-trace"><div class="label">Trace ngắn</div><div class="trace-line"><span>Dãy</span><code>[3, 7, 2, 9, 4]</code></div><div class="trace-line"><span>Max sau mỗi phần tử</span><code>3 → 7 → 7 → 9 → 9</code></div></div>
+ <p class="caption"><strong>Vì sao đúng:</strong> sau khi duyệt đến <span class="mono">aᵢ</span>, <span class="mono">Max</span> luôn là phần tử lớn nhất của <span class="mono">a₁ … aᵢ</span>. Tính chất này được duy trì qua từng lần cập nhật.</p>
+</section>
+
+<section id="representation">
+ <div class="sectionhead"><h2>4. Ba cách biểu diễn thuật toán</h2></div>
+ <p>Ba cách phổ biến: <strong>ngôn ngữ tự nhiên</strong> (diễn đạt bằng lời), <strong>sơ đồ khối</strong> (luồng điều khiển bằng hình) và <strong>giả mã</strong> (mô tả có cấu trúc, không lệ thuộc ngôn ngữ lập trình). Cả ba minh họa cùng thuật toán tìm Max.</p>
+ <h3 class="subheading">4.1. Ngôn ngữ tự nhiên</h3>
+ <ol class="bullets" style="margin-bottom:14px">
+  <li>Nhập <span class="mono">N</span> và dãy <span class="mono">a₁, …, aₙ</span>.</li>
+  <li>Đặt <span class="mono">Max = a₁</span> và <span class="mono">i = 2</span>.</li>
+  <li>Nếu <span class="mono">i &gt; N</span>, chuyển đến bước 5.</li>
+  <li>Nếu <span class="mono">aᵢ &gt; Max</span>, đặt <span class="mono">Max = aᵢ</span>; tăng <span class="mono">i</span> lên 1 rồi quay lại bước 3.</li>
+  <li>Đưa ra <span class="mono">Max</span> và kết thúc.</li>
+ </ol>
+ <h3 class="subheading">4.2. Sơ đồ khối</h3>
+ <figure class="figure"><div class="figbar">FLOWCHART · KHỞI TẠO → KIỂM TRA → CẬP NHẬT → LẶP → KẾT THÚC</div>
+ <div class="figbody">
+ <svg viewBox="0 0 900 502" role="img" aria-labelledby="flowTitle flowDesc">
+  <title id="flowTitle">Sơ đồ khối thuật toán tìm giá trị lớn nhất trong dãy</title>
+  <desc id="flowDesc">Nhập dãy, đặt Max bằng phần tử đầu, i bằng 2. Nếu i vượt N thì xuất Max. Nếu không, so sánh phần tử thứ i với Max, cập nhật nếu lớn hơn, tăng i rồi quay lại kiểm tra.</desc>
+  <defs><marker id="flowArrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#728fae"/></marker></defs>
+  <rect x="1" y="1" width="898" height="500" rx="5" fill="#fcfdff" stroke="#edf1f5"/>
+  <ellipse class="node" cx="430" cy="40" rx="126" ry="24"/><text class="lbl" x="430" y="45" text-anchor="middle">Nhập N, a₁ … aₙ</text>
+  <path class="mainline" d="M430 64 V93" marker-end="url(#flowArrow)"/>
+  <rect class="process" x="324" y="95" width="212" height="45" rx="4"/><text class="lbl" x="430" y="122" text-anchor="middle">Max ← a₁; i ← 2</text>
+  <path class="mainline" d="M430 140 V167" marker-end="url(#flowArrow)"/>
+  <path class="decision" d="M430 166 L540 205 L430 244 L320 205 Z"/><text class="lbl" x="430" y="210" text-anchor="middle">i ≤ N ?</text>
+  <path class="mainline" d="M430 244 V292" marker-end="url(#flowArrow)"/><text class="edgeLabel" x="443" y="264">Đúng</text>
+  <path class="mainline" d="M540 205 H706" marker-end="url(#flowArrow)"/><text class="edgeLabel" x="556" y="194">Sai</text>
+  <rect class="out" x="708" y="184" width="147" height="43" rx="5"/><text class="lbl" x="782" y="210" text-anchor="middle">Xuất Max</text>
+  <path class="mainline" d="M782 227 V258" marker-end="url(#flowArrow)"/>
+  <ellipse class="node" cx="782" cy="282" rx="73" ry="22"/><text class="lbl" x="782" y="287" text-anchor="middle">Kết thúc</text>
+  <path class="decision" d="M430 293 L546 334 L430 375 L314 334 Z"/><text class="lbl" x="430" y="339" text-anchor="middle">aᵢ &gt; Max ?</text>
+  <path class="mainline" d="M546 334 H628" marker-end="url(#flowArrow)"/><text class="edgeLabel" x="553" y="322">Đúng</text>
+  <rect class="process" x="630" y="313" width="157" height="43" rx="4"/><text class="lbl" x="708" y="339" text-anchor="middle">Max ← aᵢ</text>
+  <path class="mainline" d="M708 356 V421 H536" marker-end="url(#flowArrow)"/>
+  <path class="mainline" d="M430 375 V396"/><text class="edgeLabel" x="442" y="393">Sai</text>
+  <path class="mainline" d="M430 396 V399"/>
+  <rect class="process" x="324" y="402" width="212" height="44" rx="4"/><text class="lbl" x="430" y="429" text-anchor="middle">i ← i + 1</text>
+  <path class="mainline" d="M324 425 H159 V205 H320" marker-end="url(#flowArrow)"/><text class="edgeLabel" x="170" y="192">Quay lại kiểm tra</text>
+  <text x="25" y="472" class="small">Hình oval: bắt đầu / kết thúc</text>
+  <text x="298" y="472" class="small">Hình chữ nhật: thao tác</text>
+  <text x="567" y="472" class="small">Hình thoi: điều kiện</text>
+ </svg>
+ </div><figcaption>Hai điều kiện quan trọng: <strong>i ≤ N</strong> sai → xuất Max; <strong>aᵢ &gt; Max</strong> đúng → cập nhật Max.</figcaption></figure>
+ <h3 class="subheading">4.3. Giả mã — biểu diễn có cấu trúc</h3>
+ <div class="codeblock"><pre><span class="fn">MAX</span>(a[1..N]):
+    Max <span class="kw">←</span> a[1]
+    <span class="kw">for</span> i <span class="kw">←</span> 2 <span class="kw">to</span> N:
+        <span class="kw">if</span> a[i] &gt; Max:
+            Max <span class="kw">←</span> a[i]
+    <span class="kw">return</span> Max</pre></div>
+ <div class="note cool"><div class="label">Kiến thức cốt lõi cần nhớ</div><p>Ba cách biểu diễn có thể mô tả <strong>cùng một thuật toán</strong>. <strong>Giả mã không nhất thiết chạy được trực tiếp</strong> như chương trình.</p></div>
+</section>
+
+<section id="strategies">
+ <div class="sectionhead"><h2>5. Các chiến lược thiết kế thuật toán</h2></div>
+ <p>Không có chiến lược nào phù hợp với mọi bài toán; cần chọn phương pháp theo đặc điểm của bài toán.</p>
+ <div class="strategy-grid">
+ <article class="strategy"><div class="strategy-head"><h3>Chia để trị</h3><span class="strategy-icon mono">Divide & Conquer</span></div><p>Chia bài toán thành các bài toán con, giải từng phần rồi <strong>kết hợp</strong> kết quả.</p><div class="ex"><strong>Nhận diện:</strong> chia → giải → gộp. <strong>Ví dụ:</strong> Merge Sort.</div></article>
+ <article class="strategy"><div class="strategy-head"><h3>Tham lam</h3><span class="strategy-icon mono">Greedy</span></div><p>Mỗi bước chọn phương án có vẻ tốt nhất <strong>ngay tại thời điểm đó</strong>, với điều kiện bài toán cho phép lựa chọn cục bộ dẫn tới lời giải đúng.</p><div class="ex"><strong>Nhận diện:</strong> lựa chọn cục bộ. <strong>Lưu ý:</strong> không phải bài toán nào cũng dùng tham lam đúng.</div></article>
+ <article class="strategy"><div class="strategy-head"><h3>Quay lui</h3><span class="strategy-icon mono">Backtracking</span></div><p>Thử từng lựa chọn; nếu đi đến nhánh không còn phù hợp thì <strong>quay lại</strong> và thử nhánh khác.</p><div class="ex"><strong>Nhận diện:</strong> chọn → kiểm tra → hoàn tác. <strong>Ví dụ:</strong> bài toán N quân hậu.</div></article>
+ <article class="strategy"><div class="strategy-head"><h3>Quy hoạch động</h3><span class="strategy-icon mono">Dynamic Programming</span></div><p>Khai thác các <strong>bài toán con lặp lại</strong>: lưu kết quả đã tính để tránh giải đi giải lại.</p><div class="ex"><strong>Nhận diện:</strong> trạng thái + công thức chuyển + lưu kết quả. <strong>Ví dụ:</strong> Fibonacci có ghi nhớ.</div></article>
+ </div>
+</section>
+
+<section id="review">
+ <div class="sectionhead"><h2>6. Tự kiểm tra trước kỳ thi</h2></div>
+ <p>Tự trả lời từng câu trước khi nhìn đáp án.</p>
+ <div class="recall">
+  <div class="item"><div class="q">01. Năm bước giải bài toán trên máy tính là gì?</div><div class="a">Xác định bài toán → chọn/thiết kế thuật toán → viết chương trình → hiệu chỉnh → viết tài liệu.</div></div>
+  <div class="item"><div class="q">02. Input và Output phải xác định ở bước nào?</div><div class="a">Ngay bước 1. Input là dữ liệu có sẵn; Output là kết quả cần trả.</div></div>
+  <div class="item"><div class="q">03. Phân biệt mô hình dữ liệu với cấu trúc dữ liệu?</div><div class="a">Mô hình: giá trị, quan hệ, phép toán ở mức trừu tượng. CTDL: cách biểu diễn / tổ chức để thao tác trong chương trình.</div></div>
+  <div class="item"><div class="q">04. Bảy đặc trưng của thuật toán?</div><div class="a">Xác định; dừng; đúng đắn; phổ dụng; đại lượng vào; đại lượng ra; hiệu quả.</div></div>
+  <div class="item"><div class="q">05. Vì sao thuật toán tìm Max khởi tạo Max = a₁?</div><div class="a">Vì <span class="mono">N ≥ 1</span>, phần tử đầu luôn tồn tại và là giá trị lớn nhất của đoạn đã xét ban đầu.</div></div>
+  <div class="item"><div class="q">06. Ba cách biểu diễn thuật toán?</div><div class="a">Ngôn ngữ tự nhiên; sơ đồ khối; giả mã / cách mô tả có cấu trúc.</div></div>
+  <div class="item"><div class="q">07. Nếu thuật toán luôn dừng thì có chắc đúng?</div><div class="a">Không. Dừng và đúng đắn là hai yêu cầu phân biệt.</div></div>
+  <div class="item"><div class="q">08. Bốn chiến lược được nhắc đến?</div><div class="a">Chia để trị; tham lam; quay lui; quy hoạch động.</div></div>
+ </div>
+</section>
+</main></body></html>
